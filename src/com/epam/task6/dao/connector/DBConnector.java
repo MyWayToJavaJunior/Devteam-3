@@ -45,6 +45,7 @@ public class DBConnector {
             try {
                 statement = connection.createStatement();
             } catch (SQLException e) {
+                e.printStackTrace();
                // logger.error(ResourceManager.getProperty(MSG_CREATE_STATEMENT_ERROR), e);
             }
         }
@@ -62,6 +63,7 @@ public class DBConnector {
             try {
                 preparedStatement = connection.prepareStatement(query);
             } catch (SQLException e) {
+                e.printStackTrace();
               //  logger.error(ResourceManager.getProperty(MSG_CREATE_PREPARED_ERROR), e);
             }
         }
@@ -86,10 +88,7 @@ public class DBConnector {
               //  logger.error(ResourceManager.getProperty(MSG_CLOSE_PREPARED_ERROR), e);
             }
         }
-        if (connection != null) {
-           pool.returnConnection(connection
-           );
-        }
+
     }
 
 }

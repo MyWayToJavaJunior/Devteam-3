@@ -192,7 +192,8 @@ public class ProjectDAO extends AbstractDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-           throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
+            e.printStackTrace();
+         //  throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
             connector.close();
         }
