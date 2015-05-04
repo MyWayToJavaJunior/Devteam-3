@@ -1,0 +1,210 @@
+package com.epam.task6.domain.user;
+
+import com.epam.task6.service.observer.language.LanguageEvent;
+import com.epam.task6.service.observer.language.LanguageObserver;
+
+public class User {
+    private int id;
+    private String firstName;
+    private String lastName;
+    private boolean available;
+    private String qualification;
+	private String email;
+	private String password;
+    private Role role;
+
+    private String language;
+    private LanguageObserver observer;
+
+
+
+    public User(){
+        super();
+        this.observer = new LanguageObserver();
+        this.language = "en";
+    }
+	public User(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+        this.observer = new LanguageObserver();
+        this.language = "en";
+	}
+
+    public User(int id, String firstName, String lastName, String qualification, String email, String password, Role role, String language) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.qualification = qualification;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.id = id;
+        this.observer = new LanguageObserver();
+        this.language = language;
+    }
+
+    public User(int id, String firstName, String lastName, String qualification, String email, String password, Role role) {
+        super();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.qualification = qualification;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.id = id;
+        this.observer = new LanguageObserver();
+    }
+    public String getEmail() {
+		return email;
+	}
+
+    public String getPassword() {
+        return password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+
+    public void setLanguage(String language) {
+        String lang = this.language;
+        this.language = language;
+        notifyObserver(lang);
+    }
+
+    public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        if (!super.equals(obj)){
+            return false;
+        }
+
+        User user = (User) obj;
+
+        if (available != user.available) {
+            return false;
+        }
+        if (id != user.id) {
+            return false;
+        }
+        if (role != user.role) {
+            return false;
+        }
+        if (email != null ? !email.equals(user.email) : user.email != null) {
+            return false;
+        }
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null){
+            return false;
+        }
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) {
+            return false;
+        }
+        if (password != null ? !password.equals(user.password) : user.password != null) {
+            return false;
+        }
+        if (qualification != null ? !qualification.equals(user.qualification)
+                : user.qualification != null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        if (firstName != null) {
+            result = 31 * result + firstName.hashCode();
+        }
+        if (lastName != null) {
+            result = 31 * result + lastName.hashCode();
+        }
+        if (available) {
+            result = 31 * result + 1;
+        }
+        if (qualification != null) {
+            result = 31 * result + qualification.hashCode();
+        }
+        if (email != null) {
+            result = 31 * result + email.hashCode();
+        }
+        if (password != null) {
+            result = 31 * result + password.hashCode();
+        }
+        if (role != null) {
+            result = 31 * result + role.hashCode();
+        }
+        return result;
+    }
+
+    private void notifyObserver(String before) {
+        if (before != null) {
+            if (!before.equals(language)) {
+                observer.handle(new LanguageEvent(this));
+            }
+        }
+    }
+}
