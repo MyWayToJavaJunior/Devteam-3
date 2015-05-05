@@ -42,8 +42,9 @@ public class ShowNewProject extends Command {
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         ProjectDAO projectDAO = new ProjectDAO();
         try {
-            List<Project> projectList = projectDAO.getProjectsByStatusAndDivId(0,user.getId());
+            List<Project> projectList = projectDAO.getProjectsByStatusAndDivId(0, user.getId());
             if (null != projectList) {
+                System.out.print("hhhhhhhhhh         "+projectList.get(0).getName());
                 request.setAttribute(RequestParameterName.SIMPLE_INFO, projectList);
             }
         }

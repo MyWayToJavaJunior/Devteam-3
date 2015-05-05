@@ -88,7 +88,13 @@ public final class CommandHelper {
                     command = new ChangeLanguage();
                     break;
                 case EDIT_ORDER:
+                    command = new ShowEditOrder();
+                    break;
+                case EDIT_ORDER_DETAIL:
                     command = new EditOrder();
+                    break;
+                case SHOW_CUSTOMER_JOBS:
+                    command = new ViewJobsBySpetification();
                     break;
 
            }

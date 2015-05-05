@@ -20,6 +20,7 @@
 
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
+        <a class="btn btn-lg btn-primary" href="Controller?executionCommand=SHOW_SPECIFICATIONS">Назад</a>
     <form class="form-signin" action="Controller" method="get">
         <input type="hidden" name="executionCommand" value="CREATE_ORDER_PART_ONE" />
         <h3><fmt:message key="jsp.customer.specifications.add.header" bundle="${msg}"/></h3>

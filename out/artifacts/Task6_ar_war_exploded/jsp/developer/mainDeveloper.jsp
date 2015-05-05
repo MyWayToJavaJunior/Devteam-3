@@ -27,7 +27,7 @@
     </form>
     <form class="form-signin" action="Controller" method="post">
         <input type="hidden" name="executionCommand" value="SHOW_READY_PROJECTS" />
-        <p> <input type="submit" class="btn btn-lg btn-default" value="<fmt:message key="jsp.employee.current.body.header.complete" bundle="${msg}"></p>
+        <p> <input type="submit" class="btn btn-lg btn-default" value="<fmt:message key="jsp.employee.current.body.header.complete" bundle="${msg}"/>"></p>
         <p></p>
     </form>
 </div>

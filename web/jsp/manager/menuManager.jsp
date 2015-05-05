@@ -10,10 +10,9 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="Controller?command=SHOW_PROJECTS">Menu</a></li>
-                <li><a href="Controller?executionCommand=SHOW_ASSIGN_PROJECT_FORM">ASSIGN</a></li>
+                <li class="active"><a href="">Menu</a></li>
                 <li><a href="Controller?executionCommand=SHOW_PROJECTS">Projects</a></li>
-                <li><a href="Controller?executionCommand=SHOW_PROJECT_FORM">Waiting orders</a></li>
+                <li><a href="">Waiting orders</a></li>
                 <li><a href="#">Bills</a></li>
             </ul>
             <ul class="nav nav-sidebar">
@@ -22,7 +21,6 @@
 
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="">Add user</a></li>
                 <li><a href="">Delete user</a></li>
                 <li><a href="">Edit users profile</a></li>
             </ul>

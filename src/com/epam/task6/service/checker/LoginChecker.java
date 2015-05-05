@@ -12,7 +12,6 @@ public class LoginChecker {
         if (email.length() == 0 || password.length() == 0) {
             return false;
         }
-        //UserDAO userDAO = new UserDAO();
         String userPassword = password;
         logger.info("user password: " + password + " password from db: " + userPassword);
         return userPassword.equals(password);

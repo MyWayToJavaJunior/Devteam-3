@@ -3,12 +3,16 @@ package com.epam.task6.command.impl.content;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
+import com.epam.task6.dao.impl.JobDAO;
 import com.epam.task6.dao.impl.SpecificationDAO;
+import com.epam.task6.domain.project.Job;
+import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by olga on 01.05.15.
@@ -33,13 +37,13 @@ public class ShowProjectFormDetails extends Command {
 
         System.out.print("122323    "+spetificationName);
         SpecificationDAO specificationDAO = new SpecificationDAO();
-       // Spetification spetification = specificationDAO.getSpetificationByName(spetificationName);
-       // session.setAttribute(ATTRIBUTE_SPETIFICATION, spetification);
-//        System.out.println("SP ID IS  " + spetification.getId());
+        Spetification spetification = specificationDAO.getSpetificationByName(spetificationName);
+       session.setAttribute(ATTRIBUTE_SPETIFICATION, spetification);
+      System.out.println("SP ID IS  " + spetification.getId());
 
-      //  JobDAO jobDAO = new JobDAO();
-      //  List<Job> jobList = jobDAO.getSpecificationJobs(spetification.getId());
-      //  session.setAttribute(ATTRIBUTE_JOB, jobList);
+        JobDAO jobDAO = new JobDAO();
+        List<Job> jobList = jobDAO.getSpecificationJobs(spetification.getId());
+        session.setAttribute(ATTRIBUTE_JOB, jobList);
 
         setForward(FORWARD_ORDER_FORM);
     }

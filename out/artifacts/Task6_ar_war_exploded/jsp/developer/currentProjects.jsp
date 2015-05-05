@@ -47,8 +47,9 @@
                 <td>
                     <form class="form-signin" action="Controller" method="post">
                         <input type="hidden" name="executionCommand" value="TRANSFER_CURRENT_PROJECT" />
-                        <button class="btn btn-lg btn-success" type="submit" name="id_project" value="${item.id}">Ready</button>
-                    </form>                </td>
+                        <button class="btn btn-lg btn-success" type="submit" name="id_project" value="${item.id}">Confirm</button>
+                    </form>
+                </td>
             </tr>
             </c:if>
             </c:forEach>

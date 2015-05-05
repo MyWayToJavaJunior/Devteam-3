@@ -32,12 +32,12 @@
 
     <form class="form-signin" action="Controller" method="get">
         <input type="hidden" name="executionCommand" value="CREATE_ORDER_PART_TWO" />
-
+        <h3 class="form">Step 2</h3>
     <c:if test="${sessionScope.job != null}">
         <c:forEach var="i" begin="1" end="${sessionScope.job}">
         <form class="form" role="form" id="${i}">
 
-            <h3 class="form">Step 2</h3>
+
             <h4>Job</h4>
             <div class="form-group">
                 <label >Name</label>
@@ -53,11 +53,12 @@
                 <label for="exampleInputPassword1">Time</label>
                 <input type="text" name="job_time" class="form-control" id="exampleInputPassword1" placeholder="Time">
             </div>
-            <input class="btn btn-danger" type="submit" value="Create order" /><br />
+
 
         </form>
         </c:forEach>
     </c:if>
+        <input class="btn btn-danger" type="submit" value="Create order" /><br />
 </div>
 
 <p></p>

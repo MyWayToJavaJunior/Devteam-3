@@ -25,7 +25,9 @@ public enum CommandName {
     SHOW_PROJECT_FORM (Role.MANAGER),
     SHOW_PROJECT_FORM_DETAILS (Role.MANAGER),
     CHANGE_LANGUAGE(Role.ALL),
-    EDIT_ORDER (Role.CUSTOMER);
+    EDIT_ORDER (Role.CUSTOMER),
+    SHOW_CUSTOMER_JOBS(Role.CUSTOMER),
+    EDIT_ORDER_DETAIL (Role.CUSTOMER);
 
     private Role type;
 

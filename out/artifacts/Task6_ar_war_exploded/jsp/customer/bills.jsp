@@ -22,7 +22,7 @@
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="row">
-
+                <a class="btn btn-lg btn-primary" href="Controller?executionCommand=SHOW_SPECIFICATIONS">Назад</a>
                 <h2 class="sub-header">
                     <fmt:message key="jsp.customer.bills.page.title" bundle="${msg}"/>
                 </h2>

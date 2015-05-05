@@ -39,7 +39,6 @@
 <html>
 <body>
 <form action="Controller" method="get">
-    <label>Language</label>
     <input type="hidden" name="executionCommand" value="CHANGE_LANGUAGE"/>
     <input type="hidden" name="hiddenPageID" value="${pageID}" />
     <div class="col-md-2">

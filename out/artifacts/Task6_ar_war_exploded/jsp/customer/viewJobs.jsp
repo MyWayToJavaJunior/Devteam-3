@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: olga
-  Date: 26.04.15
-  Time: 22:00
+  Date: 04.05.15
+  Time: 23:23
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -12,19 +12,16 @@
 <%@ include file="menuСustomer.jspf"%>
 
 
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
     <div class="row">
 
         <%@ include file="../common/language.jsp"%>
         <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en' : localeValue}"/>
         <fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
+        <c:set var="page" value="Controller?executionCommand=SHOW_CUSTOMER_JOBS" scope="session" />
 
-        <c:set var="page" value="Controller?executionCommand=SHOW_SPECIFICATIONS" scope="session" />
-
-
-
-<%-------%>
+        <%-------%>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="span9">
@@ -32,6 +29,7 @@
                     <div class="page-header">
                         <h1><fmt:message key="jsp.customer.specifications.body.header" bundle="${msg}"/></h1>
                     </div>
+                    <a class="btn btn-lg btn-primary" href="Controller?executionCommand=SHOW_SPECIFICATIONS">Назад</a>
 
                     <table class="table table-bordered table-striped">
 
@@ -47,33 +45,27 @@
                         </thead>
 
                         <tbody>
-                        <c:forEach var="item" items="${simpleinfo}">
-                        <c:if test="${item.getClass().getSimpleName() eq 'Spetification' }">
+                        <c:forEach var="item" items="${jobs}">
+                        <c:if test="${item.getClass().getSimpleName() eq 'Job' }">
                         <tr>
                             <td><c:out value="${item.id}"></c:out></td>
                             <td><c:out value="${item.name}"></c:out></td>
-                            <td><c:out value="${item.user_id}"></c:out></td>
-                            <td><c:out value="${item.status}"></c:out></td>
-                            <td><c:out value="${item.jobs}"></c:out></td>
-                            <td>
-                                <a id = "${item.id}" class="btn btn-mini btn-primary" href="Controller?spId=${item.id}&executionCommand=EDIT_ORDER" >
-                                    <i class="icon-edit icon-white"></i>
-                                    <fmt:message key="jsp.customer.specifications.button.edit" bundle="${msg}"/></a>
-
-                                <a class="btn btn-mini btn-danger" href="Controller?spId=${item.id}&executionCommand=SHOW_CUSTOMER_JOBS" data-toggle="modal" href=""><i
-                                        class="icon-remove icon-white"></i>
-                                    <fmt:message key="jsp.customer.specifications.button.jobs.view" bundle="${msg}"/></a>
-                            </td>
+                            <td><c:out value="${item.qualification}"></c:out></td>
+                            <td><c:out value="${item.cost}"></c:out></td>
+                            <td><c:out value="${item.time}"></c:out></td>
+                            <td><c:out value="${item.specification}"></c:out></td>
+                            <td><c:out value="${item.specialist}"></c:out></td>
 
                         </tr>
                         </c:if>
                         </c:forEach>
+
                     </table>
                 </div>
             </div>
         </div>
     </div>
-        </div>
+</div>
 
 </body>
 </html>

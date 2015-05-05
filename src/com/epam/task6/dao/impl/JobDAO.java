@@ -100,16 +100,16 @@ public class JobDAO extends AbstractDAO {
     /**
      * Returns list of jobs in certain specification
      *
-     * @param id Specification id
+     * @param sid Specification id
      * @return List of Jobs
      * @throws com.epam.task6.dao.DAOException object if execution of query is failed
      */
-    public List<Job> getSpecificationJobs(int id) throws DAOException {
+    public List<Job> getSpecificationJobs(int sid) throws DAOException {
         List<Job> jobs = new ArrayList<Job>();
         connector = new DBConnector();
         try {
             preparedStatement = connector.getPreparedStatement(SQL_FIND_JOBS_BY_SPECIFICATION_ID);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1, sid);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Job job = new Job();
@@ -122,13 +122,14 @@ public class JobDAO extends AbstractDAO {
                 jobs.add(job);
             }
         } catch (SQLException e) {
-            throw new DAOException(ResourceManager.getProperty(ERROR_SPECIFICATION_JOBS) + id, e);
+            throw new DAOException(ResourceManager.getProperty(ERROR_SPECIFICATION_JOBS) + sid, e);
         } finally {
             connector.close();
         }
-        logger.info(ResourceManager.getProperty(INFO_SPECIFICATION_JOBS) + id);
+        logger.info(ResourceManager.getProperty(INFO_SPECIFICATION_JOBS) + sid);
         return jobs;
     }
+
 
 
     /**

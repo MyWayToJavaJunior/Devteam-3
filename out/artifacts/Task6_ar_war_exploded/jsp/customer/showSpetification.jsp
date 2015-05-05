@@ -37,6 +37,7 @@
 
                         <thead>
                         <tr>
+                            <td><b>ID</b></td>
                             <td><b><fmt:message key="jsp.customer.specifications.table.name" bundle="${msg}"/></b></td>
                             <td><b><fmt:message key="jsp.customer.specifications.table.uid" bundle="${msg}"/></b></td>
                             <td><b><fmt:message key="jsp.customer.specifications.table.status" bundle="${msg}"/></b></td>
@@ -49,24 +50,24 @@
                         <c:forEach var="item" items="${simpleinfo}">
                         <c:if test="${item.getClass().getSimpleName() eq 'Spetification' }">
                         <tr>
+                            <td><c:out value="${item.id}"></c:out></td>
                             <td><c:out value="${item.name}"></c:out></td>
                             <td><c:out value="${item.user_id}"></c:out></td>
                             <td><c:out value="${item.status}"></c:out></td>
                             <td><c:out value="${item.jobs}"></c:out></td>
-
                             <td>
-                                <a class="btn btn-mini btn-primary" href="Controller?executionCommand=EDIT_ORDER" >
+                                <a id = "${item.id}" class="btn btn-mini btn-primary" href="Controller?spId=${item.id}&executionCommand=EDIT_ORDER" >
                                     <i class="icon-edit icon-white"></i>
                                     <fmt:message key="jsp.customer.specifications.button.edit" bundle="${msg}"/></a>
 
-                                <a class="btn btn-mini btn-danger" data-toggle="modal" href=""><i
+                                <a class="btn btn-mini btn-danger" href="Controller?spId=${item.id}&executionCommand=SHOW_CUSTOMER_JOBS" data-toggle="modal" href=""><i
                                         class="icon-remove icon-white"></i>
                                     <fmt:message key="jsp.customer.specifications.button.jobs.view" bundle="${msg}"/></a>
                             </td>
+
                         </tr>
                         </c:if>
                         </c:forEach>
-
                     </table>
                 </div>
             </div>

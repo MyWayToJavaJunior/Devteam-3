@@ -19,7 +19,7 @@
     <div class="row">
 
         <h2 class="sub-header">
-<fmt:message key="jsp.employee.current.body.header" bundle="${msg}">
+New projects
         </h2>
         <table class="table table-bordered table-striped">
 
@@ -49,7 +49,7 @@
                         <td><c:out value="${item.manager}"></c:out></td>
                         <td><c:out value="${item.status}"></c:out></td>
                         <td>
-                            <form class="form-signin" action="Controller" method="post">
+                            <form class="form-signin" action="Controller" method="get">
                                 <input type="hidden" name="executionCommand" value="TRANSFER_NEW_PROJECT" />
                                 <button class="btn btn-lg btn-success" type="submit" name="id_project" value="${item.id}">Confirm</button>
                         </form>
@@ -60,6 +60,5 @@
 
     </div>
     </div>
-
 
 

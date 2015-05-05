@@ -19,7 +19,7 @@
     <div class="row">
 
         <h2 class="sub-header">
-<fmt:message key="jsp.employee.current.body.header" bundle="${msg}">
+New projects
         </h2>
         <table class="table table-bordered table-striped">
 
@@ -60,6 +60,5 @@
 
     </div>
     </div>
-
 
 

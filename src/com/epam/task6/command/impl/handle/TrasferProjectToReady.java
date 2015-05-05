@@ -18,7 +18,7 @@ public class TrasferProjectToReady extends Command {
     private static final String PROJECT_ATTRIBUTE = "project";
     private static final String USER_ATTRIBUTE = "user";
 
-    private static final String REDERICT = "Controller?command=SHOW_PROJECTS";
+    private static final String REDERICT = "Controller?executionCommand=SHOW_READY_PROJECTS";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {

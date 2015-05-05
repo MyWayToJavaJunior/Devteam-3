@@ -45,10 +45,11 @@
                 <td><c:out value="${item.manager}"></c:out></td>
                 <td><c:out value="${item.status}"></c:out></td>
                 <td>
-                    <form class="form-signin" action="Controller" method="post">
+                    <form class="form-signin" action="Controller" method="get">
                         <input type="hidden" name="executionCommand" value="TRANSFER_CURRENT_PROJECT" />
-                        <button class="btn btn-lg btn-success" type="submit" name="id_project" value="${item.id}">Ready</button>
-                    </form>                </td>
+                        <button class="btn btn-lg btn-success" type="submit" name="id_project" value="${item.id}">Confirm</button>
+                    </form>
+                </td>
             </tr>
             </c:if>
             </c:forEach>

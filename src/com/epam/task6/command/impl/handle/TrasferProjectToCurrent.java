@@ -18,7 +18,7 @@ public class TrasferProjectToCurrent extends Command {
     private static final String PROJECT_ATTRIBUTE = "project";
     private static final String USER_ATTRIBUTE = "user";
 
-    private static final String REDERICT = "Controller?command=SHOW_PROJECTS";
+    private static final String REDERICT = "Controller?executionCommand=SHOW_CURRENT_PROJECTS";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
@@ -26,12 +26,7 @@ public class TrasferProjectToCurrent extends Command {
         User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
         String projectId = request.getParameter(RequestParameterName.ID_PROJECT);
         ProjectDAO projectDAO = new ProjectDAO();
-
-        //как передать
-
-        System.out.print("projectId   "+projectId);
         projectDAO.updateStatusById(Integer.parseInt(projectId),1);
-
         setForward(REDERICT);
     }
 }

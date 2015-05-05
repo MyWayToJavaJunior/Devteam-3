@@ -45,6 +45,16 @@ public class SpecificationDAO extends AbstractDAO {
     public static final String SQL_SET_SPECIFICATION_BYNAME =
             "SELECT * FROM specifications WHERE name = ?";
 
+    public static final String SQL_SET_SPECIFICATION_BY_ID =
+            "SELECT * FROM specifications WHERE id = ?";
+
+
+    public static final String SQL_UPDATE_SPECTIFICATION_BY_JOBS =
+            "UPDATE specifications SET jobs = ? WHERE id = ?";
+
+    public static final String SQL_UPDATE_SPECTIFICATION_BY_NAME =
+            "UPDATE specifications SET name = ? WHERE id = ?";
+
     public static final String SQL_INSERT_NEW_SPECIFICATION =
             "INSERT INTO specifications (uid, name, status) VALUES (?, ?, ?)";
 
@@ -52,7 +62,7 @@ public class SpecificationDAO extends AbstractDAO {
             "SELECT MAX(id) FROM specifications WHERE uid = ?";
 
     public static final String SQL_FIND_SPECIFICATIONS_BY_CUSTOMER_ID =
-            "SELECT * FROM specifications WHERE uid=? ORDER BY id DESC";
+            "UPDATE specifications SET name = ? WHERE id = ?";
 
     private static final String SQL_FIND_SPETIFICATION_BY_USER_ID =
             "SELECT * FROM specifications WHERE uid = ?";
@@ -152,6 +162,29 @@ public class SpecificationDAO extends AbstractDAO {
 
     }
 
+    public Spetification getSpetificationById(int id){
+        Spetification spetification = null;
+        connector = new DBConnector();
+        try {
+            preparedStatement = connector.getPreparedStatement(SQL_SET_SPECIFICATION_BY_ID);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                spetification = new Spetification(resultSet.getString("name"), resultSet.getInt("uid"), resultSet.getInt("jobs"),resultSet.getInt("status"));
+                spetification.setStatus(1);
+                spetification.setId(resultSet.getInt("id"));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }  finally {
+            connector.close();
+
+        }
+        System.out.println("OK for getSpetificationById");
+        return spetification;
+
+    }
 
 
 
@@ -266,6 +299,7 @@ public class SpecificationDAO extends AbstractDAO {
             for (; count < last_number + count_on_page && resultSet.next(); count++) {
                 spetification = new Spetification(resultSet.getInt("jobs"), resultSet.getInt("uid"), resultSet.getString("name"), resultSet.getInt("status"));
                 System.out.print(resultSet.getString("name"));
+                spetification.setId(resultSet.getInt("id"));
                 jobList.add(spetification);
             }
 
@@ -277,6 +311,44 @@ public class SpecificationDAO extends AbstractDAO {
         }
 
         return jobList;
+    }
+
+
+    public void updateSpetificationName(String name, int id){
+        connector = new DBConnector();
+        try {
+            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_SPECTIFICATION_BY_NAME);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+          //  throw new DAOException(ResourceManager.getProperty(ERROR_SET_JOB_COST) + cost, e);
+        } finally {
+            connector.close();
+        }
+        System.out.println("OK for update");
+
+      //  logger.info(ResourceManager.getProperty(INFO_SET_JOB_COST) + id);
+    }
+    public void updateSpetificationJobs (int jobs, int id){
+        connector = new DBConnector();
+        try {
+            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_SPECTIFICATION_BY_JOBS);
+            preparedStatement.setInt(1, jobs);
+            preparedStatement.setInt(2, id);
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //  throw new DAOException(ResourceManager.getProperty(ERROR_SET_JOB_COST) + cost, e);
+        } finally {
+            connector.close();
+        }
+        System.out.println("OK for update");
+
+        //  logger.info(ResourceManager.getProperty(INFO_SET_JOB_COST) + id);
     }
 
 
