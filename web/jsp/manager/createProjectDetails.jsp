@@ -16,27 +16,27 @@
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
         <form class="form-signin" action="Controller" method="get">
-            <input type="hidden" name="executionCommand" value="ASSIGN_PROJECT" />
+            <input type="hidden" name="executionCommand" value="CREATE_PROJECT" />
             <h3>Create Project Details</h3>
 
             <div class="form-group">
                 <label for="disabledInput">Spetification name</label>
-                <input type="text" id="disabledInput2" class="form-control"  placeholder="${sessionScope.spetification.name}" disabled>
+                <input type="text" id="disabledInput2" class="form-control"  value="${sessionScope.spetification.name}" disabled>
             </div>
 
             <div class="form-group">
                 <label for="disabledInput">User Id</label>
-                <input type="text" id="disabledInput" class="form-control"  placeholder="${sessionScope.spetification.user_id}" disabled>
+                <input type="text" id="disabledInput" class="form-control"  value="${sessionScope.spetification.user_id}" disabled>
             </div>
 
             <div class="form-group">
                 <label for="disabledInput">Jobs count</label>
-                <input type="text" id="disabledInput1" class="form-control"  placeholder="${sessionScope.spetification.jobs}" disabled>
+                <input type="text" id="disabledInput1" class="form-control"  value="${sessionScope.spetification.jobs}" disabled>
             </div>
 
             <div class="form-group">
                 <label for="disabledInput">Status id</label>
-                <input type="text" id="disabledInput3" class="form-control"  placeholder="${sessionScope.spetification.status}" disabled>
+                <input type="text" id="disabledInput3" class="form-control"  value="${sessionScope.spetification.status}" disabled>
             </div>
 
             <form class="form-signin" action="Controller" method="get">
@@ -46,27 +46,27 @@
                 <c:forEach var="item" items="${sessionScope.jobList}">
                 <div class="form-group">
                     <label for="disabledInput">Job name</label>
-                    <input type="text" id="disabledInput5" class="form-control"  placeholder="${item.name}" disabled>
+                    <input type="text" id="disabledInput5" class="form-control"  value="${item.name}" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="disabledInput">Qualification</label>
-                    <input type="text" id="disabledInput6" class="form-control"  placeholder="${item.qualification}" disabled>
+                    <input type="text" id="disabledInput6" class="form-control"  value="${item.qualification}" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="disabledInput">Cost</label>
-                    <input type="text" id="disabledInput17" class="form-control"  placeholder="${item.cost}" disabled>
+                    <input type="text" id="disabledInput17" class="form-control"  value="${item.cost}" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="disabledInput">Time</label>
-                    <input type="text" id="disabledInput38" class="form-control"  placeholder="${item.time}" disabled>
+                    <input type="text" id="disabledInput38" class="form-control"  value="${item.time}" disabled>
                 </div>
 
                     <div class="form-group">
                         <label for="disabledInput">Specialist count</label>
-                        <input type="text" id="disabledInput28" class="form-control"  placeholder="${item.specialist}" disabled>
+                        <input type="text" id="disabledInput28" class="form-control"  value="${item.specialist}" disabled>
                     </div>
 
                     </c:forEach>
@@ -74,6 +74,7 @@
 
             <p></p>
             <input class="btn" type="submit" value="Create Order" /><br />
+            <a class="btn" href="Controller?executionCommand=CREATE_PROJECT">CREATE</a>
             <a class="btn" href="Controller?executionCommand=SHOW_PROJECT_FORM">Назад</a>
         </form>
     </div>

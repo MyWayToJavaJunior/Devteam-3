@@ -44,6 +44,9 @@ public class UserDAO extends AbstractDAO {
     private static final String SQL_CHANGE_UI_LANGUAGE =
             "UPDATE users SET `language` = ? WHERE id = ?";
 
+    private static final UserDAO instance = new UserDAO();
+    public static UserDAO getInstance() { return  instance; }
+
     public UserDAO() {
         super();
     }

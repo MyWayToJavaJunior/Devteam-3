@@ -3,7 +3,7 @@ package com.epam.task6.command.impl.handle;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.impl.ProjectDAO;
+import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +26,9 @@ public class CreateProject extends Command {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
 
-        ProjectDAO projectDAO = new ProjectDAO();
-        //projectDAO.saveProject();
+        Spetification spetification = (Spetification) session.getAttribute("spec");
+        System.out.println("CreateProject   is "+spetification.getName());
+
+        setForward("Controller?executionCommand=SHOW_PROJECTS");
     }
 }

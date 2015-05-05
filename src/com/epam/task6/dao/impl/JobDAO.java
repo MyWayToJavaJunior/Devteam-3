@@ -77,6 +77,8 @@ public class JobDAO extends AbstractDAO {
             "SELECT SUM(cost) FROM jobs WHERE sid = ?";
 
 
+    private static final JobDAO instance = new JobDAO();
+    public static JobDAO getInstance() { return  instance; }
 
     public int getNumberOfJobsInSpecification(int id) throws DAOException {
         connector = new DBConnector();

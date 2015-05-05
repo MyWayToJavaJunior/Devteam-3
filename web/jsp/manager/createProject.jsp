@@ -21,10 +21,10 @@
             <h3>Create Project</h3>
 
             <div class="control-group">
-                <label class="control-label" for="sp_name">Name of project:</label>
+                <label class="control-label" for="spetification_name">Name of project:</label>
 
                 <div class="controls">
-                    <select id="sp_name" name="sp_name" class="form-control">
+                    <select id="spetification_name" name="spetification_name" class="form-control">
                         <c:forEach var="spetifications" items="${spetifications}" varStatus="status">
                             <option><c:out value="${spetifications}"/></option>
                         </c:forEach>

@@ -21,7 +21,7 @@ public final class CommandHelper {
         Command command = null;
         CommandName commandType = getCommandEnum(request.getParameter(EXECUTION_COMMAND));
 
-        System.out.println(" EX   COMMAND  " + request.getParameter(EXECUTION_COMMAND));
+        //System.out.println(" EX   COMMAND  " + request.getParameter(EXECUTION_COMMAND));
        if (AccessChecker.checkPermission(request, commandType))
         {
             System.out.println("111111");
@@ -37,19 +37,19 @@ public final class CommandHelper {
                     command = new ShowManagerPage();
                     break;
                 case SHOW_SPECIFICATIONS:
-                    command = new ShowSpecifications();
+                    command = new ViewSpecifications();
                     break;
                 case SHOW_ORDER_FORM:
-                    command = new ShowOrderForm();
+                    command = new ViewOrderForm();
                     break;
                 case DEV:
                     command = new ShowDeveloperPage();
                     break;
                 case SHOW_PROJECTS:
-                    command = new ShowProjects();
+                    command = new ViewProjects();
                     break;
                 case SHOW_BILLS:
-                    command = new ShowBills();
+                    command = new ViewBills();
                     break;
                 case CREATE_ORDER_PART_ONE:
                     command = new CreateOrderPartOne();
@@ -58,13 +58,13 @@ public final class CommandHelper {
                     command = new CreateOrderPartTwo();
                     break;
                 case SHOW_NEW_PROJECTS:
-                    command = new ShowNewProject();
+                    command = new ViewNewProject();
                     break;
                 case SHOW_CURRENT_PROJECTS:
-                    command = new ShowCurrentProject();
+                    command = new ViewCurrentProject();
                     break;
                 case SHOW_READY_PROJECTS:
-                    command = new ShowReadyProject();
+                    command = new ViewReadyProject();
                     break;
                 case TRANSFER_NEW_PROJECT:
                     command = new TrasferProjectToCurrent();
@@ -73,22 +73,22 @@ public final class CommandHelper {
                     command = new TrasferProjectToReady();
                     break;
                 case SHOW_ASSIGN_PROJECT_FORM:
-                    command = new ShowAssignProjectForm();
+                    command = new ViewAssignProjectForm();
                     break;
                 case ASSIGN_PROJECT:
                     command = new AssignProject();
                     break;
                 case SHOW_PROJECT_FORM:
-                    command = new ShowProjectForm();
+                    command = new ViewProjectForm();
                     break;
                 case SHOW_PROJECT_FORM_DETAILS:
-                    command = new ShowProjectFormDetails();
+                    command = new ViewProjectFormDetails();
                     break;
                 case CHANGE_LANGUAGE:
                     command = new ChangeLanguage();
                     break;
                 case EDIT_ORDER:
-                    command = new ShowEditOrder();
+                    command = new ViewEditOrder();
                     break;
                 case EDIT_ORDER_DETAIL:
                     command = new EditOrder();
@@ -96,11 +96,25 @@ public final class CommandHelper {
                 case SHOW_CUSTOMER_JOBS:
                     command = new ViewJobsBySpetification();
                     break;
-
+                case VIEW_EDIT_PROJECT:
+                    command = new ViewEditProject();
+                    break;
+                case DELETE_PROJECT:
+                    command = new DeleteProject();
+                    break;
+                case EDIT_PRIJECT:
+                    command = new EditProject();
+                    break;
+                case VIEW_WAITING_ORDER:
+                    command = new ViewWaitingOrder();
+                    break;
+                case CREATE_PROJECT:
+                    command = new CreateProject();
+                    break;
            }
         }
         else {
-           System.out.print("else11111");
+          // System.out.print("else11111");
            command = new Login();
 
        }

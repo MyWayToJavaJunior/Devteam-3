@@ -36,7 +36,7 @@ public class CreateOrderPartTwo extends Command {
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
 
         String jobName = request.getParameter(RequestParameterName.NAME_JOB);
-       String qualification = request.getParameter(RequestParameterName.QUALIFICATION_JOB);
+        String qualification = request.getParameter(RequestParameterName.QUALIFICATION_JOB);
         String jobTime = request.getParameter(RequestParameterName.JOB_TIME);
 
         /*
@@ -46,7 +46,7 @@ public class CreateOrderPartTwo extends Command {
         */
 
         int countSp = spetification.getJobs();
-        JobDAO jobDAO = new JobDAO();
+        JobDAO jobDAO = JobDAO.getInstance();
        // for (int i=0; i<jobName.size(); ++i) {
            jobDAO.saveJob(spetification.getId(), jobName, qualification,jobTime);
             System.out.println("111111   "+spetification.getId()+" "+jobName+" "+qualification+" "+jobTime);

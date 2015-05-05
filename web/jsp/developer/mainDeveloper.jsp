@@ -10,11 +10,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
+
 <!-- Header -->
 <%@ include file="../common/header.jspf"%>
 
+<div class="container">
+<div align="center">
+<p> <%@ include file="../common/language.jsp"%> </p>
+<fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en' : localeValue}"/>
+<fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
+<c:set var="page" value="Controller?executionCommand=DEV" scope="session" />
+</div>
+</div>
+
 <div align="center">
 <div class="container">
+
     <form class="form-signin" action="Controller" method="post">
         <input type="hidden" name="executionCommand" value="SHOW_NEW_PROJECTS" />
 <p> <input type="submit" class="btn btn-lg btn-default" value="<fmt:message key="jsp.employee.current.body.header" bundle="${msg}"/>"></p>

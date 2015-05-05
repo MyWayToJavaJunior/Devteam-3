@@ -40,7 +40,7 @@ public class CreateOrderPartOne extends Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         String name = request.getParameter(RequestParameterName.NAME_ORDER);
         String jobs = request.getParameter(RequestParameterName.JOB_NUMBER);
-        SpecificationDAO specificationDAO = new SpecificationDAO();
+        SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATTRIBUTE_USER);

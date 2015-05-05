@@ -17,7 +17,7 @@ public class ViewJobsBySpetification extends Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
         int spetificationId = Integer.parseInt(request.getParameter("spId"));
-        JobDAO jobDAO = new JobDAO();
+        JobDAO jobDAO = JobDAO.getInstance();
         List<Job> jobArrayList = jobDAO.getSpecificationJobs(spetificationId);
         if (jobArrayList != null){
             request.setAttribute("jobs", jobArrayList);

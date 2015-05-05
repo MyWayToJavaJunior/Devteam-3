@@ -25,7 +25,7 @@ public class TrasferProjectToCurrent extends Command {
 
         User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
         String projectId = request.getParameter(RequestParameterName.ID_PROJECT);
-        ProjectDAO projectDAO = new ProjectDAO();
+        ProjectDAO projectDAO = ProjectDAO.getInstance();
         projectDAO.updateStatusById(Integer.parseInt(projectId),1);
         setForward(REDERICT);
     }

@@ -77,6 +77,10 @@ public class TimeDAO extends AbstractDAO {
      * @param time Time
      * @throws DAOException
      */
+    private static final TimeDAO instance = new TimeDAO();
+    public static TimeDAO getInstance() { return  instance; }
+
+
     public void saveElapsedTime(int uid, int jid, int time) throws DAOException {
         connector = new DBConnector();
         try {

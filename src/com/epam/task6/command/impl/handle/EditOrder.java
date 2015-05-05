@@ -25,7 +25,7 @@ public class EditOrder extends Command {
         System.out.println(request.getParameter("id"));
         System.out.println(request.getParameter("job"));
         System.out.println(request.getParameter("order"));
-        SpecificationDAO specificationDAO = new SpecificationDAO();
+        SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
 
         specificationDAO.updateSpetificationName(spetification.getName(),spetification.getId());
         specificationDAO.updateSpetificationJobs(spetification.getJobs(), spetification.getId());

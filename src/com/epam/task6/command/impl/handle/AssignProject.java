@@ -45,8 +45,8 @@ public class AssignProject extends Command {
         String nameProject = request.getParameter(ATTRIBUTE_PROJECT_NAME);
         String devName = request.getParameter(ATTRIBUTE_DEVELOPER_NAME);
 
-        UserDAO userDAO = new UserDAO();
-        ProjectDAO projectDAO = new ProjectDAO();
+        UserDAO userDAO = UserDAO.getInstance();
+        ProjectDAO projectDAO = ProjectDAO.getInstance();
         int projectId = projectDAO.returnIdByName(nameProject);
         int devId = userDAO.returnIdByName(devName);
 

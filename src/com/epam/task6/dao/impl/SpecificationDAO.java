@@ -67,6 +67,9 @@ public class SpecificationDAO extends AbstractDAO {
     private static final String SQL_FIND_SPETIFICATION_BY_USER_ID =
             "SELECT * FROM specifications WHERE uid = ?";
 
+    private static final String SQL_FIND_SPETIFICATION_BY_STATUS =
+            "SELECT * FROM specifications WHERE status = ?";
+
     public static final String SQL_INSERT_NEW_SPECIFICATION_BY_NAME =
             "INSERT INTO specifications (name, jobs, uid, status) VALUES (?, ?, ?, ?)";
     public static final String SQL_INSERT_NEW_SPECIFICATION_BY_UID =
@@ -75,6 +78,10 @@ public class SpecificationDAO extends AbstractDAO {
 
     private static final String SQL_FIND_MANAGER_SPECIFICATION =
             "SELECT name FROM specifications WHERE status = 0";
+
+    private static final SpecificationDAO instance = new SpecificationDAO();
+    public static SpecificationDAO getInstance() { return  instance; }
+
 
     public List<String> getManagerSpetification() throws DAOException {
 
@@ -140,6 +147,7 @@ public class SpecificationDAO extends AbstractDAO {
 
     public Spetification getSpetificationByName(String name){
         Spetification spetification = null;
+        System.out.println("getSpetificationByName   "+name);
         connector = new DBConnector();
         try {
             preparedStatement = connector.getPreparedStatement(SQL_SET_SPECIFICATION_BYNAME);
@@ -305,6 +313,37 @@ public class SpecificationDAO extends AbstractDAO {
 
         } catch (SQLException e) {
               throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER), e);
+        } finally {
+            connector.close();
+
+        }
+
+        return jobList;
+    }
+
+
+    public List<Spetification> getUserSpecificationsByStatus(int status) throws DAOException {
+        Spetification spetification = null;
+        List<Spetification> jobList = new ArrayList<Spetification>();
+        connector = new DBConnector();
+
+        try {
+            preparedStatement = connector.getPreparedStatement(SQL_FIND_SPETIFICATION_BY_STATUS);
+            preparedStatement.setInt(1, 1);
+            resultSet = preparedStatement.executeQuery();
+            int count = 0;
+            while (count < last_number && resultSet.next()) {
+                count++;
+            }
+            for (; count < last_number + count_on_page && resultSet.next(); count++) {
+                spetification = new Spetification(resultSet.getInt("jobs"), resultSet.getInt("uid"), resultSet.getString("name"), resultSet.getInt("status"));
+                System.out.print(resultSet.getString("name"));
+                spetification.setId(resultSet.getInt("id"));
+                jobList.add(spetification);
+            }
+
+        } catch (SQLException e) {
+            throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER), e);
         } finally {
             connector.close();
 

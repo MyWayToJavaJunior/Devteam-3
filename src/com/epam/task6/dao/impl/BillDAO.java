@@ -58,6 +58,10 @@ public class BillDAO extends AbstractDAO {
     public static final String SQL_CREATE_BILL_FOR_CUSTOMER =
             "INSERT INTO bills (name, cid, pid, mid, sum) VALUES (?, ?, ?, ?, ?)";
 
+
+    private static final BillDAO instance = new BillDAO();
+    public static BillDAO getInstance() { return  instance; }
+
     /**
      * Returns list of all bills for customer
      *

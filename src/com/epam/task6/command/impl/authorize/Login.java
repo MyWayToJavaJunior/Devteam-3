@@ -42,7 +42,7 @@ public class Login extends Command {
         String email = request.getParameter(RequestParameterName.EMAIL);
         String password = request.getParameter(RequestParameterName.PASSWORD);
 
-        UserDAO loginDAO = new UserDAO();
+        UserDAO loginDAO = UserDAO.getInstance();
         User user = loginDAO.checkUserMailAndPassword(email, password);
 
         if (null != user) {

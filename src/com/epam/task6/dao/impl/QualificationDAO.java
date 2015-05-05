@@ -41,6 +41,11 @@ public class QualificationDAO extends AbstractDAO {
      * @return List of qualifications
      * @throws DAOException object if execution of query is failed
      */
+
+    private static final QualificationDAO instance = new QualificationDAO();
+    public static QualificationDAO getInstance() { return  instance; }
+
+
     public List<String> getAllQualifications () throws DAOException {
         connector = new DBConnector();
         List<String> list = new ArrayList<String>();

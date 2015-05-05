@@ -12,25 +12,34 @@
 <!-- Header -->
 <%@ include file="../common/header.jspf"%>
 
-<a class="btn btn-primary btn-large" href="Controller?executionCommand=DEV"> Go to Home page </a>
+<div class="container">
+    <div align="center">
+        <p> <%@ include file="../common/language.jsp"%> </p>
+        <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en' : localeValue}"/>
+        <fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
+        <c:set var="page" value="Controller?executionCommand=SHOW_READY_PROJECTS" scope="session" />
+    </div>
+</div>
+
+<a class="btn btn-primary btn-large" href="Controller?executionCommand=DEV"> <fmt:message key="jsp.employee.button.home" bundle="${msg}"/> </a>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="row">
 
         <h2 class="sub-header">
-            Header
+            <fmt:message key="jsp.employee.current.body.header" bundle="${msg}"/>
         </h2>
         <table class="table table-bordered table-striped">
 
             <thead>
             <tr>
-                <td><b>name</b></td>
-                <td><b>spetification_id</b></td>
-                <td><b>time</b></td>
-                <td><b>employees</b></td>
-                <td><b>manager</b></td>
-                <td><b>status</b></td>
-                <th>Action</th>
+                <td><b><fmt:message key="jsp.employee.complete.table.name" bundle="${msg}"/></b></td>
+                <td><b><fmt:message key="jsp.employee.complete.table.specifications" bundle="${msg}"/></b></td>
+                <td><b><fmt:message key="jsp.employee.complete.table.time" bundle="${msg}"/></b></td>
+                <td><b><fmt:message key="jsp.employee.complete.table.developer" bundle="${msg}"/></b></td>
+                <td><b><fmt:message key="jsp.employee.complete.table.manager" bundle="${msg}"/></b></td>
+                <td><b><fmt:message key="jsp.employee.complete.table.status" bundle="${msg}"/></b></td>
+                <th><b><fmt:message key="jsp.employee.complete.table.action" bundle="${msg}"/></b></th>
             </tr>
             </thead>
 
