@@ -56,7 +56,7 @@ public class ViewManagerProject extends Command {
             }
         }
         catch (DAOException e){
-            logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
+            logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
         setForward(MANAGER_PAGE);

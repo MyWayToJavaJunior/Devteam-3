@@ -36,7 +36,7 @@ public class ViewCurrentProject extends Command {
      * @throws com.epam.task6.dao.DAOException
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         ProjectDAO projectDAO = ProjectDAO.getInstance();

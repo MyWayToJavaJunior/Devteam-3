@@ -2,7 +2,7 @@ package com.epam.task6.dao.impl;
 
 import com.epam.task6.dao.AbstractDAO;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.connector.DBConnector;
+import com.epam.task6.dao.pool.ConnectionPool;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
@@ -28,6 +28,7 @@ public class TimeDAO extends AbstractDAO {
     private static final String ERROR_GET_ELAPSED_BY_MAIL = "logger.db.error.get.elapsed.by.mail";
     private static final String INFO_GET_ELAPSED_BY_MAIL = "logger.db.info.get.elapsed.by.mail";
 
+    private static final String ERROR_CLOSE = "111";
     /**
      * This query sets time which employee elapsed on job. <br />
      * Requires to set job id, user id and time.
@@ -82,9 +83,10 @@ public class TimeDAO extends AbstractDAO {
 
 
     public void saveElapsedTime(int uid, int jid, int time) throws DAOException {
-        connector = new DBConnector();
+       // connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_SET_ELAPSED_TIME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_SET_ELAPSED_TIME);
             preparedStatement.setInt(1, jid);
             preparedStatement.setInt(2, uid);
             preparedStatement.setInt(3, time);
@@ -92,7 +94,11 @@ public class TimeDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_ELAPSED) + uid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_ELAPSED) + uid);
     }
@@ -106,9 +112,9 @@ public class TimeDAO extends AbstractDAO {
      * @throws DAOException
      */
     public void updateElapsedTime(int uid, int jid, int time) throws DAOException {
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_EXISTING_ELAPSED_TIME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_UPDATE_EXISTING_ELAPSED_TIME);
             preparedStatement.setInt(1, time);
             preparedStatement.setInt(2, uid);
             preparedStatement.setInt(3, jid);
@@ -116,7 +122,11 @@ public class TimeDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_UPDATE_ELAPSED) + uid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_UPDATE_ELAPSED) + uid);
     }
@@ -131,9 +141,9 @@ public class TimeDAO extends AbstractDAO {
      */
     public int getExistingElapsedTime(int uid, int jid) throws DAOException {
         int time = 0;
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_EXISTING_ELAPSED_TIME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_EXISTING_ELAPSED_TIME);
             preparedStatement.setInt(1, jid);
             preparedStatement.setInt(2, uid);
             resultSet = preparedStatement.executeQuery();
@@ -143,7 +153,11 @@ public class TimeDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_ELAPSED) + uid + "," + jid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_ELAPSED) + uid + "," + jid);
         return time;
@@ -159,9 +173,9 @@ public class TimeDAO extends AbstractDAO {
      */
     public boolean isExistElapsedTime(int uid, int jid) throws DAOException  {
         boolean exist = false;
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_IS_EXIST_ELAPSED_TIME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_IS_EXIST_ELAPSED_TIME);
             preparedStatement.setInt(1, jid);
             preparedStatement.setInt(2, uid);
             resultSet = preparedStatement.executeQuery();
@@ -171,7 +185,11 @@ public class TimeDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_IS_EXIST_ELAPSED) + uid + "," + jid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         return exist;
     }
@@ -185,9 +203,9 @@ public class TimeDAO extends AbstractDAO {
      */
     public int getTotalElapsedTimeOnProject(int sid) throws DAOException {
         int time = 0;
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_ELAPSED_TIME_ON_PROJECT_BY_SPECIFICATION);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_ELAPSED_TIME_ON_PROJECT_BY_SPECIFICATION);
             preparedStatement.setInt(1, sid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -198,36 +216,16 @@ public class TimeDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_TOTAL_ELAPSED) + sid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_TOTAL_ELAPSED) + sid);
         return time;
     }
 
-    /**
-     * Returns how mush certain employee elapsed on job.
-     *
-     * @param mail User mail
-     * @return Time elapsed on project
-     * @throws DAOException object if execution of query is failed
-     */
-    public int getEmployeeElapsedTimeOnProject(String mail) throws DAOException {
-        int time = 0;
-        connector = new DBConnector();
-        try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_EMPLOYEE_ELAPSED_TIME_ON_PROJECT_BY_MAIL);
-            preparedStatement.setBytes(1, mail.getBytes());
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                time = resultSet.getInt(1);
-            }
-        } catch (SQLException e) {
-            throw new DAOException(ResourceManager.getProperty(ERROR_GET_ELAPSED_BY_MAIL) + mail, e);
-        } finally {
-            connector.close();
-        }
-        logger.info(ResourceManager.getProperty(INFO_GET_ELAPSED_BY_MAIL) + mail);
-        return time;
-    }
+
 
 }

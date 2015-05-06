@@ -27,6 +27,8 @@ public class SignInFormTest {
 
     @Test
     public void testForm() {
+        //UserDAO loginDAO = UserDAO.getInstance();
+        //User user = loginDAO.checkUserMailAndPassword("olga@com.com", "olga");
         form.setLogin("alibaba@mail.ru");
         form.setPassword("1");
         Set<ConstraintViolation<SignInForm>> violations = validator.validate(form);

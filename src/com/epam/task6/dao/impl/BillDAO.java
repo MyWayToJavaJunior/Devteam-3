@@ -2,7 +2,7 @@ package com.epam.task6.dao.impl;
 
 import com.epam.task6.dao.AbstractDAO;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.connector.DBConnector;
+import com.epam.task6.dao.pool.ConnectionPool;
 import com.epam.task6.domain.project.Bill;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
@@ -30,6 +30,7 @@ public class BillDAO extends AbstractDAO {
     private static final String ERROR_GET_LAST_BILL_NAME = "logger.db.error.get.last.bill.name";
     private static final String ERROR_CREATE_BILL = "logger.db.error.create.bill";
     private static final String INFO_CREATE_BILL = "logger.db.info.create.bill";
+    private static final String ERROR_CLOSE = "111";
 
     /**
      * Keeps query which return customer bills order by newest. <br />
@@ -70,11 +71,11 @@ public class BillDAO extends AbstractDAO {
      * @throws DAOException object if execution of query is failed
      */
     public List<Bill> getCustomerBills(int id) throws DAOException {
-        connector = new DBConnector();
         Bill bill = null;
         List<Bill> billList = new ArrayList<Bill>();
         try {
-            preparedStatement= connector.getPreparedStatement(SQL_FIND_BILLS_FOR_CUSTOMER);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement= connector.prepareStatement(SQL_FIND_BILLS_FOR_CUSTOMER);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             int count = 0;
@@ -89,7 +90,11 @@ public class BillDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_CUSTOMER_BILLS), e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_CUSTOMER_BILLS) + id);
         return billList;
@@ -103,10 +108,11 @@ public class BillDAO extends AbstractDAO {
      * @throws DAOException object if execution of query is failed
      */
     public List<Bill> getManagerBills(int id) throws DAOException {
-        connector = new DBConnector();
+       // connector = new DBConnector();
         List<Bill> bills = new ArrayList<Bill>();
         try {
-            PreparedStatement statement = connector.getPreparedStatement(SQL_FIND_ALL_BILLS_CREATED_BY);
+            connector = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = connector.prepareStatement(SQL_FIND_ALL_BILLS_CREATED_BY);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -122,7 +128,11 @@ public class BillDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_MANAGER_BILLS), e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_MANAGER_BILLS) + id);
         return bills;
@@ -136,9 +146,10 @@ public class BillDAO extends AbstractDAO {
      */
     public String getLastBillName() throws DAOException {
         String name = "";
-        connector = new DBConnector();
+       // connector = new DBConnector();
         try {
-            statement = connector.getStatement();
+            connector = ConnectionPool.getInstance().getConnection();
+            statement = connector.createStatement();
             resultSet = statement.executeQuery(SQL_FIND_LAST_BILL);
             if (resultSet.next()) {
                 if (resultSet.getObject(1) != null) {
@@ -148,7 +159,11 @@ public class BillDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_LAST_BILL_NAME), e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         return name;
     }
@@ -164,9 +179,9 @@ public class BillDAO extends AbstractDAO {
      * @throws DAOException object if execution of query is failed
      */
     public void createBill(String name, int cid, int pid, int mid, int sum) throws DAOException {
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_CREATE_BILL_FOR_CUSTOMER);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_CREATE_BILL_FOR_CUSTOMER);
             preparedStatement.setBytes(1, name.getBytes());
             preparedStatement.setInt(2, cid);
             preparedStatement.setInt(3, pid);
@@ -176,7 +191,11 @@ public class BillDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_CREATE_BILL), e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_CREATE_BILL) + name);
     }

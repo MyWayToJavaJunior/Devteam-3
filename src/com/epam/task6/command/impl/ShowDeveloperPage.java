@@ -3,7 +3,6 @@ package com.epam.task6.command.impl;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.controller.JspPageName;
-import com.epam.task6.dao.DAOException;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,15 +26,14 @@ public class ShowDeveloperPage extends Command {
 
 
     /**
-     * This method executes the command.
+     *  This method executes the command.
      *
-     * @param request HttpServletRequest object
-     * @return page or forward command.
-     * @throws CommandException  If command can't be executed.
-     * @throws DAOException
+     *  @param request HttpServletRequest object
+     *  @param response HttpServletResponse object
+     *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         setForward(JspPageName.DEVELOPER_PAGE);
     }
 

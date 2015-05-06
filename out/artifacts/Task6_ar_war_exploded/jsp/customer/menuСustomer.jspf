@@ -1,0 +1,17 @@
+
+
+<fmt:setLocale value="${localeValue}"/>
+<fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="Controller?executionCommand=SHOW_SPECIFICATIONS"><fmt:message key="jsp.customer.menu.specifications.add" bundle="${msg}"/></a></li>
+                <li><a href="Controller?executionCommand=SHOW_ORDER_FORM"><fmt:message key="jsp.customer.add.specifications" bundle="${msg}"/></a></li>
+                <li><a href="Controller?executionCommand=SHOW_SPECIFICATIONS"><fmt:message key="jsp.customer.specifications" bundle="${msg}"/></a></li>
+                <li><a href="Controller?executionCommand=SHOW_BILLS"><fmt:message key="jsp.customer.bills" bundle="${msg}"/></a></li>
+           <li>${localeValue}</li>
+            </ul>
+        </div>
+    </div>
+</div>

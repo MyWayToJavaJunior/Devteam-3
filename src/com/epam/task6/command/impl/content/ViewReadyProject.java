@@ -48,7 +48,7 @@ public class ViewReadyProject extends Command {
             }
         }
         catch (DAOException e){
-            logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
+            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
         setForward(NEW_PROJECT_PAGE);

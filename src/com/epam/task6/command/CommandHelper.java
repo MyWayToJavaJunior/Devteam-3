@@ -1,40 +1,47 @@
 package com.epam.task6.command;
 
 
+import com.epam.task6.command.impl.NoFound;
 import com.epam.task6.command.impl.ShowDeveloperPage;
-import com.epam.task6.command.impl.ShowManagerPage;
 import com.epam.task6.command.impl.authorize.Login;
 import com.epam.task6.command.impl.authorize.Logout;
 import com.epam.task6.command.impl.content.*;
 import com.epam.task6.command.impl.handle.*;
 import com.epam.task6.command.impl.language.ChangeLanguage;
+import com.epam.task6.resource.ResourceManager;
 import com.epam.task6.service.checker.AccessChecker;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public final class CommandHelper {
+    /* Initializing command activity */
+    private static Logger logger = Logger.getLogger("activity");
 
+    /* Keeps name of parameter which contains command name */
     private static final String EXECUTION_COMMAND = "executionCommand";
 
+    /* Keeps illegal command message */
+    private static final String LOGGER_ILLEGAL_COMMAND = "logger.error.illegal.command";
 
+
+    /**
+     * This method defines command
+     *
+     * @param request HttpServletRequest object
+     * @return Command object
+     */
     public static Command getCommand(HttpServletRequest request){
         Command command = null;
         CommandName commandType = getCommandEnum(request.getParameter(EXECUTION_COMMAND));
-
-        //System.out.println(" EX   COMMAND  " + request.getParameter(EXECUTION_COMMAND));
        if (AccessChecker.checkPermission(request, commandType))
         {
-            System.out.println("111111");
             switch (commandType){
                 case LOGIN:
-                    System.out.println("222222");
                     command = new Login();
                     break;
                 case LOGOUT:
                     command = new Logout();
-                    break;
-                case SHOW_MENU_COMMAND:
-                    command = new ShowManagerPage();
                     break;
                 case SHOW_SPECIFICATIONS:
                     command = new ViewSpecifications();
@@ -109,12 +116,14 @@ public final class CommandHelper {
                     command = new ViewWaitingOrder();
                     break;
                 case CREATE_PROJECT:
-                    command = new CreateProject();
+                    command = new ViewProject();
+                    break;
+                default:
+                    command = new NoFound();
                     break;
            }
         }
         else {
-          // System.out.print("else11111");
            command = new Login();
 
        }
@@ -132,8 +141,7 @@ public final class CommandHelper {
         try {
             commandEnum = CommandName.valueOf(executionCommand);
         } catch (IllegalArgumentException exception) {
-            exception.printStackTrace();
-
+            logger.error(ResourceManager.getProperty(LOGGER_ILLEGAL_COMMAND), exception);
             commandEnum = CommandName.NO_SUCH_COMMAND;
         }
         return commandEnum;

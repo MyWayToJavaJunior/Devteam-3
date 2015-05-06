@@ -37,14 +37,13 @@ public class ViewNewProject extends Command {
      * @throws DAOException
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
 
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         ProjectDAO projectDAO = ProjectDAO.getInstance();
         try {
             List<Project> projectList = projectDAO.getProjectsByStatusAndDivId(0, user.getId());
             if (null != projectList) {
-                System.out.print("hhhhhhhhhh         "+projectList.get(0).getName());
                 request.setAttribute(RequestParameterName.SIMPLE_INFO, projectList);
             }
         }

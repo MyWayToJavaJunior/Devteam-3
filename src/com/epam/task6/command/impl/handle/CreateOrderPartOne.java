@@ -3,9 +3,11 @@ package com.epam.task6.command.impl.handle;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.controller.RequestParameterName;
+import com.epam.task6.dao.DAOException;
 import com.epam.task6.dao.impl.SpecificationDAO;
 import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
+import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpSession;
  */
 public class CreateOrderPartOne extends Command {
     /** Initialize activity logger */
-    private static Logger logger = Logger.getLogger("activity");
+    private static Logger logger = Logger.getLogger(CreateOrderPartOne.class);
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
@@ -29,12 +31,11 @@ public class CreateOrderPartOne extends Command {
     private static final String CREATE_JOBS = "jsp/customer/addjobs.jsp";
 
     /**
-     * This method executes the command.
+     *  This method executes the command.
      *
-     * @param request HttpServletRequest object
-     * @return page or forward command.
-     * @throws CommandException  If command can't be executed.
-     * @throws com.epam.task6.dao.DAOException
+     *  @param request HttpServletRequest object
+     *  @param response HttpServletResponse object
+     *  @throws CommandException  If command can't be executed.
      */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -44,11 +45,15 @@ public class CreateOrderPartOne extends Command {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
-
-        specificationDAO.addSpetificationByNameAndJob(name, Integer.parseInt(jobs), user.getId(), 0);
-        session.setAttribute(ATTRIBUTE_JOB, Integer.parseInt(jobs));
-        Spetification spetification = specificationDAO.setSpetificationByNameAndJob(name, Integer.parseInt(jobs));
-        session.setAttribute(ATTRIBUTE_SPETIFICATION, spetification);
+        try {
+            specificationDAO.addSpetificationByNameAndJob(name, Integer.parseInt(jobs), user.getId(), 0);
+            session.setAttribute(ATTRIBUTE_JOB, Integer.parseInt(jobs));
+            Spetification spetification = specificationDAO.setSpetificationByNameAndJob(name, Integer.parseInt(jobs));
+            session.setAttribute(ATTRIBUTE_SPETIFICATION, spetification);
+        }
+        catch (DAOException e){
+            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
+        }
         setForward(CREATE_JOBS);
     }
 

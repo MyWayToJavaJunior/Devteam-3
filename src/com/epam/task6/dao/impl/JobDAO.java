@@ -2,7 +2,7 @@ package com.epam.task6.dao.impl;
 
 import com.epam.task6.dao.AbstractDAO;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.connector.DBConnector;
+import com.epam.task6.dao.pool.ConnectionPool;
 import com.epam.task6.domain.project.Job;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
@@ -31,6 +31,7 @@ public class JobDAO extends AbstractDAO {
     private static final String ERROR_JOB_WHERE_BUSY = "logger.db.error.get.job.where.emp.busy";
     private static final String INFO_JOB_WHERE_BUSY = "logger.db.info.get.job.where.emp.busy";
     private static final String ERROR_COST_OF_SPEC_JOBS = "logger.db.error.get.total.spec.cost";
+    private static final String ERROR_CLOSE = "111";
 
     /**
      * Keeps query which return the number of jobs in specification. <br />
@@ -81,10 +82,10 @@ public class JobDAO extends AbstractDAO {
     public static JobDAO getInstance() { return  instance; }
 
     public int getNumberOfJobsInSpecification(int id) throws DAOException {
-        connector = new DBConnector();
         int jobs = 0;
         try {
-            PreparedStatement statement = connector.getPreparedStatement(SQL_GET_COUNT_JOBS_BY_SPECIFICATION_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement = connector.prepareStatement(SQL_GET_COUNT_JOBS_BY_SPECIFICATION_ID);
             statement.setInt(1, id);
             resultSet = statement.executeQuery();
             if (resultSet.next()) {
@@ -93,7 +94,11 @@ public class JobDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_NUMBER_OF_JOBS) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_NUMBER_OF_JOBS) + id);
         return jobs;
@@ -108,9 +113,9 @@ public class JobDAO extends AbstractDAO {
      */
     public List<Job> getSpecificationJobs(int sid) throws DAOException {
         List<Job> jobs = new ArrayList<Job>();
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_JOBS_BY_SPECIFICATION_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_JOBS_BY_SPECIFICATION_ID);
             preparedStatement.setInt(1, sid);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -126,7 +131,11 @@ public class JobDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SPECIFICATION_JOBS) + sid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SPECIFICATION_JOBS) + sid);
         return jobs;
@@ -143,18 +152,12 @@ public class JobDAO extends AbstractDAO {
      * @throws com.epam.task6.dao.DAOException object if execution of query is failed
      */
     public void saveJob(int sid, String name, String qualification, String time) throws DAOException {
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_INSERT_JOB);
-
-            //spetification_id
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_INSERT_JOB);
             preparedStatement.setInt(1, sid);
-            //name
-           // preparedStatement.setBytes(2, (new String(name.getBytes("UTF-8"), "CP1251")).getBytes());
-
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, qualification);
-
             preparedStatement.setString(4, time);
             preparedStatement.execute();
         } catch (SQLException  e) {
@@ -162,7 +165,11 @@ public class JobDAO extends AbstractDAO {
         }
 
         finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_JOB) + name);
     }
@@ -175,16 +182,21 @@ public class JobDAO extends AbstractDAO {
      * @throws com.epam.task6.dao.DAOException object if execution of query is failed
      */
     public void setJobCost(int id, int cost) throws DAOException {
-        connector = new DBConnector();
+        //connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_SET_JOB_COST);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_SET_JOB_COST);
             preparedStatement.setInt(1, cost);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SET_JOB_COST) + cost, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SET_JOB_COST) + id);
     }
@@ -198,9 +210,10 @@ public class JobDAO extends AbstractDAO {
      */
     public int getTotalCostOfSpecJobs(int sid) throws DAOException {
         int cost = 0;
-        connector = new DBConnector();
+        //connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_TOTAL_COST_OF_SPEC_JOBS);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_TOTAL_COST_OF_SPEC_JOBS);
             preparedStatement.setInt(1, sid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -209,7 +222,11 @@ public class JobDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_COST_OF_SPEC_JOBS), e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         return cost;
     }
@@ -224,9 +241,10 @@ public class JobDAO extends AbstractDAO {
      */
     public Job getJobWhereEmployeeBusy (int id) throws DAOException {
         Job job = new Job();
-        connector = new DBConnector();
+       // connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_JOB_WHERE_BUSY_EMPLOYEE);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_JOB_WHERE_BUSY_EMPLOYEE);
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -238,7 +256,11 @@ public class JobDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_JOB_WHERE_BUSY) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_JOB_WHERE_BUSY) + id);
         return job;

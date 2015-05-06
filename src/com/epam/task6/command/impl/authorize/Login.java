@@ -3,12 +3,13 @@ package com.epam.task6.command.impl.authorize;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.controller.JspPageName;
-import com.epam.task6.controller.RequestParameterName;
-import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.impl.UserDAO;
 import com.epam.task6.domain.user.Role;
 import com.epam.task6.domain.user.User;
+import com.epam.task6.domain.verifable.SignInForm;
+import com.epam.task6.domain.verifable.builder.VerifiableBuilder;
 import com.epam.task6.resource.ResourceManager;
+import com.epam.task6.service.ServiceException;
+import com.epam.task6.service.builder.UserBuilder;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,13 +45,15 @@ public class Login extends Command {
     private static final String ATTRIBUTE_INCORRECT_MSG = "errorLoginPasswordMessage";
 
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-        String email = request.getParameter(RequestParameterName.EMAIL);
-        String password = request.getParameter(RequestParameterName.PASSWORD);
-
-        UserDAO loginDAO = UserDAO.getInstance();
-        User user = loginDAO.checkUserMailAndPassword(email, password);
+        SignInForm form = VerifiableBuilder.buildSignInForm(request);
+        User user = null;
+        try {
+            user = UserBuilder.buildUser(form);
+        } catch (ServiceException e) {
+            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
+        }
 
         if (null != user) {
             HttpSession session = request.getSession();

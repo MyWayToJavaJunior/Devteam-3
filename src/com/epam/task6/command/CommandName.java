@@ -2,6 +2,12 @@ package com.epam.task6.command;
 
 import com.epam.task6.domain.user.Role;
 
+/**
+ * Enum of user commands.
+ *
+ * Created by olga on 30.04.15.
+ */
+
 public enum CommandName {
     NO_SUCH_COMMAND(Role.ALL),
     LOGIN(Role.ALL),
@@ -37,20 +43,10 @@ public enum CommandName {
 
     private Role type;
 
-    /**
-     * Constructor
-     *
-     * @param type User Role object
-     */
     private CommandName(Role type) {
         this.type = type;
     }
 
-    /**
-     * Returns user role object
-     *
-     * @return User role object
-     */
     public Role getUserType() {
         return type;
     }

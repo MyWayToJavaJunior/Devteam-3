@@ -2,7 +2,7 @@ package com.epam.task6.dao.impl;
 
 import com.epam.task6.dao.AbstractDAO;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.connector.DBConnector;
+import com.epam.task6.dao.pool.ConnectionPool;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
@@ -22,6 +22,7 @@ public class QualificationDAO extends AbstractDAO {
     private static final String INFO_GET_QUALIFICATIONS = "logger.db.info.get.qualifications";
     private static final String ERROR_DEFINE_QUALIFICATION = "logger.db.error.define.qualification";
     private static final String INFO_DEFINE_QUALIFICATION = "logger.db.info.define.qualification";
+    private static final String ERROR_CLOSE = "111";
 
     /**
      * This query searches unique list of qualifications.
@@ -47,10 +48,10 @@ public class QualificationDAO extends AbstractDAO {
 
 
     public List<String> getAllQualifications () throws DAOException {
-        connector = new DBConnector();
         List<String> list = new ArrayList<String>();
         try {
-            statement = connector.getStatement();
+            connector = ConnectionPool.getInstance().getConnection();
+            statement = connector.createStatement();
             resultSet = statement.executeQuery(SQL_FIND_ALL_QUALIFICATIONS);
             while (resultSet.next()) {
                 list.add(resultSet.getString(1));
@@ -58,7 +59,11 @@ public class QualificationDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_QUALIFICATIONS), e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_QUALIFICATIONS));
         return list;
@@ -72,10 +77,10 @@ public class QualificationDAO extends AbstractDAO {
      * @throws DAOException object if execution of query is failed
      */
     public int defineQualification(String name) throws DAOException {
-        connector = new DBConnector();
         int result = 0;
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_GET_QUALIFICATION_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_GET_QUALIFICATION_ID);
             preparedStatement.setBytes(1, name.getBytes());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -84,7 +89,11 @@ public class QualificationDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_DEFINE_QUALIFICATION) + name, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_DEFINE_QUALIFICATION) + name);
         return result;

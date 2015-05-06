@@ -1,7 +1,6 @@
 package com.epam.task6.dao;
 
-import com.epam.task6.dao.connector.DBConnector;
-
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -11,7 +10,7 @@ import java.sql.Statement;
  */
 public abstract class AbstractDAO {
     protected ResultSet resultSet;
-    protected DBConnector connector;
+    protected Connection connector;
     protected PreparedStatement preparedStatement;
     protected Statement statement;
 }

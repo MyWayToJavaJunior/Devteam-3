@@ -5,6 +5,8 @@ import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
 import com.epam.task6.dao.impl.ProjectDAO;
 import com.epam.task6.dao.impl.UserDAO;
+import com.epam.task6.domain.user.User;
+import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,32 +31,37 @@ public class AssignProject extends Command {
 
     private static final String ATTRIBUTE_PROJECT_NAME = "project_name";
     private static final String ATTRIBUTE_DEVELOPER_NAME = "dev_name";
+    private static final String USER_ATTRIBUTE = "user";
+    private static final String ASSIG_REDERICT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
     //project_name
     //dev_name
 
     /**
-     * This method executes the command.
+     *  This method executes the command.
      *
-     * @param request HttpServletRequest object
-     * @return page or forward command.
-     * @throws CommandException  If command can't be executed.
-     * @throws DAOException
+     *  @param request HttpServletRequest object
+     *  @param response HttpServletResponse object
+     *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
+        User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         String nameProject = request.getParameter(ATTRIBUTE_PROJECT_NAME);
         String devName = request.getParameter(ATTRIBUTE_DEVELOPER_NAME);
-
+        try {
         UserDAO userDAO = UserDAO.getInstance();
         ProjectDAO projectDAO = ProjectDAO.getInstance();
-        int projectId = projectDAO.returnIdByName(nameProject);
-        int devId = userDAO.returnIdByName(devName);
 
-        projectDAO.updateDevId(projectId, devId);
-        projectDAO.updateStatusById(projectId, 1);
+            int projectId = projectDAO.returnIdByName(nameProject);
+            int devId = userDAO.getUserByName(devName);
 
-        System.out.println("assign project  =  " + nameProject +"   "+projectId+ "  "+devId+"  " + devName);
-        setForward("Controller?executionCommand=SHOW_PROJECTS");
+            projectDAO.updateDevId(projectId, devId);
+            projectDAO.updateStatusById(projectId, 1);
+        }
+        catch (DAOException e){
+            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
+        }
+        setForward(ASSIG_REDERICT_PAGE);
     }
 }
 

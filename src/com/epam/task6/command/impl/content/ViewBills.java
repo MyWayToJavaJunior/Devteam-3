@@ -36,7 +36,7 @@ public class ViewBills extends Command {
      * @throws DAOException
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         BillDAO dao = BillDAO.getInstance();
         try {

@@ -33,14 +33,18 @@ public class ViewProjectForm extends Command {
 
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         ProjectDAO projectDAO = ProjectDAO.getInstance();
         SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
         UserDAO userDAO = new UserDAO();
+        try {
         List<String> projectList = projectDAO.getManagerProjectsWithStarus(user.getId(), 0);
         List<String> spetificationList = specificationDAO.getManagerSpetification();
         request.setAttribute(PARAM_PROJECT, spetificationList);
+        } catch (DAOException e) {
+            e.printStackTrace();
+        }
 
         setForward(FORWARD_ORDER_FORM);
 

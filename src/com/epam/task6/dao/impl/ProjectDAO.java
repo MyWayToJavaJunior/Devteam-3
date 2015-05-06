@@ -2,7 +2,7 @@ package com.epam.task6.dao.impl;
 
 import com.epam.task6.dao.AbstractDAO;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.connector.DBConnector;
+import com.epam.task6.dao.pool.ConnectionPool;
 import com.epam.task6.domain.project.Project;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
@@ -33,6 +33,7 @@ public class ProjectDAO extends AbstractDAO {
     private static final String INFO_GET_PROJECT_BY_ID = "logger.db.info.get.project.by.id";
     private static final String ERROR_GET_LAST_PROJECT_ID = "logger.db.error.get.last.project.id";
     private static final String INFO_GET_LAST_PROJECT_ID = "logger.db.info.get.last.project.id";
+    private static final String ERROR_CLOSE = "111";
 
     /**
      * Keeps query which return project created by certain manager. <br />
@@ -95,71 +96,92 @@ public class ProjectDAO extends AbstractDAO {
     public static ProjectDAO getInstance() { return  instance; }
 
 
-    public void deleteProject (int id) throws DAOException{
-        connector = new DBConnector();
+    public void deleteProject (int id) throws DAOException {
+        //connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_DELETE_PROJECT);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_DELETE_PROJECT);
             preparedStatement.setInt(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_PROJECT) + id);
     }
 
-    public void updateProjectByName(int id, String name) throws DAOException{
-        connector = new DBConnector();
+    public void updateProjectByName(int id, String name) throws DAOException {
+       // connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_NAME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_UPDATE_NAME);
             preparedStatement.setString(1, name);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_PROJECT) + id);
     }
 
-    public void updateProjectByTime(int id, String time) throws DAOException{
-        connector = new DBConnector();
+    public void updateProjectByTime(int id, String time) throws DAOException {
+        //onnector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_TIME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_UPDATE_TIME);
             preparedStatement.setString(1, time);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_PROJECT) + id);
     }
 
 
-    public void updateStatusById(int id, int status) throws DAOException{
-        connector = new DBConnector();
+    public void updateStatusById(int id, int status) throws DAOException {
+       // connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_STATUS);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_UPDATE_STATUS);
             preparedStatement.setInt(1, status);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_PROJECT) + id);
     }
 
     public int returnIdByName (String name) throws DAOException {
-        connector = new DBConnector();
+      //  connector = new DBConnector();
         int id = 0;
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_ID_BY_NAME);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_ID_BY_NAME);
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
@@ -169,7 +191,11 @@ public class ProjectDAO extends AbstractDAO {
         catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         return id;
     }
@@ -182,10 +208,11 @@ public class ProjectDAO extends AbstractDAO {
      */
     public List<Project> getManagerProjects(int uid) throws DAOException {
         ArrayList<Project> list = new ArrayList<Project>();
-        connector = new DBConnector();
+       // connector = new DBConnector();
         Project project = null;
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_MANAGER_PROJECTS);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_MANAGER_PROJECTS);
             preparedStatement.setInt(1, uid);
             resultSet = preparedStatement.executeQuery();
 
@@ -201,7 +228,11 @@ public class ProjectDAO extends AbstractDAO {
         } catch (SQLException exception) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_MANAGER_PROJECTS) + uid, exception);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_MANAGER_PROJECTS) + uid);
         return list;
@@ -220,9 +251,10 @@ public class ProjectDAO extends AbstractDAO {
 
         ArrayList<String> list = new ArrayList<String>();
 
-            connector = new DBConnector();
+           // connector = new DBConnector();
             try {
-                preparedStatement = connector.getPreparedStatement(SQL_FIND_MANAGER_PROJECTS_WITH_STATUS);
+                connector = ConnectionPool.getInstance().getConnection();
+                preparedStatement = connector.prepareStatement(SQL_FIND_MANAGER_PROJECTS_WITH_STATUS);
                 preparedStatement.setInt(1, uid);
                 preparedStatement.setInt(2, status);
                 resultSet = preparedStatement.executeQuery();
@@ -236,7 +268,11 @@ public class ProjectDAO extends AbstractDAO {
             } catch (SQLException exception) {
                 throw new DAOException(ResourceManager.getProperty(ERROR_GET_MANAGER_PROJECTS) + uid, exception);
             } finally {
-                connector.close();
+                try {
+                    connector.close();
+                } catch (SQLException e) {
+                    logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+                }
             }
             logger.info(ResourceManager.getProperty(INFO_GET_MANAGER_PROJECTS) + uid);
 
@@ -245,26 +281,32 @@ public class ProjectDAO extends AbstractDAO {
 
     public void updateDevId(int id, int devId) throws DAOException {
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_UPDATE_DEV_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_UPDATE_DEV_ID);
             preparedStatement.setInt(1, devId);
             preparedStatement.setInt(2, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+           e.printStackTrace();
          //  throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + id, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_PROJECT) + id);
     }
 
-    public List<Project> getProjectsByStatusAndDivId(int status, int devid) throws DAOException{
+    public List<Project> getProjectsByStatusAndDivId(int status, int devid) throws DAOException {
 
         ArrayList<Project> list = new ArrayList<Project>();
-        connector = new DBConnector();
+        //connector = new DBConnector();
         Project project = null;
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_PROJECTS_BY_STATUS_AND_DIVID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_PROJECTS_BY_STATUS_AND_DIVID);
             preparedStatement.setInt(1, status);
             preparedStatement.setInt(2, devid);
 
@@ -283,7 +325,11 @@ public class ProjectDAO extends AbstractDAO {
         } catch (SQLException exception) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_MANAGER_PROJECTS) + devid, exception);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_MANAGER_PROJECTS) + devid);
         return list;
@@ -298,9 +344,9 @@ public class ProjectDAO extends AbstractDAO {
      * @throws DAOException object if execution of query is failed
      */
     public int saveProject(String name, int mid, int sid) throws DAOException {
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_SAVE_PROJECT);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_SAVE_PROJECT);
             preparedStatement.setBytes(1, new String(name.getBytes("ISO-8859-1"), "CP1251").getBytes());
             preparedStatement.setInt(2, mid);
             preparedStatement.setInt(3, sid);
@@ -308,7 +354,11 @@ public class ProjectDAO extends AbstractDAO {
         } catch (SQLException | UnsupportedEncodingException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_SAVE_PROJECT) + name, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_SAVE_PROJECT) + sid);
         return getLastProjectId(mid);
@@ -323,9 +373,10 @@ public class ProjectDAO extends AbstractDAO {
      */
     public Project getProject(int sid) throws DAOException {
         Project project = new Project();
-        connector = new DBConnector();
+        //connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_PROJECT_BY_SPECIFICATION_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_PROJECT_BY_SPECIFICATION_ID);
             preparedStatement.setInt(1, sid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -337,7 +388,11 @@ public class ProjectDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_PROJECT) + sid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_PROJECT) + sid);
         return project;
@@ -352,9 +407,10 @@ public class ProjectDAO extends AbstractDAO {
      */
     public Project getProjectById(int pid) throws DAOException {
         Project project = new Project();
-        connector = new DBConnector();
+       // connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_PROJECT_BY_PROJECT_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_PROJECT_BY_PROJECT_ID);
             preparedStatement.setInt(1, pid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -367,7 +423,11 @@ public class ProjectDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_PROJECT_BY_ID) + pid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_PROJECT_BY_ID) + pid);
         return project;
@@ -382,9 +442,9 @@ public class ProjectDAO extends AbstractDAO {
      */
     public int getLastProjectId(int mid) throws DAOException {
         int id = 0;
-        connector = new DBConnector();
         try {
-            preparedStatement = connector.getPreparedStatement(SQL_FIND_LAST_MANAGER_PROJECT_ID);
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_LAST_MANAGER_PROJECT_ID);
             preparedStatement.setInt(1, mid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -393,7 +453,11 @@ public class ProjectDAO extends AbstractDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_LAST_PROJECT_ID) + mid, e);
         } finally {
-            connector.close();
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_LAST_PROJECT_ID) + mid);
         return id;

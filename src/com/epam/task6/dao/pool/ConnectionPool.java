@@ -78,10 +78,9 @@ public class ConnectionPool {
             }
 
            // logger.error(ResourceManager.getProperty(LOGGER_TAKE_CONNECTION_ERROR), exception);
-        } catch (SQLException exception) {
-            exception.printStackTrace();
-           // logger.error(ResourceManager.getProperty(LOGGER_GET_CONNECTION_ERROR), exception);
-        } catch (InterruptedException e) {
+        }  catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
