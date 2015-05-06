@@ -46,7 +46,7 @@ public final class CommandHelper {
                     command = new ShowDeveloperPage();
                     break;
                 case SHOW_PROJECTS:
-                    command = new ViewProjects();
+                    command = new ViewManagerProject();
                     break;
                 case SHOW_BILLS:
                     command = new ViewBills();

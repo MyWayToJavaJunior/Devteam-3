@@ -12,36 +12,45 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * Created by olga on 29.04.15.
+ * Implementing command pattern.
+ *
+ * Created by olga on 28.04.15.
  */
-public class ViewCurrentProject extends Command {
-    private static Logger logger = Logger.getLogger(ViewCurrentProject.class);
+public class ViewManagerProject extends Command {
+
+    private static Logger logger = Logger.getLogger(ViewManagerProject.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.project";
 
+
+    private static final String PROJECT_ATTRIBUTE = "project";
     private static final String USER_ATTRIBUTE = "user";
-    private static final String NEW_PROJECT_PAGE = "jsp/developer/newProjects.jsp";
+    private static final String MANAGER_PAGE = "jsp/manager/projects.jsp";
 
 
     /**
      * This method executes the command.
      *
      * @param request HttpServletRequest object
-     * @return page or forward command.
-     * @throws com.epam.task6.command.CommandException  If command can't be executed.
-     * @throws com.epam.task6.dao.DAOException
+     * @param response HttpServletResponse object
+     *
+     * @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         ProjectDAO projectDAO = ProjectDAO.getInstance();
         try {
-            List<Project> projectList = projectDAO.getProjectsByStatusAndDivId(1 ,user.getId());
+            HttpSession httpSession = request.getSession();
+            List<Project> projectList = projectDAO.getManagerProjects(user.getId());
+            httpSession.setAttribute(PROJECT_ATTRIBUTE, projectList);
+
             if (null != projectList) {
                 request.setAttribute(RequestParameterName.SIMPLE_INFO, projectList);
             }
@@ -50,7 +59,6 @@ public class ViewCurrentProject extends Command {
             logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
-        setForward(NEW_PROJECT_PAGE);
-
+        setForward(MANAGER_PAGE);
     }
 }

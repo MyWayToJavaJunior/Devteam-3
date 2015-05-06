@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Implementing command pattern.
+ *
  * Created by olga on 22.04.15.
  */
 public class Logout extends Command{
@@ -37,8 +39,8 @@ public class Logout extends Command{
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         HttpSession session=request.getSession();
         session.invalidate();
-       logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
-       setForward(LOGIN_PAGE);
+        logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
+        setForward(LOGIN_PAGE);
     }
 
 }

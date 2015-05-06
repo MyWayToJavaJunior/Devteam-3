@@ -15,13 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * Implementing command pattern.
+ *
  * Created by olga on 29.04.15.
  */
 public class ViewReadyProject extends Command {
-    private static Logger logger = Logger.getLogger("activity");
+    private static Logger logger = Logger.getLogger(ViewReadyProject.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.show.order";
+    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.project";
 
 
     private static final String USER_ATTRIBUTE = "user";
@@ -29,16 +31,14 @@ public class ViewReadyProject extends Command {
 
 
     /**
-     * This method executes the command.
+     *  This method executes the command.
      *
-     * @param request HttpServletRequest object
-     * @return page or forward command.
-     * @throws com.epam.task6.command.CommandException  If command can't be executed.
-     * @throws com.epam.task6.dao.DAOException
+     *  @param request HttpServletRequest object
+     *  @param response HttpServletResponse object
+     *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
-
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         ProjectDAO projectDAO = ProjectDAO.getInstance();
         try {

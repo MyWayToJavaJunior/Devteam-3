@@ -8,14 +8,22 @@ import com.epam.task6.dao.DAOException;
 import com.epam.task6.dao.impl.UserDAO;
 import com.epam.task6.domain.user.Role;
 import com.epam.task6.domain.user.User;
+import com.epam.task6.resource.ResourceManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Implementing command pattern.
+ *
+ * Created by olga on 22.04.15.
+ */
+
 public class Login extends Command {
 
-//      private static Logger logger = Logger.getLogger(Login.class);
+     private static Logger logger = Logger.getLogger(Login.class);
 
     /* Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.login";
@@ -28,7 +36,6 @@ public class Login extends Command {
     /* Attributes and parameters */
     private static final String PARAM_USER = "user";
     private static final String PARAM_ROLE = "role";
-    private static final String PARAM_FORWARD_LOGIN = "login.jsp";
     private static final String PARAM_REDIRECT_COMMAND = "Controller?executionCommand=SHOW_SPECIFICATIONS";
     private static final String PARAM_REDIRECT_COMMAND1 = "Controller?executionCommand=SHOW_PROJECTS";
     private static final String PARAM_REDIRECT_COMMAND2 = "Controller?executionCommand=DEV";
@@ -50,6 +57,7 @@ public class Login extends Command {
             session.setAttribute(PARAM_USER, user);
             session.setAttribute(PARAM_ROLE, user.getRole());
             setSessionLifecycle(request, user);
+            logger.info(ResourceManager.getProperty(MSG_SIGNED_IN) + user.getId());
             if (user.getRole() == Role.CUSTOMER) {
                 setForward(PARAM_REDIRECT_COMMAND);
             } else if (user.getRole() == Role.MANAGER) {
@@ -58,12 +66,11 @@ public class Login extends Command {
                 setForward(PARAM_REDIRECT_COMMAND2);
             }
         } else {
+            logger.info(ResourceManager.getProperty(MSG_SIGN_FAILED) + user.getPassword() + "," + user.getEmail());
             request.setAttribute(ATTRIBUTE_INCORRECT_MSG, PARAM_INCORRECT_MSG);
             setForward(JspPageName.ERROR_PAGE);
         }
     }
-
-
 
     private void setSessionLifecycle(HttpServletRequest request, User user) {
         HttpSession session = request.getSession();

@@ -8,22 +8,25 @@ import com.epam.task6.dao.impl.SpecificationDAO;
 import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * Implementing command pattern.
+ *
  * Created by olga on 19.04.15.
  */
 public class ViewSpecifications extends Command {
 
 
-  //  private static Logger logger = Logger.getLogger("activity");
+    private static Logger logger = Logger.getLogger(ViewSpecifications.class);
 
     /* Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.specifications";
-    private static final String MSG_REQUESTED = "logger.activity.requested.specifications";
+    private static final String MSG_REQUESTED = "logger.error.execute.view.project";
 
     /* Attributes and parameters */
     private static final String LIST_OF_SPECIFICATIONS = "specificationsList";
@@ -36,12 +39,11 @@ public class ViewSpecifications extends Command {
      * This method executes the command.
      *
      * @param request HttpServletRequest object
-     * @return page or forward command.
-     * @throws CommandException  If command can't be executed.
-     * @throws DAOException
+     * @param response HttpServletResponse object
+     * @throws CommandException if an error has occurred on runtime
      */
    @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
        User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
        SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
@@ -54,7 +56,7 @@ public class ViewSpecifications extends Command {
        catch (DAOException e){
            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
        }
-   //    logger.info(ResourceManager.getProperty(MSG_REQUESTED) + user.getId());
+       logger.info(ResourceManager.getProperty(MSG_REQUESTED) + user.getId());
        setForward(SPECIFICATIONS_PAGE);
    }
 }

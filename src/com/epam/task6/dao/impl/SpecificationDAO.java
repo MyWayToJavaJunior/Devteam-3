@@ -170,7 +170,7 @@ public class SpecificationDAO extends AbstractDAO {
 
     }
 
-    public Spetification getSpetificationById(int id){
+    public Spetification getSpetificationById(int id) throws DAOException{
         Spetification spetification = null;
         connector = new DBConnector();
         try {

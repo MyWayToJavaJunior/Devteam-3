@@ -20,11 +20,12 @@ public class ViewEditOrder extends Command {
     private static Logger logger = Logger.getLogger(ViewEditOrder.class);
 
     private static final String MSG_SHOW_BILLS = "logger.activity.customer.show.bills";
-    private static final String MSG_ERROR_LOADING_BILLS = "logger.error.show.bills";
+    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.edit.order";
 
     private static final String CUSTOMER_EDIT_SPETIFICATION_PAGE = "jsp/customer/editSpetification.jsp";
 
-    private static final String LIST_OF_BILLS = "billsList";
+    private static final String LIST_OF_SPETIFICATION = "editSp";
+    private static final String SPETIFICATION = "spId";
     private static final String USER_ATTRIBUTE = "user";
 
     /**
@@ -36,19 +37,22 @@ public class ViewEditOrder extends Command {
      * @throws DAOException
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException, DAOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
-        int spetificationId = Integer.parseInt(request.getParameter("spId"));
+        int spetificationId = Integer.parseInt(request.getParameter(SPETIFICATION));
 
-        SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
-        Spetification spetification = specificationDAO.getSpetificationById(spetificationId);
+        try {
+            SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
+            Spetification spetification = specificationDAO.getSpetificationById(spetificationId);
 
-        if (spetification!=null) {
-            request.setAttribute("editSp", spetification);
-            System.out.println(spetificationId);
+            if (spetification != null) {
+                request.setAttribute(LIST_OF_SPETIFICATION, spetification);
+            }
         }
-
+        catch (DAOException e){
+            logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
+        }
         logger.info(ResourceManager.getProperty(MSG_SHOW_BILLS) + user.getId());
         setForward(CUSTOMER_EDIT_SPETIFICATION_PAGE);
     }

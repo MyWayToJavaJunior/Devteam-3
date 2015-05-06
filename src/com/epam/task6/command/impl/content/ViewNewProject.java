@@ -18,7 +18,7 @@ import java.util.List;
  * Created by olga on 29.04.15.
  */
 public class ViewNewProject extends Command {
-    private static Logger logger = Logger.getLogger("activity");
+    private static Logger logger = Logger.getLogger(ViewNewProject.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.show.order";

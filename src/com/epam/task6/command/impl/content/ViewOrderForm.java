@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class ViewOrderForm extends Command {
     /* Initializes activity logger */
-    private static Logger logger = Logger.getLogger("activity");
+    private static Logger logger = Logger.getLogger(ViewOrderForm.class);
 
     /* Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.order.form";
