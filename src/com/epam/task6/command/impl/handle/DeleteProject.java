@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
  */
 public class DeleteProject extends Command {
 
+    private static DeleteProject instance = new DeleteProject();
+
     /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(DeleteProject.class);
 
@@ -27,6 +29,12 @@ public class DeleteProject extends Command {
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_PROJECT = "projectId";
     private static final String DELETE_PROJECT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
+
+
+    public static DeleteProject getInstance() {
+        return instance;
+    }
+
     /**
      *  This method executes the command.
      *

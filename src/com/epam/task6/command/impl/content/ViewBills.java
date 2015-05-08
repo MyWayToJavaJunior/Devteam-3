@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by olga on 28.04.15.
  */
 public class ViewBills extends Command {
+    private static ViewBills instance = new ViewBills();
     private static Logger logger = Logger.getLogger(ViewBills.class);
 
     private static final String MSG_SHOW_BILLS = "logger.activity.customer.show.bills";
@@ -26,6 +27,11 @@ public class ViewBills extends Command {
 
     private static final String LIST_OF_BILLS = "billsList";
     private static final String USER_ATTRIBUTE = "user";
+
+
+    public static ViewBills getInstance() {
+        return instance;
+    }
 
     /**
      * This method executes the command.

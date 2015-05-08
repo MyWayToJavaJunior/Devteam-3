@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by olga on 05.05.15.
  */
 public class ViewEditProject extends Command {
+    private static ViewEditProject instance = new ViewEditProject();
     private static Logger logger = Logger.getLogger(ViewEditProject.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.edit.project";
@@ -24,6 +25,10 @@ public class ViewEditProject extends Command {
     private static final String CUSTOMER_EDIT_PROJECT = "jsp/manager/editProject.jsp";
 
     private static final String USER_ATTRIBUTE = "user";
+
+    public static ViewEditProject getInstance() {
+        return instance;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

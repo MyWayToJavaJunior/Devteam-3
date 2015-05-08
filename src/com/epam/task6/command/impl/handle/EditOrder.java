@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
  */
 public class EditOrder extends Command {
 
+    private static EditOrder instance = new EditOrder();
     /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(DeleteProject.class);
 
@@ -30,6 +31,11 @@ public class EditOrder extends Command {
     private static final String ATTRIBUTE_SP_JOBS= "job";
     private static final String ATTRIBUTE_SP_ID = "id";
     private static final String EDIT_ORDER_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
+
+    public static EditOrder getInstance() {
+        return instance;
+    }
+
     /**
      *  This method executes the command.
      *

@@ -323,7 +323,7 @@ public class SpecificationDAO extends AbstractDAO {
         try {
             connector = ConnectionPool.getInstance().getConnection();
             preparedStatement = connector.prepareStatement(SQL_FIND_SPETIFICATION_BY_USER_ID);
-            preparedStatement.setInt(1, 1);
+            preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             int count = 0;
             while (count < last_number && resultSet.next()) {

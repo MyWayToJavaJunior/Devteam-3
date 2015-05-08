@@ -18,6 +18,7 @@ import java.util.List;
  */
 public class ViewProjectForm extends Command {
 
+    private static ViewProjectForm instance = new ViewProjectForm();
     private static Logger logger = Logger.getLogger("activity");
 
     /* Attributes and parameters */
@@ -29,8 +30,9 @@ public class ViewProjectForm extends Command {
 
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
 
-
-
+    public static ViewProjectForm getInstance() {
+        return instance;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

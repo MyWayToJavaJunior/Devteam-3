@@ -13,10 +13,15 @@ import javax.servlet.http.HttpSession;
  * Created by olga on 01.05.15.
  */
 public class ViewProject extends Command {
+    private static ViewProject instance = new ViewProject();
 
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_SHOW_PROJECT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
     private static final String ATTRIBUTE_SPETIFICATION = "spec";
+
+    public static ViewProject getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

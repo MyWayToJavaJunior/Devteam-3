@@ -21,7 +21,7 @@ import java.util.List;
  * Created by olga on 28.04.15.
  */
 public class ViewManagerProject extends Command {
-
+    private static ViewManagerProject instance = new ViewManagerProject();
     private static Logger logger = Logger.getLogger(ViewManagerProject.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
@@ -32,6 +32,9 @@ public class ViewManagerProject extends Command {
     private static final String USER_ATTRIBUTE = "user";
     private static final String MANAGER_PAGE = "jsp/manager/projects.jsp";
 
+    public static ViewManagerProject getInstance() {
+        return instance;
+    }
 
     /**
      * This method executes the command.

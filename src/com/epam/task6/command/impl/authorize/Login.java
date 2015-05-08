@@ -15,6 +15,8 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Implementing command pattern.
@@ -24,7 +26,9 @@ import javax.servlet.http.HttpSession;
 
 public class Login extends Command {
 
-     private static Logger logger = Logger.getLogger(Login.class);
+    private static Login instance = new Login();
+    private static Lock lock = new ReentrantLock();
+    private static Logger logger = Logger.getLogger(Login.class);
 
     /* Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.login";
@@ -44,6 +48,9 @@ public class Login extends Command {
     private static final String PARAM_INCORRECT_MSG = "Incorrect login or password";
     private static final String ATTRIBUTE_INCORRECT_MSG = "errorLoginPasswordMessage";
 
+    public static Login getInstance(){
+        return instance;
+    }
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 

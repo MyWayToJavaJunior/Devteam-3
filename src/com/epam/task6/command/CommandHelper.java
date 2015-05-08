@@ -38,93 +38,96 @@ public final class CommandHelper {
         {
             switch (commandType){
                 case LOGIN:
-                    command = new Login();
+                    command = Login.getInstance();
                     break;
                 case LOGOUT:
-                    command = new Logout();
+                    command = Logout.getInstance();
                     break;
                 case SHOW_SPECIFICATIONS:
-                    command = new ViewSpecifications();
+                    command = ViewSpecifications.getInstance();
                     break;
                 case SHOW_ORDER_FORM:
-                    command = new ViewOrderForm();
+                    command = ViewOrderForm.getInstance();
                     break;
                 case DEV:
-                    command = new ShowDeveloperPage();
+                    command = ShowDeveloperPage.getInstance();
                     break;
                 case SHOW_PROJECTS:
-                    command = new ViewManagerProject();
+                    command = ViewManagerProject.getInstance();
                     break;
                 case SHOW_BILLS:
-                    command = new ViewBills();
+                    command = ViewBills.getInstance();
                     break;
                 case CREATE_ORDER_PART_ONE:
-                    command = new CreateOrderPartOne();
+                    command = CreateOrderPartOne.getInstance();
                     break;
                 case  CREATE_ORDER_PART_TWO:
-                    command = new CreateOrderPartTwo();
+                    command = CreateOrderPartTwo.getInstance();
                     break;
                 case SHOW_NEW_PROJECTS:
-                    command = new ViewNewProject();
+                    command = ViewNewProject.getInstance();
                     break;
                 case SHOW_CURRENT_PROJECTS:
-                    command = new ViewCurrentProject();
+                    command = ViewCurrentProject.getInstance();
                     break;
                 case SHOW_READY_PROJECTS:
-                    command = new ViewReadyProject();
+                    command = ViewReadyProject.getInstance();
                     break;
                 case TRANSFER_NEW_PROJECT:
-                    command = new TrasferProjectToCurrent();
+                    command = TrasferProjectToCurrent.getInstance();
                     break;
                 case TRANSFER_CURRENT_PROJECT:
-                    command = new TrasferProjectToReady();
+                    command = TrasferProjectToReady.getInstance();
                     break;
                 case SHOW_ASSIGN_PROJECT_FORM:
-                    command = new ViewAssignProjectForm();
+                    command = ViewAssignProjectForm.getInstance();
                     break;
                 case ASSIGN_PROJECT:
-                    command = new AssignProject();
+                    command = AssignProject.getInstance();
                     break;
                 case SHOW_PROJECT_FORM:
-                    command = new ViewProjectForm();
+                    command = ViewProjectForm.getInstance();
                     break;
                 case SHOW_PROJECT_FORM_DETAILS:
-                    command = new ViewProjectFormDetails();
+                    command = ViewProjectFormDetails.getInstance();
                     break;
                 case CHANGE_LANGUAGE:
-                    command = new ChangeLanguage();
+                    command = ChangeLanguage.getInstance();
                     break;
                 case EDIT_ORDER:
-                    command = new ViewEditOrder();
+                    command = ViewEditOrder.getInstance();
                     break;
                 case EDIT_ORDER_DETAIL:
-                    command = new EditOrder();
+                    command = EditOrder.getInstance();
                     break;
                 case SHOW_CUSTOMER_JOBS:
-                    command = new ViewJobsBySpetification();
+                    command = ViewJobsBySpetification.getInstance();
                     break;
                 case VIEW_EDIT_PROJECT:
-                    command = new ViewEditProject();
+                    command = ViewEditProject.getInstance();
                     break;
                 case DELETE_PROJECT:
-                    command = new DeleteProject();
+                    command = DeleteProject.getInstance();
                     break;
                 case EDIT_PRIJECT:
-                    command = new EditProject();
+                    command = EditProject.getInstance();
                     break;
                 case VIEW_WAITING_ORDER:
-                    command = new ViewWaitingOrder();
+                    command = ViewWaitingOrder.getInstance();
                     break;
                 case CREATE_PROJECT:
-                    command = new ViewProject();
+                    command = ViewProject.getInstance();
+                    break;
+                case VIEW_USER:
+                    command = ViewUser.getInstance();
                     break;
                 default:
-                    command = new NoFound();
+                    command = NoFound.getInstance();
                     break;
            }
         }
         else {
-           command = new Login();
+           command = Login.getInstance();
 
        }
         return command;

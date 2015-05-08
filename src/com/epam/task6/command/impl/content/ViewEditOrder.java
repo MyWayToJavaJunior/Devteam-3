@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by olga on 29.04.15.
  */
 public class ViewEditOrder extends Command {
-
+    private static ViewEditProject instance = new ViewEditProject();
     private static Logger logger = Logger.getLogger(ViewEditOrder.class);
 
     private static final String MSG_SHOW_BILLS = "logger.activity.customer.show.bills";
@@ -27,6 +27,10 @@ public class ViewEditOrder extends Command {
     private static final String LIST_OF_SPETIFICATION = "editSp";
     private static final String SPETIFICATION = "spId";
     private static final String USER_ATTRIBUTE = "user";
+
+    public static ViewEditProject getInstance() {
+        return instance;
+    }
 
     /**
      * This method executes the command.

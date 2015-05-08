@@ -18,6 +18,8 @@ import javax.servlet.http.HttpSession;
  * Created by olga on 26.04.15.
  */
 public class CreateOrderPartOne extends Command {
+
+    private static CreateOrderPartOne instance = new CreateOrderPartOne();
     /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(CreateOrderPartOne.class);
 
@@ -29,6 +31,10 @@ public class CreateOrderPartOne extends Command {
     private static final String ATTRIBUTE_JOB = "job";
     private static final String ATTRIBUTE_SPETIFICATION = "spetification";
     private static final String CREATE_JOBS = "jsp/customer/addjobs.jsp";
+
+    public static CreateOrderPartOne getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

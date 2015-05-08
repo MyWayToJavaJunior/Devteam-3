@@ -16,11 +16,16 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TrasferProjectToCurrent extends Command {
 
+    private static TrasferProjectToCurrent instance = new TrasferProjectToCurrent();
+
     private static final String PROJECT_ATTRIBUTE = "project";
     private static final String USER_ATTRIBUTE = "user";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
     private static final String READY_PROJECT_PAGE = "Controller?executionCommand=SHOW_CURRENT_PROJECTS";
 
+    public static TrasferProjectToCurrent getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

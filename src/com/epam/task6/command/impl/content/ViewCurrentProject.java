@@ -18,6 +18,7 @@ import java.util.List;
  * Created by olga on 29.04.15.
  */
 public class ViewCurrentProject extends Command {
+    private static ViewCurrentProject instance = new ViewCurrentProject();
     private static Logger logger = Logger.getLogger(ViewCurrentProject.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
@@ -26,6 +27,10 @@ public class ViewCurrentProject extends Command {
     private static final String USER_ATTRIBUTE = "user";
     private static final String NEW_PROJECT_PAGE = "jsp/developer/newProjects.jsp";
 
+
+    public static ViewCurrentProject getInstance() {
+        return instance;
+    }
 
     /**
      * This method executes the command.

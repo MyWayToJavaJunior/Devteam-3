@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by olga on 26.04.15.
  */
 public class ViewOrderForm extends Command {
+    private static ViewOrderForm instance = new ViewOrderForm();
     /* Initializes activity logger */
     private static Logger logger = Logger.getLogger(ViewOrderForm.class);
 
@@ -28,6 +29,10 @@ public class ViewOrderForm extends Command {
 
     /* Forward page */
     private static final String FORWARD_ORDER_FORM = "jsp/customer/addSpetification.jsp";
+
+    public static ViewOrderForm getInstance() {
+        return instance;
+    }
 
     /**
      * Implementation of command

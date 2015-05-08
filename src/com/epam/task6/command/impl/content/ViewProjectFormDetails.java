@@ -19,7 +19,7 @@ import java.util.List;
  * Created by olga on 01.05.15.
  */
 public class ViewProjectFormDetails extends Command {
-
+    private static ViewProjectFormDetails instance = new ViewProjectFormDetails();
 
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.assign.project";
     private static final String ATTRIBUTE_USER = "user";
@@ -30,6 +30,9 @@ public class ViewProjectFormDetails extends Command {
 
     private static final String FORWARD_ORDER_FORM = "jsp/manager/createProjectDetails.jsp";
 
+    public static ViewProjectFormDetails getInstance() {
+        return instance;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{

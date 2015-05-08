@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
  * Created by olga on 28.04.15.
  */
 public class ChangeLanguage extends Command {
+
+    private static ChangeLanguage instance = new ChangeLanguage();
     /* Initializes activity logger */
     private static Logger logger = Logger.getLogger(ChangeLanguage.class);
 
@@ -30,6 +32,10 @@ public class ChangeLanguage extends Command {
 
     /* Forward page */
     private static final String REDIRECT_TO_DEFAULT_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
+
+    public static ChangeLanguage getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

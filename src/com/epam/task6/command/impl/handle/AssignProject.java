@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * Created by olga on 28.04.15.
  */
 public class AssignProject extends Command {
+
+    private static AssignProject instance = new AssignProject();
     /** Initialize activity logger */
     private static Logger logger = Logger.getLogger("activity");
 
@@ -35,6 +37,11 @@ public class AssignProject extends Command {
     private static final String ASSIG_REDERICT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
     //project_name
     //dev_name
+
+
+    public static AssignProject getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

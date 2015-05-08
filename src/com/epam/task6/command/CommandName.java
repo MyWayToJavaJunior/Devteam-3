@@ -38,6 +38,7 @@ public enum CommandName {
     DELETE_PROJECT (Role.MANAGER),
     VIEW_WAITING_ORDER (Role.MANAGER),
     EDIT_ORDER_DETAIL (Role.CUSTOMER),
+    VIEW_USER(Role.MANAGER),
     CREATE_PROJECT (Role.MANAGER);
 
 

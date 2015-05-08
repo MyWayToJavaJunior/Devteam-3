@@ -1,8 +1,5 @@
 package com.epam.task6.domain.user;
 
-import com.epam.task6.service.observer.language.LanguageEvent;
-import com.epam.task6.service.observer.language.LanguageObserver;
-
 public class User {
     private int id;
     private String firstName;
@@ -13,36 +10,18 @@ public class User {
 	private String password;
     private Role role;
 
-    private String language;
-    private LanguageObserver observer;
 
 
 
     public User(){
         super();
-        this.observer = new LanguageObserver();
-        this.language = "en";
     }
 	public User(String email, String password) {
 		super();
 		this.email = email;
 		this.password = password;
-        this.observer = new LanguageObserver();
-        this.language = "en";
 	}
 
-    public User(int id, String firstName, String lastName, String qualification, String email, String password, Role role, String language) {
-        super();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.qualification = qualification;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.id = id;
-        this.observer = new LanguageObserver();
-        this.language = language;
-    }
 
     public User(int id, String firstName, String lastName, String qualification, String email, String password, Role role) {
         super();
@@ -53,7 +32,6 @@ public class User {
         this.password = password;
         this.role = role;
         this.id = id;
-        this.observer = new LanguageObserver();
     }
     public String getEmail() {
 		return email;
@@ -85,17 +63,6 @@ public class User {
 
     public Role getRole() {
         return role;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-
-    public void setLanguage(String language) {
-        String lang = this.language;
-        this.language = language;
-        notifyObserver(lang);
     }
 
     public void setEmail(String email) {
@@ -200,11 +167,4 @@ public class User {
         return result;
     }
 
-    private void notifyObserver(String before) {
-        if (before != null) {
-            if (!before.equals(language)) {
-                observer.handle(new LanguageEvent(this));
-            }
-        }
-    }
 }

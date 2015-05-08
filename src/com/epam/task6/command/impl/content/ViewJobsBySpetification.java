@@ -17,6 +17,7 @@ import java.util.List;
  * Created by olga on 04.05.15.
  */
 public class ViewJobsBySpetification extends Command {
+    public static ViewJobsBySpetification instance = new ViewJobsBySpetification();
     private static Logger logger = Logger.getLogger(ViewJobsBySpetification.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.job";
@@ -27,6 +28,10 @@ public class ViewJobsBySpetification extends Command {
     private static final String JOBS_ATTRIBUTE = "jobs";
     private static final String USER_ATTRIBUTE = "user";
     private static final String MANAGER_PAGE = "jsp/customer/viewJobs.jsp";
+
+    public static ViewJobsBySpetification getInstance() {
+        return instance;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

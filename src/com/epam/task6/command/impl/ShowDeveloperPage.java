@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by olga on 21.04.15.
  */
 public class ShowDeveloperPage extends Command {
+    private static ShowDeveloperPage instance = new ShowDeveloperPage();
     private static Logger logger = Logger.getLogger("activity");
 
     /** Logger messages */
@@ -24,6 +25,9 @@ public class ShowDeveloperPage extends Command {
     private static final String ATTRIBUTE_FORM_CORRECT = "isFormCorrect";
     private static final String PARAM_FORWARD_PAGE = "redirect.customer.show.order.form";
 
+    public static ShowDeveloperPage getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

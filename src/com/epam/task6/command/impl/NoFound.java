@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class NoFound extends Command {
+
+    private static NoFound instance = new NoFound();
     /* Initialize activity logger */
     private static Logger logger = Logger.getLogger(NoFound.class);
 
@@ -20,6 +22,10 @@ public class NoFound extends Command {
 
     /* Parameters */
     private static final String PARAM_EXECUTION_COMMAND = "executionCommand";
+
+    public static NoFound getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

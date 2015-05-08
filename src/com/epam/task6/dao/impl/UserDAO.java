@@ -17,7 +17,8 @@ public class UserDAO extends AbstractDAO {
 
     /** Initializing database activity logger */
     private static Logger logger = Logger.getLogger(UserDAO.class);
-
+    private static int last_number = 0;
+    private static int count_on_page = 100;
     /** Logger messages */
     private static final String ERROR_GET_PASSWORD = "logger.db.error.get.password";
     private static final String INFO_GET_PASSWORD = "logger.db.info.get.password";
@@ -34,6 +35,9 @@ public class UserDAO extends AbstractDAO {
 
     private static final String SQL_FIND_USERS_BY_EMIL_AND_PASSWORD =
             "SELECT * FROM users WHERE email = ? AND password = ?";
+
+    private static final String SQL_SELECT_USERS =
+            "SELECT * FROM users WHERE role_id = ?";
 
     private static final String SQL_FIND_USER_MAIL_BY_ID =
             "SELECT email FROM users WHERE id = ?";
@@ -93,7 +97,6 @@ public class UserDAO extends AbstractDAO {
      */
 
     public int getUserByName(String name) throws DAOException {
-         //connector = new DBConnector();
         int id = 0;
         try {
             connector = ConnectionPool.getInstance().getConnection();
@@ -147,6 +150,63 @@ public class UserDAO extends AbstractDAO {
         return userList;
     }
 
+    public int getUserById(int role) throws DAOException {
+        int id = 0;
+        try {
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_ID_BY_NAME);
+            preparedStatement.setInt(1, role);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()){
+                id = resultSet.getInt("id");
+            }
+        }
+        catch (SQLException e) {
+            throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER_NAME) + id, e);
+        }
+        finally {
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+        }
+        logger.info(ResourceManager.getProperty(INFO_GET_USER_MAIL) + id);
+        return id;
+    }
+
+    public User getUsersById1 (int id) throws DAOException {
+        User user = null;
+
+        try {
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_FIND_USER_MAIL_BY_ID);
+            preparedStatement.setInt(1, id);
+            resultSet = preparedStatement.executeQuery();
+            int count = 0;
+            while (count < last_number && resultSet.next()) {
+                count++;
+            }
+            for (; count < last_number + count_on_page && resultSet.next(); count++) {
+
+                user = new User(resultSet.getInt("id"), resultSet.getString("firstName"), resultSet.getString("lastname"),
+                        resultSet.getString("qualification"), resultSet.getString("email"),
+                        resultSet.getString("password"), getUserRole(resultSet.getInt("role_id")));
+
+            }
+        }
+        catch (SQLException e) {
+            throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER), e);
+        } finally {
+            try {
+                connector.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+        }
+        logger.info(ResourceManager.getProperty(INFO_GET_USER));
+        return user;
+    }
     /**
      *
      * @param id

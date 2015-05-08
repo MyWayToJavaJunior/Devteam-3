@@ -20,6 +20,8 @@ import javax.servlet.http.HttpSession;
  */
 public class CreateOrderPartTwo extends Command {
 
+    private static CreateOrderPartTwo instance = new CreateOrderPartTwo();
+
     /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(CreateOrderPartTwo.class);
 
@@ -27,6 +29,10 @@ public class CreateOrderPartTwo extends Command {
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
     private static final String ATTRIBUTE_SPETIFICATION = "spetification";
     private static final String ATTRIBUTE_USER = "user";
+
+    public static CreateOrderPartTwo getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class ViewWaitingOrder extends Command
 {
+    private static ViewWaitingOrder instance = new ViewWaitingOrder();
     private static Logger logger = Logger.getLogger(ViewWaitingOrder.class);
     private static final String MSG_EXECUTE_ERROR = "logger.db.error.get.waiting.specifications";
     private static final String MSG_REQUESTED = "logger.activity.requested.waiting.orders";
@@ -28,6 +29,10 @@ public class ViewWaitingOrder extends Command
     private static final String LIST_OF_SPECIFICATIONS = "spetification";
     private static final String USER_ATTRIBUTE = "user";
     private static final String PAGE = "jsp/manager/watingOrders.jsp";
+
+    public static ViewWaitingOrder getInstance() {
+        return instance;
+    }
 
     /**
      * Implementation of command

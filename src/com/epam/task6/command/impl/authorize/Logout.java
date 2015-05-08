@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
  * Created by olga on 22.04.15.
  */
 public class Logout extends Command{
+    private static Logout instance = new Logout();
     /* Initializes activity logger */
     private static Logger logger = Logger.getLogger(Logout.class);
 
@@ -27,6 +28,10 @@ public class Logout extends Command{
 
     /* Attributes */
     private static final String USER_ATTRIBUTE = "user";
+
+    public static Logout getInstance() {
+        return instance;
+    }
 
     /**
      * This method invalidates user session

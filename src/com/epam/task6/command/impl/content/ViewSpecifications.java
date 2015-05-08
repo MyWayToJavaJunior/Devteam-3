@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class ViewSpecifications extends Command {
 
-
+    private static ViewSpecifications instance = new ViewSpecifications();
     private static Logger logger = Logger.getLogger(ViewSpecifications.class);
 
     /* Logger messages */
@@ -34,6 +34,9 @@ public class ViewSpecifications extends Command {
     private static final String SPECIFICATIONS_PAGE = "jsp/customer/showSpetification.jsp";
 
 
+    public static ViewSpecifications getInstance() {
+        return instance;
+    }
 
     /**
      * This method executes the command.

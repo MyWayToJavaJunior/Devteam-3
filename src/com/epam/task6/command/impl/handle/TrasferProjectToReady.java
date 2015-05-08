@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TrasferProjectToReady extends Command {
 
+    private static TrasferProjectToReady instance = new TrasferProjectToReady();
+
     private static final String PROJECT_ATTRIBUTE = "project";
     private static final String USER_ATTRIBUTE = "user";
     private static final String READY_PROJECT_PAGE = "Controller?executionCommand=SHOW_CURRENT_PROJECTS";
@@ -23,6 +25,10 @@ public class TrasferProjectToReady extends Command {
 
     private static final String REDERICT_TO_READY_PROJECTS = "Controller?executionCommand=SHOW_READY_PROJECTS";
 
+
+    public static TrasferProjectToReady getInstance() {
+        return instance;
+    }
 
     /**
      *  This method executes the command.

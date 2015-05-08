@@ -17,6 +17,7 @@ import java.util.List;
  * Created by olga on 30.04.15.
  */
 public class ViewAssignProjectForm extends Command {
+    private static ViewAssignProjectForm instance = new ViewAssignProjectForm();
     private static Logger logger = Logger.getLogger(ViewAssignProjectForm.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.view.assign.project";
@@ -27,6 +28,10 @@ public class ViewAssignProjectForm extends Command {
     private static final String PARAM_DEV_NAMES = "dev_names";
 
     private static final String FORWARD_ASSIGN_PROJECT_FORM = "jsp/manager/assignProject.jsp";
+
+    public static ViewAssignProjectForm getInstance() {
+        return instance;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {

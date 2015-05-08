@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
  */
 public class EditProject extends Command {
 
+    private static EditProject instance = new EditProject();
     /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(DeleteProject.class);
 
@@ -30,7 +31,11 @@ public class EditProject extends Command {
     private static final String ATTRIBUTE_PR_TIME= "time";
     private static final String ATTRIBUTE_PR_ID = "id";
     private static final String EDIT_PROJECT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
-    /**
+
+    public static EditProject getInstance() {
+        return instance;
+    }
+
     /**
      *  This method executes the command.
      *
