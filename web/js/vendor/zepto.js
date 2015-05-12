@@ -985,8 +985,8 @@ window.Zepto = Zepto
     })
   }
 
-  // triggers event handlers on current element just as if an event occurred,
-  // doesn't trigger an actual event, doesn't bubble
+  // triggers listener handlers on current element just as if an listener occurred,
+  // doesn't trigger an actual listener, doesn't bubble
   $.fn.triggerHandler = function(event, data){
     var e, result
     this.each(function(i, element){
@@ -1001,7 +1001,7 @@ window.Zepto = Zepto
     return result
   }
 
-  // shortcut methods for `.bind(event, fn)` for each event type
+  // shortcut methods for `.bind(listener, fn)` for each listener type
   ;('focusin focusout load resize scroll unload click dblclick '+
   'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
   'change select keydown keypress keyup error').split(' ').forEach(function(event) {
@@ -1158,7 +1158,7 @@ window.Zepto = Zepto
 
     wrappedCallback = function(event){
       if (typeof event !== 'undefined') {
-        if (event.target !== event.currentTarget) return // makes sure the event didn't bubble from "below"
+        if (event.target !== event.currentTarget) return // makes sure the listener didn't bubble from "below"
         $(event.target).unbind(endEvent, arguments.callee)
       }
       $(this).css(cssReset)
@@ -1199,14 +1199,14 @@ window.Zepto = Zepto
       htmlType = 'text/html',
       blankRE = /^\s*$/
 
-  // trigger a custom event and return false if it was cancelled
+  // trigger a custom listener and return false if it was cancelled
   function triggerAndReturn(context, eventName, data) {
     var event = $.Event(eventName)
     $(context).trigger(event, data)
     return !event.defaultPrevented
   }
 
-  // trigger an Ajax "global" event
+  // trigger an Ajax "global" listener
   function triggerGlobal(settings, context, eventName, data) {
     if (settings.global) return triggerAndReturn(context || document, eventName, data)
   }
@@ -1221,7 +1221,7 @@ window.Zepto = Zepto
     if (settings.global && !(--$.active)) triggerGlobal(settings, null, 'ajaxStop')
   }
 
-  // triggers an extra global event "ajaxBeforeSend" that's like "ajaxSend" but cancelable
+  // triggers an extra global listener "ajaxBeforeSend" that's like "ajaxSend" but cancelable
   function ajaxBeforeSend(xhr, settings) {
     var context = settings.context
     if (settings.beforeSend.call(context, xhr, settings) === false ||

@@ -10,23 +10,21 @@
 
 <div class="container">
 <form class="form-signin" action="Controller" method="post">
-    <h2 class="form-signin-heading">Please sign in</h2>
+    <h2 class="form-signin-heading">Войдите</h2>
     <input type="hidden" name="executionCommand" value="LOGIN" />
-    <c:out value="${login}" />
-    <br /> <input class="form-control" type="text" name="email" value="" placeholder="Email address"/><br />
-    <c:out value="${password}" />
-    <br /> <input class="form-control" type="password" name="password" value="" placeholder="Password" /><br />
+    <c:out value="Логин:" />
+    <br /> <input class="form-control" type="text" name="email" value="" placeholder="Почтовый адрес"/><br />
+    <c:out value="Пароль:" />
+    <br /> <input class="form-control" type="password" name="password" value="" placeholder="Пароль" /><br />
 
     <div class="control-group">
         <div class="controls">
 
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
             </div>
     </div>
 </form>
     </div>
-
-
 
 <%@ include file="jsp/common/footer.jspf"%>
 

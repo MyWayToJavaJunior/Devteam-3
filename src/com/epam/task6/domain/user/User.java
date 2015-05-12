@@ -11,11 +11,10 @@ public class User {
     private Role role;
 
 
-
-
     public User(){
         super();
     }
+
 	public User(String email, String password) {
 		super();
 		this.email = email;

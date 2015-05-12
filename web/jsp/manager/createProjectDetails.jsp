@@ -15,8 +15,8 @@
 
 <div class="container">
     <div class="col-md-6 col-md-offset-3">
-        <form class="form-signin" action="Controller" method="get">
-            <input type="hidden" name="executionCommand" value="CREATE_PROJECT" />
+        <a class="btn btn-lg btn-primary" href="Controller?executionCommand=SHOW_PROJECTS">Назад</a>
+
             <h3>Create Project Details</h3>
 
             <div class="form-group">
@@ -73,9 +73,7 @@
                 </form>
 
             <p></p>
-            <input class="btn" type="submit" value="Create Order" /><br />
-            <a class="btn" href="Controller?executionCommand=CREATE_PROJECT">CREATE</a>
-            <a class="btn" href="Controller?executionCommand=SHOW_PROJECT_FORM">Назад</a>
+            <a class="btn btn-lg btn-primary" href="Controller?executionCommand=CREATE_PROJECT">Create Order</a>
         </form>
     </div>
 

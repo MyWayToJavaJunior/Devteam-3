@@ -34,6 +34,7 @@
 
             <thead>
             <tr>
+                <td><b>id</b></td>
                 <td><b><fmt:message key="jsp.employee.complete.table.name" bundle="${msg}"/></b></td>
                 <td><b><fmt:message key="jsp.employee.complete.table.specifications" bundle="${msg}"/></b></td>
                 <td><b><fmt:message key="jsp.employee.complete.table.time" bundle="${msg}"/></b></td>
@@ -54,7 +55,16 @@
                         <td><c:out value="${item.time}"></c:out></td>
                         <td><c:out value="${item.employees}"></c:out></td>
                         <td><c:out value="${item.manager}"></c:out></td>
-                        <td><c:out value="${item.status}"></c:out></td>
+                        <td>
+                            <c:if test="${item.status eq '0'}" >
+                            <c:out value="Не подтвержден"></c:out></td>
+                                </c:if>
+                                <c:if test="${item.status eq '1'}" >
+                                    <c:out value="В разработке"></c:out></td>
+                                </c:if>
+                                <c:if test="${item.status eq '2'}" >
+                                    <c:out value="Выполнен"></c:out></td>
+                                </c:if>
                         <td>
                             <form class="form-signin" action="Controller" method="get">
                                 <input type="hidden" name="executionCommand" value="TRANSFER_NEW_PROJECT" />

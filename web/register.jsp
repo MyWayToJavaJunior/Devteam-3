@@ -4,23 +4,28 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<link href="css/singin.css" rel="stylesheet">
 <%@ include file="jsp/common/header.jspf"%>
 
-        <c:set var="pageID" value="register.jsp" scope="request" />
-        <jsp:include page="locale.jsp"/>
-
-	<form class="form-signin" action="Controller" method="post">
+<div class="container">
+    <form class="form-signin" action="Controller" method="post">
 		<input type="hidden" name="command" value="register" />
-        <c:out value="${firstname}" />
+        Имя:
         <br /> <input class="form-control" type="text" name="firstname" value="" /><br />
-        <c:out value="${secondname}" />
+        Фамилия:
         <br /> <input class="form-control" type="text" name="secondname" value="" /><br />
-		<c:out value="${login}" />
+		Логин:
 		<br /> <input class="form-control" type="text" name="email" value="" /><br />
-		<c:out value="${password}" />
-		<br /> <input class="form-control" type="password" name="password" value="" /><br /> <input
-			type="submit" value="${register}" /><br />
+		Пароль:
+		<br /> <input class="form-control" type="password" name="password" value="" /><br />
+
+        <div class="control-group">
+            <div class="controls">
+
+                <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегестрироваться</button>
+            </div>
+        </div>
 	</form>
+</div>
 
 <%@ include file="jsp/common/footer.jspf"%>

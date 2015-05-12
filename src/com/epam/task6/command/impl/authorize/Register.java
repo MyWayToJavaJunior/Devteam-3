@@ -3,7 +3,7 @@ package com.epam.task6.command.impl.authorize;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.controller.RequestParameterName;
-import com.epam.task6.dao.impl.RegisterDAO;
+import com.epam.task6.dao.impl.RegisterDAOImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ public class Register extends Command {
     }
 
     @Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
 		String page = null;
 		
@@ -25,8 +25,9 @@ public class Register extends Command {
 		String firstName = request.getParameter(RequestParameterName.FIRSTNAME);
         String secondName = request.getParameter(RequestParameterName.SECONDNAME);
 
-        RegisterDAO registerDAO = new RegisterDAO();
+        RegisterDAOImpl registerDAO = new RegisterDAOImpl();
         registerDAO.registerUser(email, password, firstName, secondName);
+        return null;
 
 	}
 }

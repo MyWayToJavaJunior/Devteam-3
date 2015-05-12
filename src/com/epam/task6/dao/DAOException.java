@@ -17,10 +17,6 @@ public class DAOException extends Exception {
         super(s);
     }
 
-    public DAOException(String s, Throwable throwable) {
-        super(s, throwable);
-    }
-
     /**
      * Constructor
      *
@@ -28,5 +24,7 @@ public class DAOException extends Exception {
      * @param throwable Exception object from lower level of business logic
      */
 
-
+    public DAOException(String s, Throwable throwable) {
+        super(s, throwable);
+    }
 }

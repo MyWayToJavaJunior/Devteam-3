@@ -21,7 +21,7 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
 
     /* Initializes error logger */
-    private static Logger logger = Logger.getLogger(Controller.class);
+    private static final Logger logger = Logger.getLogger(Controller.class);
 
     /* Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.command";
@@ -70,13 +70,16 @@ public class Controller extends HttpServlet {
         Command command = CommandHelper.getCommand(request);
         try {
             command.execute(request,response);
-           RequestDispatcher dispatcher = request.getRequestDispatcher(command.getForward());//.forward(request, response);
+           RequestDispatcher dispatcher = request.getRequestDispatcher(command.execute(request,response));//.forward(request, response);
             //dispatcher может быть 0
             if (dispatcher != null){
                 dispatcher.forward(request, response);
             }
+            else {
+                ///
+            }
         } catch (CommandException e) {
-            command.setForward(ResourceManager.getProperty(FORWARD_SERVER_ERROR));
+            //command.setForward(ResourceManager.getProperty(FORWARD_SERVER_ERROR));
             logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
         }
     }

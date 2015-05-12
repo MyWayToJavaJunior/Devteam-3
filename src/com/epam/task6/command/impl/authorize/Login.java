@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Implementing command pattern.
@@ -27,7 +25,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Login extends Command {
 
     private static Login instance = new Login();
-    private static Lock lock = new ReentrantLock();
+    //private static Lock lock = new ReentrantLock();
     private static Logger logger = Logger.getLogger(Login.class);
 
     /* Logger messages */
@@ -52,7 +50,14 @@ public class Login extends Command {
         return instance;
     }
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    /**
+     * Implementation of login command
+     *
+     * @param request HttpServletRequest object
+     * @param response HttpServletResponse object
+     * @throws CommandException If errors occurred when executing command
+     */
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
         SignInForm form = VerifiableBuilder.buildSignInForm(request);
         User user = null;
@@ -69,16 +74,16 @@ public class Login extends Command {
             setSessionLifecycle(request, user);
             logger.info(ResourceManager.getProperty(MSG_SIGNED_IN) + user.getId());
             if (user.getRole() == Role.CUSTOMER) {
-                setForward(PARAM_REDIRECT_COMMAND);
+                return  (PARAM_REDIRECT_COMMAND);
             } else if (user.getRole() == Role.MANAGER) {
-                setForward(PARAM_REDIRECT_COMMAND1);
+                return(PARAM_REDIRECT_COMMAND1);
             } else {
-                setForward(PARAM_REDIRECT_COMMAND2);
+                return(PARAM_REDIRECT_COMMAND2);
             }
         } else {
             logger.info(ResourceManager.getProperty(MSG_SIGN_FAILED) + user.getPassword() + "," + user.getEmail());
             request.setAttribute(ATTRIBUTE_INCORRECT_MSG, PARAM_INCORRECT_MSG);
-            setForward(JspPageName.ERROR_PAGE);
+            return(JspPageName.ERROR_PAGE);
         }
     }
 

@@ -4,7 +4,7 @@ import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.controller.RequestParameterName;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.impl.ProjectDAO;
+import com.epam.task6.dao.impl.ProjectDAOImpl;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
 
@@ -35,16 +35,16 @@ public class TrasferProjectToCurrent extends Command {
      *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
         User user = (User) request.getSession().getAttribute(USER_ATTRIBUTE);
         String projectId = request.getParameter(RequestParameterName.ID_PROJECT);
-        ProjectDAO projectDAO = ProjectDAO.getInstance();
+        ProjectDAOImpl projectDAO = ProjectDAOImpl.getInstance();
         try {
             projectDAO.updateStatusById(Integer.parseInt(projectId),1);
         } catch (DAOException e) {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        setForward(READY_PROJECT_PAGE);
+        return (READY_PROJECT_PAGE);
     }
 }

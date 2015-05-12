@@ -3,7 +3,7 @@ package com.epam.task6.command.impl.handle;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.impl.ProjectDAO;
+import com.epam.task6.dao.impl.ProjectDAOImpl;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
@@ -43,18 +43,18 @@ public class DeleteProject extends Command {
      *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response)
+    public String execute(HttpServletRequest request, HttpServletResponse response)
             throws CommandException{
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
         int projectId = Integer.parseInt(request.getParameter(ATTRIBUTE_PROJECT));
-        ProjectDAO projectDAO = ProjectDAO.getInstance();
+        ProjectDAOImpl projectDAO = ProjectDAOImpl.getInstance();
         try {
             projectDAO.deleteProject(projectId);
         } catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        setForward(DELETE_PROJECT_PAGE);
+        return (DELETE_PROJECT_PAGE);
 
     }
 }

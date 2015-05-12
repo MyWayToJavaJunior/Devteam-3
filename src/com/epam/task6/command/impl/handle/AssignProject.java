@@ -3,8 +3,8 @@ package com.epam.task6.command.impl.handle;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.impl.ProjectDAO;
-import com.epam.task6.dao.impl.UserDAO;
+import com.epam.task6.dao.impl.ProjectDAOImpl;
+import com.epam.task6.dao.impl.UserDAOImpl;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
@@ -51,13 +51,13 @@ public class AssignProject extends Command {
      *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         String nameProject = request.getParameter(ATTRIBUTE_PROJECT_NAME);
         String devName = request.getParameter(ATTRIBUTE_DEVELOPER_NAME);
         try {
-        UserDAO userDAO = UserDAO.getInstance();
-        ProjectDAO projectDAO = ProjectDAO.getInstance();
+        UserDAOImpl userDAO = UserDAOImpl.getInstance();
+        ProjectDAOImpl projectDAO = ProjectDAOImpl.getInstance();
 
             int projectId = projectDAO.returnIdByName(nameProject);
             int devId = userDAO.getUserByName(devName);
@@ -68,7 +68,7 @@ public class AssignProject extends Command {
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        setForward(ASSIG_REDERICT_PAGE);
+        return(ASSIG_REDERICT_PAGE);
     }
 }
 

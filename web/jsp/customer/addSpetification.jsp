@@ -22,7 +22,7 @@
     <div class="col-md-6 col-md-offset-3">
         <a class="btn btn-lg btn-primary" href="Controller?executionCommand=SHOW_SPECIFICATIONS">Назад</a>
     <form class="form-signin" action="Controller" method="get">
-        <input type="hidden" name="executionCommand" value="CREATE_ORDER_PART_ONE" />
+        <input type="hidden" name="executionCommand" value="CREATE_ORDER" />
         <h3><fmt:message key="jsp.customer.specifications.add.header" bundle="${msg}"/></h3>
         <div class="form-group">
             <label><fmt:message key="jsp.customer.specifications.table.name" bundle="${msg}"/></label>
@@ -36,6 +36,8 @@
     </form>
 </div>
 </div>
+
+
 
 <p></p>
 <p></p>

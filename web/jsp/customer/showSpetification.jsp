@@ -55,6 +55,7 @@
                             <td><c:out value="${item.user_id}"></c:out></td>
                             <td><c:out value="${item.status}"></c:out></td>
                             <td><c:out value="${item.jobs}"></c:out></td>
+                            <c:set var="item_job" value="${item.jobs}" scope="session"/>
                             <td>
                                 <a id = "${item.id}" class="btn btn-mini btn-primary" href="Controller?spId=${item.id}&executionCommand=EDIT_ORDER" >
                                     <i class="icon-edit icon-white"></i>

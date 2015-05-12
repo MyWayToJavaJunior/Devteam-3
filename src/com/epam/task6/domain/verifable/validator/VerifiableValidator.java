@@ -1,6 +1,6 @@
 package com.epam.task6.domain.verifable.validator;
 
-import com.epam.task6.dao.impl.UserDAO;
+import com.epam.task6.dao.impl.UserDAOImpl;
 import com.epam.task6.domain.verifable.PreparedJob;
 import com.epam.task6.domain.verifable.PreparedProject;
 import com.epam.task6.domain.verifable.ProposedOrder;
@@ -64,7 +64,7 @@ public class VerifiableValidator {
             return false;
         }
         ArrayList<PreparedJob> jobs = project.getJobs();
-        UserDAO dao = new UserDAO();
+        UserDAOImpl dao = new UserDAOImpl();
         for (PreparedJob job : jobs) {
             ArrayList<String> mails = job.getEmployees();
         }

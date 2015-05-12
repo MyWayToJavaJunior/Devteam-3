@@ -1,8 +1,8 @@
 package com.epam.task6.command;
 
 
-import com.epam.task6.command.impl.NoFound;
-import com.epam.task6.command.impl.ShowDeveloperPage;
+import com.epam.task6.command.impl.content.GetDeveloperPage;
+import com.epam.task6.command.impl.navigate.NoFound;
 import com.epam.task6.command.impl.authorize.Login;
 import com.epam.task6.command.impl.authorize.Logout;
 import com.epam.task6.command.impl.content.*;
@@ -44,34 +44,34 @@ public final class CommandHelper {
                     command = Logout.getInstance();
                     break;
                 case SHOW_SPECIFICATIONS:
-                    command = ViewSpecifications.getInstance();
+                    command = GetSpecifications.getInstance();
                     break;
                 case SHOW_ORDER_FORM:
-                    command = ViewOrderForm.getInstance();
+                    command = GetOrderForm.getInstance();
                     break;
                 case DEV:
-                    command = ShowDeveloperPage.getInstance();
+                    command = GetDeveloperPage.getInstance();
                     break;
                 case SHOW_PROJECTS:
-                    command = ViewManagerProject.getInstance();
+                    command = GetManagerProject.getInstance();
                     break;
                 case SHOW_BILLS:
-                    command = ViewBills.getInstance();
+                    command = GetBills.getInstance();
                     break;
-                case CREATE_ORDER_PART_ONE:
-                    command = CreateOrderPartOne.getInstance();
+                case CREATE_ORDER:
+                    command = CreateOrder.getInstance();
                     break;
-                case  CREATE_ORDER_PART_TWO:
-                    command = CreateOrderPartTwo.getInstance();
+                case CREATE_JOB:
+                    command = CreateJob.getInstance();
                     break;
                 case SHOW_NEW_PROJECTS:
-                    command = ViewNewProject.getInstance();
+                    command = GetNewProject.getInstance();
                     break;
                 case SHOW_CURRENT_PROJECTS:
-                    command = ViewCurrentProject.getInstance();
+                    command = GetCurrentProject.getInstance();
                     break;
                 case SHOW_READY_PROJECTS:
-                    command = ViewReadyProject.getInstance();
+                    command = GetReadyProject.getInstance();
                     break;
                 case TRANSFER_NEW_PROJECT:
                     command = TrasferProjectToCurrent.getInstance();
@@ -80,31 +80,31 @@ public final class CommandHelper {
                     command = TrasferProjectToReady.getInstance();
                     break;
                 case SHOW_ASSIGN_PROJECT_FORM:
-                    command = ViewAssignProjectForm.getInstance();
+                    command = GetAssignProjectForm.getInstance();
                     break;
                 case ASSIGN_PROJECT:
                     command = AssignProject.getInstance();
                     break;
                 case SHOW_PROJECT_FORM:
-                    command = ViewProjectForm.getInstance();
+                    command = GetProjectForm.getInstance();
                     break;
                 case SHOW_PROJECT_FORM_DETAILS:
-                    command = ViewProjectFormDetails.getInstance();
+                    command = GetProjectFormDetails.getInstance();
                     break;
                 case CHANGE_LANGUAGE:
                     command = ChangeLanguage.getInstance();
                     break;
                 case EDIT_ORDER:
-                    command = ViewEditOrder.getInstance();
+                    command = GetEditOrder.getInstance();
                     break;
                 case EDIT_ORDER_DETAIL:
                     command = EditOrder.getInstance();
                     break;
                 case SHOW_CUSTOMER_JOBS:
-                    command = ViewJobsBySpetification.getInstance();
+                    command = GetJobsBySpetification.getInstance();
                     break;
                 case VIEW_EDIT_PROJECT:
-                    command = ViewEditProject.getInstance();
+                    command = GetEditProject.getInstance();
                     break;
                 case DELETE_PROJECT:
                     command = DeleteProject.getInstance();
@@ -113,13 +113,13 @@ public final class CommandHelper {
                     command = EditProject.getInstance();
                     break;
                 case VIEW_WAITING_ORDER:
-                    command = ViewWaitingOrder.getInstance();
+                    command = GetWaitingOrder.getInstance();
                     break;
                 case CREATE_PROJECT:
-                    command = ViewProject.getInstance();
+                    command = GetProject.getInstance();
                     break;
                 case VIEW_USER:
-                    command = ViewUser.getInstance();
+                    command = GetUserProfile.getInstance();
                     break;
                 default:
                     command = NoFound.getInstance();

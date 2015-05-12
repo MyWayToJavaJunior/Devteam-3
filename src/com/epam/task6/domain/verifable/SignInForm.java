@@ -1,6 +1,5 @@
 package com.epam.task6.domain.verifable;
 
-import org.hibernate.validator.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -9,7 +8,6 @@ import javax.validation.constraints.Size;
  */
 public class SignInForm {
     @NotNull(message = "Login can't be empty")
-    @Email(message = "Incorrect email")    // эту фигню переделать!!!
     private String login;
 
     @NotNull(message = "Password can't be empty")

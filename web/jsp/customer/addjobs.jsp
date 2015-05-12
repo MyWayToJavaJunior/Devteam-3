@@ -29,36 +29,27 @@
 
 
 <div class="container">
-
-    <form class="form-signin" action="Controller" method="get">
-        <input type="hidden" name="executionCommand" value="CREATE_ORDER_PART_TWO" />
         <h3 class="form">Step 2</h3>
-    <c:if test="${sessionScope.job != null}">
-        <c:forEach var="i" begin="1" end="${sessionScope.job}">
-        <form class="form" role="form" id="${i}">
 
+        <form class="form" role="form" >
 
             <h4>Job</h4>
             <div class="form-group">
-                <label >Name</label>
-                <input type="text" name="name_job" class="form-control" placeholder="Enter name of job" required="" autofocus="">
+                <label for="name_job">Name</label>
+                <input type="text" id="name_job" name="name_job"  class="form-control" placeholder="Enter name of job" required="" autofocus="">
             </div>
 
             <div class="form-group">
-                <label>Qualification</label>
-                <input type="text" name="qualification_job" class="form-control" placeholder="Enter qualification" required="" autofocus="">
+                <label for = "qualification_job">Qualification</label>
+                <input type="text" id="qualification_job" name="qualification_job" class="form-control" placeholder="Enter qualification" required="">
             </div>
 
             <div class="form-group">
-                <label for="exampleInputPassword1">Time</label>
-                <input type="text" name="job_time" class="form-control" id="exampleInputPassword1" placeholder="Time">
+                <label for="qualification_job">Time</label>
+                <input type="text" id="job_time" name="job_time" class="form-control" id="exampleInputPassword1" placeholder="Time">
             </div>
-
-
         </form>
-        </c:forEach>
-    </c:if>
-        <input class="btn btn-danger" type="submit" value="Create order" /><br />
+        <a class="btn btn-lg btn-primary" href="Controller?executionCommand=CREATE_JOB">Create job</a>
 </div>
 
 <p></p>

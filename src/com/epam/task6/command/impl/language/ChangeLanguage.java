@@ -16,21 +16,22 @@ import javax.servlet.http.HttpSession;
 public class ChangeLanguage extends Command {
 
     private static ChangeLanguage instance = new ChangeLanguage();
-    /* Initializes activity logger */
+
+    /** Initializes activity logger */
     private static Logger logger = Logger.getLogger(ChangeLanguage.class);
 
-    /* Logger messages */
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.order.form";
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
 
 
-    /* Attributes and parameters */
+    /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
     private static final String PARAM_LANGUAGE = "language";
     private static final String SESSION_LOCALE_ATTRIBUTE = "localeValue";
     private static final String SESSION_PAGE_ATTRIBUTE = "page";
 
-    /* Forward page */
+    /** Forward page */
     private static final String REDIRECT_TO_DEFAULT_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
 
     public static ChangeLanguage getInstance() {
@@ -45,12 +46,12 @@ public class ChangeLanguage extends Command {
      *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = (User)request.getSession().getAttribute(ATTRIBUTE_USER);
         HttpSession session = request.getSession(true);
         String currentLocale = request.getParameter(PARAM_LANGUAGE);
         session.setAttribute(SESSION_LOCALE_ATTRIBUTE, currentLocale);
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
-        setForward((String) session.getAttribute(SESSION_PAGE_ATTRIBUTE));
+        return ((String) session.getAttribute(SESSION_PAGE_ATTRIBUTE));
     }
 }

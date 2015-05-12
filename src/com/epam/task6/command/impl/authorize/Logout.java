@@ -3,7 +3,6 @@ package com.epam.task6.command.impl.authorize;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.domain.user.User;
-import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,15 +36,16 @@ public class Logout extends Command{
      * This method invalidates user session
      *
      * @param request HttpServletRequest object
+     * @param response HttpServletResponse object
      * @throws CommandException If execution is failed
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         HttpSession session=request.getSession();
         session.invalidate();
-        logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
-        setForward(LOGIN_PAGE);
+      //  logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
+        return LOGIN_PAGE;
     }
 
 }

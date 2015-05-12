@@ -3,7 +3,7 @@ package com.epam.task6.command.impl.handle;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
-import com.epam.task6.dao.impl.SpecificationDAO;
+import com.epam.task6.dao.impl.SpecificationDAOImpl;
 import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
@@ -44,7 +44,7 @@ public class EditOrder extends Command {
      *  @throws CommandException  If command can't be executed.
      */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response)
+    public String execute(HttpServletRequest request, HttpServletResponse response)
             throws CommandException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
@@ -53,7 +53,7 @@ public class EditOrder extends Command {
         spetification.setJobs(Integer.parseInt(request.getParameter(ATTRIBUTE_SP_JOBS)));
         spetification.setId(Integer.parseInt(request.getParameter(ATTRIBUTE_SP_ID)));
 
-        SpecificationDAO specificationDAO = SpecificationDAO.getInstance();
+        SpecificationDAOImpl specificationDAO = SpecificationDAOImpl.getInstance();
 
         try {
             specificationDAO.updateSpetificationName(spetification.getName(), spetification.getId());
@@ -63,6 +63,6 @@ public class EditOrder extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
 
-        setForward(EDIT_ORDER_PAGE);
+        return (EDIT_ORDER_PAGE);
     }
 }
