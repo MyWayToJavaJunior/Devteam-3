@@ -20,10 +20,7 @@
                 <li><a href="Controller?executionCommand=SHOW_PROJECT_FORM"><fmt:message key="jsp.manager.add.orders.body.header" bundle="${msg}"/></a></li>
 
             </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="Controller?executionCommand=VIEW_USER"><fmt:message key="jsp.manager.user.delete.body.header" bundle="${msg}"/></a></li>
-                <li><a href="Controller?executionCommand=VIEW_USER"><fmt:message key="jsp.manager.user.edit.profile.body.header" bundle="${msg}"/></a></li>
-            </ul>
+
         </div>
     </div>
 </div>

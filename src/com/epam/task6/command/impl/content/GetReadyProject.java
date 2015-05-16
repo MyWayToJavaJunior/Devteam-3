@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Implementing command pattern.
+ * This command get all ready projects with status 2.
  *
  * Created by olga on 29.04.15.
  */
@@ -23,8 +23,8 @@ public class GetReadyProject extends Command {
     private static GetReadyProject instance = new GetReadyProject();
     private static Logger logger = Logger.getLogger(GetReadyProject.class);
 
-    private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.project";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.ready.project";
+    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.ready.project";
 
 
     private static final String USER_ATTRIBUTE = "user";

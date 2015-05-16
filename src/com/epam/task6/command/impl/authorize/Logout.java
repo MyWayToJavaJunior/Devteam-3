@@ -44,7 +44,7 @@ public class Logout extends Command{
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         HttpSession session=request.getSession();
         session.invalidate();
-      //  logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
+        //logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
         return LOGIN_PAGE;
     }
 

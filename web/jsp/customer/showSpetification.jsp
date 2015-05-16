@@ -21,7 +21,7 @@
         <fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
 
         <c:set var="page" value="Controller?executionCommand=SHOW_SPECIFICATIONS" scope="session" />
-
+        <c:set var="item_job" value="${item.jobs}" scope="session"/>
 
 
 <%-------%>
@@ -39,7 +39,6 @@
                         <tr>
                             <td><b>ID</b></td>
                             <td><b><fmt:message key="jsp.customer.specifications.table.name" bundle="${msg}"/></b></td>
-                            <td><b><fmt:message key="jsp.customer.specifications.table.uid" bundle="${msg}"/></b></td>
                             <td><b><fmt:message key="jsp.customer.specifications.table.status" bundle="${msg}"/></b></td>
                             <td><b><fmt:message key="jsp.customer.specifications.table.jobs.number" bundle="${msg}"/></b></td>
                             <th><b><fmt:message key="jsp.customer.specifications.table.action" bundle="${msg}"/></b></th>
@@ -52,10 +51,18 @@
                         <tr>
                             <td><c:out value="${item.id}"></c:out></td>
                             <td><c:out value="${item.name}"></c:out></td>
-                            <td><c:out value="${item.user_id}"></c:out></td>
-                            <td><c:out value="${item.status}"></c:out></td>
+
+                            <td>
+                                <c:if test="${item.status eq '0'}" >
+                                <c:out value="Не подтвержден"></c:out></td>
+                            </c:if>
+                            <c:if test="${item.status eq '1'}" >
+                                <c:out value="В разработке"></c:out></td>
+                            </c:if>
+                            <c:if test="${item.status eq '2'}" >
+                                <c:out value="Выполнен"></c:out></td>
+                            </c:if>
                             <td><c:out value="${item.jobs}"></c:out></td>
-                            <c:set var="item_job" value="${item.jobs}" scope="session"/>
                             <td>
                                 <a id = "${item.id}" class="btn btn-mini btn-primary" href="Controller?spId=${item.id}&executionCommand=EDIT_ORDER" >
                                     <i class="icon-edit icon-white"></i>

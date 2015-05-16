@@ -14,11 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * This command is get form for assign project to developer.
+ *
  * Created by olga on 30.04.15.
  */
 public class GetAssignProjectForm extends Command {
     private static GetAssignProjectForm instance = new GetAssignProjectForm();
-    private static Logger logger = Logger.getLogger(GetAssignProjectForm.class);
+
+    private static final Logger logger = Logger.getLogger(GetAssignProjectForm.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.view.assign.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.assign.project";

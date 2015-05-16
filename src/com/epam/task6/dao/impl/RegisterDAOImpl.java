@@ -24,7 +24,7 @@ public class RegisterDAOImpl implements RegisterDAO{
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            System.out.println("dao " + " email " + email + " password " + password);
+            //System.out.println("dao " + " email " + email + " password " + password);
 
             if (m.matches()) {
                 String insertTableSQL = "INSERT INTO users (id, email, password, firstName, lastname, role_id, qualification)" + " VALUES (9567, " + "'" + email + "'" + ",'" + password + "'" + ",'" + firstName + "'" + ",'" + secondName + "',1,0);";

@@ -13,18 +13,19 @@ import com.epam.task6.util.Hasher;
  *
  * Created by olga on 21.04.15.
  */
-public class UserBuilder {
+public final class UserBuilder {
 
     private static final String USER_BUILDER_ERROR = "";
 
     public static User buildUser(SignInForm form) throws ServiceException {
         User user = null;
                UserDAOImpl dao = UserDAOImpl.getInstance();
-        try {
-            user = dao.checkUserMailAndPassword(form.getLogin(), Hasher.getMD5(form.getPassword()));
-        } catch (DAOException e) {
-            throw new ServiceException(ResourceManager.getProperty(USER_BUILDER_ERROR), e);
-        }
+            try {
+                user = dao.checkUserMailAndPassword(form.getLogin(), Hasher.getMD5(form.getPassword()));
+            } catch (DAOException e) {
+                throw new ServiceException(ResourceManager.getProperty(USER_BUILDER_ERROR), e);
+            }
+
         return user;
     }
 

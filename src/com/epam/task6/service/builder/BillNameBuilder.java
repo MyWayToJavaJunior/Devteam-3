@@ -7,7 +7,7 @@ import java.util.Calendar;
  *
  * Created by olga on 08.05.15.
  */
-public class BillNameBuilder {
+public final class BillNameBuilder {
     /* Default bill name prefix */
     private static final String INVOICE = "INVOICE-";
 

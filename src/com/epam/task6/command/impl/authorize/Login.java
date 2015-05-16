@@ -59,6 +59,7 @@ public class Login extends Command {
      */
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
+
         SignInForm form = VerifiableBuilder.buildSignInForm(request);
         User user = null;
         try {
@@ -81,7 +82,7 @@ public class Login extends Command {
                 return(PARAM_REDIRECT_COMMAND2);
             }
         } else {
-            logger.info(ResourceManager.getProperty(MSG_SIGN_FAILED) + user.getPassword() + "," + user.getEmail());
+           // logger.info(ResourceManager.getProperty(MSG_SIGN_FAILED) + user.getPassword() + "," + user.getEmail());
             request.setAttribute(ATTRIBUTE_INCORRECT_MSG, PARAM_INCORRECT_MSG);
             return(JspPageName.ERROR_PAGE);
         }

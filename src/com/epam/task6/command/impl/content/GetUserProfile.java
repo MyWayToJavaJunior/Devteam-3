@@ -44,7 +44,6 @@ public class GetUserProfile extends Command {
         UserDAOImpl userDAO = UserDAOImpl.getInstance();
         try {
             int user1 = userDAO.getUserByName("olga");
-            System.out.println("111" + user1);
 
         }
         catch (DAOException e){

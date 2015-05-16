@@ -26,14 +26,10 @@ public class AssignProject extends Command {
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
-    private static final String PARAM_SPECIFICATION_ID = "specId";
-    private static final String ATTRIBUTE_FORM_CORRECT = "isFormCorrect";
-    private static final String FORWARD_CUSTOMER_PROJECTS = "redirect.manager.projects";
-    private static final String FORWARD_PREPARE_PROJECT = "redirect.manager.prepare.project";
+
 
     private static final String ATTRIBUTE_PROJECT_NAME = "project_name";
     private static final String ATTRIBUTE_DEVELOPER_NAME = "dev_name";
-    private static final String USER_ATTRIBUTE = "user";
     private static final String ASSIG_REDERICT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
     //project_name
     //dev_name
@@ -52,7 +48,7 @@ public class AssignProject extends Command {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException{
-        User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
+        User user = (User)request.getSession().getAttribute(ATTRIBUTE_USER);
         String nameProject = request.getParameter(ATTRIBUTE_PROJECT_NAME);
         String devName = request.getParameter(ATTRIBUTE_DEVELOPER_NAME);
         try {

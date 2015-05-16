@@ -91,6 +91,10 @@ public class ConnectionPool {
               logger.error(ResourceManager.getProperty(LOGGER_PUT_CONNECTION_ERROR), e);
             }
         }
+        else
+        {
+            logger.debug(ResourceManager.getProperty(LOGGER_PUT_CONNECTION_ERROR));
+        }
     }
 
 }

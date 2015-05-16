@@ -15,14 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * This command get all current projects with status 1.
+ *
  * Created by olga on 29.04.15.
  */
 public class GetCurrentProject extends Command {
     private static GetCurrentProject instance = new GetCurrentProject();
-    private static Logger logger = Logger.getLogger(GetCurrentProject.class);
+    private static final Logger logger = Logger.getLogger(GetCurrentProject.class);
 
-    private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.project";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.current.project";
+    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.current.project";
 
     private static final String USER_ATTRIBUTE = "user";
     private static final String NEW_PROJECT_PAGE = "jsp/developer/currentProjects.jsp";

@@ -68,19 +68,21 @@ public class Controller extends HttpServlet {
      */
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandHelper.getCommand(request);
+        String page;
         try {
-            command.execute(request,response);
-           RequestDispatcher dispatcher = request.getRequestDispatcher(command.execute(request,response));//.forward(request, response);
-            //dispatcher может быть 0
-            if (dispatcher != null){
-                dispatcher.forward(request, response);
-            }
-            else {
-                ///
-            }
+           page = command.execute(request,response);
+
         } catch (CommandException e) {
-            //command.setForward(ResourceManager.getProperty(FORWARD_SERVER_ERROR));
+            page = FORWARD_SERVER_ERROR;
             logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
+        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+        //dispatcher может быть 0
+        if (dispatcher != null){
+            dispatcher.forward(request, response);
+        }
+        else {
+            logger.error(ResourceManager.getProperty(MSG_EXECUTE_ERROR));
         }
     }
 }

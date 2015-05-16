@@ -61,9 +61,16 @@ public class QualificationDAOImpl implements QualificationDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_QUALIFICATIONS), e);
         } finally {
+            ConnectionPool.getInstance().returnConnection(connector);
             try {
-                connector.close();
+                statement.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -96,8 +103,13 @@ public class QualificationDAOImpl implements QualificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }

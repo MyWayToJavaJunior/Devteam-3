@@ -14,15 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * This command get page for show all jobs by spetification.
+ *
  * Created by olga on 04.05.15.
  */
 public class GetJobsBySpetification extends Command {
     public static GetJobsBySpetification instance = new GetJobsBySpetification();
-    private static Logger logger = Logger.getLogger(GetJobsBySpetification.class);
+    private static final Logger logger = Logger.getLogger(GetJobsBySpetification.class);
 
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.job";
     private static final String MSG_EXECUTE_ERROR = "logger.error.show.current.job";
-
 
     private static final String SPETIFICATION_ATTRIBUTE = "spId";
     private static final String JOBS_ATTRIBUTE = "jobs";

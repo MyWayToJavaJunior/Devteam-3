@@ -13,9 +13,9 @@
     <h2 class="form-signin-heading">Войдите</h2>
     <input type="hidden" name="executionCommand" value="LOGIN" />
     <c:out value="Логин:" />
-    <br /> <input class="form-control" type="text" name="email" value="" placeholder="Почтовый адрес"/><br />
+    <br /> <input class="form-control" type="text" name="email" placeholder="Почтовый адрес"/><br />
     <c:out value="Пароль:" />
-    <br /> <input class="form-control" type="password" name="password" value="" placeholder="Пароль" /><br />
+    <br /> <input class="form-control" type="password" name="password" placeholder="Пароль" /><br />
 
     <div class="control-group">
         <div class="controls">

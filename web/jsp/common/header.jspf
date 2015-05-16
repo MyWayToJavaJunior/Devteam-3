@@ -45,13 +45,12 @@
                 <ul class="nav navbar-nav navbar-left">
 
                     <li><a href="index.jsp"><fmt:message key="jsp.common.header.home" bundle="${msg}"/></a></li>
-                    <li><a href="/anon/possibility"><fmt:message key="jsp.common.header.possibilities" bundle="${msg}"/></a></li>
-                    <li><a href="/anon/news"><fmt:message key="jsp.common.header.news" bundle="${msg}"/></a></li>
-                    <li><a href="/anon/faq"><fmt:message key="jsp.common.header.faq" bundle="${msg}"/></a></li>
+                    <li><a href=""><fmt:message key="jsp.common.header.possibilities" bundle="${msg}"/></a></li>
+                    <li><a href=""><fmt:message key="jsp.common.header.news" bundle="${msg}"/></a></li>
+                    <li><a href=""><fmt:message key="jsp.common.header.faq" bundle="${msg}"/></a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="register.jsp"><fmt:message key="jsp.common.header.reg" bundle="${msg}"/></a></li>
                     <li><a href="login.jsp"><fmt:message key="jsp.common.header.login" bundle="${msg}"/></a></li>
                 </ul>
 
@@ -61,12 +60,25 @@
 
         <c:if test="${sessionScope.user != null}">
 
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-left">
 
+            <c:if test="${sessionScope.role == 'CUSTOMER'}">
                     <li><a href="Controller?executionCommand=SHOW_SPECIFICATIONS"><fmt:message key="jsp.common.header.home" bundle="${msg}"/></a></li>
 
-                    <li><a href="/about"><fmt:message key="jsp.common.header.about" bundle="${msg}"/></a></li>
+                    <li><a href="Controller?executionCommand=VIEW_EDIT_CUSTOMER_PROFILE"><fmt:message key="jsp.common.header.about" bundle="${msg}"/></a></li>
+            </c:if>
+                    <c:if test="${sessionScope.role == 'DEVELOPER'}">
+                        <li><a href="Controller?executionCommand=DEV"><fmt:message key="jsp.common.header.home" bundle="${msg}"/></a></li>
+
+                        <li><a href=""><fmt:message key="jsp.common.header.about" bundle="${msg}"/></a></li>
+                    </c:if>
+                    <c:if test="${sessionScope.role == 'MANAGER'}">
+                        <li><a href="Controller?executionCommand=SHOW_PROJECTS"><fmt:message key="jsp.common.header.home" bundle="${msg}"/></a></li>
+
+                        <li><a href=""><fmt:message key="jsp.common.header.about" bundle="${msg}"/></a></li>
+                    </c:if>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -75,6 +87,9 @@
 
                 </ul>
             </div>
+
+
+
         </c:if>
     </div>
 </div>

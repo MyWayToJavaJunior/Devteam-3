@@ -121,6 +121,9 @@ public final class CommandHelper {
                 case VIEW_USER:
                     command = GetUserProfile.getInstance();
                     break;
+                case VIEW_EDIT_CUSTOMER_PROFILE:
+                    command = GetEditCusomerProfile.getInstance();
+                    break;
                 default:
                     command = NoFound.getInstance();
                     break;

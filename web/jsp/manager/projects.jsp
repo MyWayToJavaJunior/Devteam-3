@@ -54,19 +54,7 @@
 
 
             </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="2">
-                    <div align="center">Total = <span class="badge badge-inverse">10</span></div>
-                </td>
-                <td colspan="2">
-                    <div align="center">Todo = <span class="badge">5</span></div>
-                </td>
-                <td colspan="2">
-                    <div align="center">Done = <span class="badge badge-success">5</span></div>
-                </td>
-            </tr>
-            </tfoot>
+
         </table>
 
 

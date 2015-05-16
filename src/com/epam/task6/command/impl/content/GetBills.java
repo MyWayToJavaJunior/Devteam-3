@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class GetBills extends Command {
     private static GetBills instance = new GetBills();
-    private static Logger logger = Logger.getLogger(GetBills.class);
+    private static final Logger logger = Logger.getLogger(GetBills.class);
 
     private static final String MSG_SHOW_BILLS = "logger.activity.customer.show.bills";
     private static final String MSG_ERROR_LOADING_BILLS = "logger.error.show.bills";

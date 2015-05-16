@@ -23,7 +23,7 @@ public class DeleteProject extends Command {
     private static Logger logger = Logger.getLogger(DeleteProject.class);
 
     /** Logger messages */
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
+    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.delete.order";
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";

@@ -83,6 +83,13 @@ public class JobDAOImpl implements JobDAO {
     private static final JobDAOImpl instance = new JobDAOImpl();
     public static JobDAOImpl getInstance() { return  instance; }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws DAOException
+     */
+
     public int getNumberOfJobsInSpecification(int id) throws DAOException {
         int jobs = 0;
         Connection connector = ConnectionPool.getInstance().getConnection();
@@ -101,8 +108,13 @@ public class JobDAOImpl implements JobDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 resultSet.close();
-                preparedStatement.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                preparedStatement.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -115,7 +127,7 @@ public class JobDAOImpl implements JobDAO {
      *
      * @param sid Specification id
      * @return List of Jobs
-     * @throws com.epam.task6.dao.DAOException object if execution of query is failed
+     * @throws DAOException object if execution of query is failed
      */
     public List<Job> getSpecificationJobs(int sid) throws DAOException {
         List<Job> jobs = new ArrayList<Job>();
@@ -142,8 +154,14 @@ public class JobDAOImpl implements JobDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                preparedStatement.close();
-               resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -159,7 +177,8 @@ public class JobDAOImpl implements JobDAO {
      * @param sid Specification id
      * @param name Name of job
      * @param qualification Qualification of required specialists
-     * @throws com.epam.task6.dao.DAOException object if execution of query is failed
+     * @param time Time of job
+     * @throws DAOException object if execution of query is failed
      */
     public void saveJob(int sid, String name, String qualification, String time) throws DAOException {
         Connection connector = ConnectionPool.getInstance().getConnection();
@@ -241,10 +260,16 @@ public class JobDAOImpl implements JobDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+
         }
         return cost;
     }
@@ -279,8 +304,13 @@ public class JobDAOImpl implements JobDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }

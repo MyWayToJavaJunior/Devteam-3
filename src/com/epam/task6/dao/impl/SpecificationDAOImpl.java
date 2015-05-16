@@ -28,10 +28,6 @@ public class SpecificationDAOImpl implements SpetificationDAO {
      */
 
     /** Specification logger messages */
-    private static final String ERROR_GET_SPEC_NAME = "logger.db.error.get.specification.name";
-    private static final String INFO_GET_SPEC_NAME = "logger.db.info.get.specification.name";
-    private static final String ERROR_GET_SPEC_STATUS = "logger.db.error.get.specification.status";
-    private static final String INFO_GET_SPEC_STATUS = "logger.db.info.get.specification.status";
     private static final String ERROR_GET_USER_SPECS = "logger.db.error.get.user.specifications";
     private static final String ERROR_GET_USER_SPECS_BY_ID = "logger.db.error.get.user.specifications";
     private static final String ERROR_GET_USER_SPECS_BY_NAME = "logger.db.error.get.user.specifications";
@@ -41,8 +37,7 @@ public class SpecificationDAOImpl implements SpetificationDAO {
     private static final String INFO_UPDATE_USER_SPECS = "logger.db.info.get.user.specifications";
 
     private static final String INFO_GET_USER_SPECS = "logger.db.info.get.user.specifications";
-    private static final String ERROR_GET_WAITING_SPECS = "logger.db.error.get.waiting.specifications";
-    private static final String INFO_GET_WAITING_SPECS = "logger.db.info.get.waiting.specifications";
+
     private static final String ERROR_SAVE_SPEC = "logger.db.error.save.specification";
     private static final String INFO_SAVE_SPEC = "logger.db.info.save.specification";
     private static final String ERROR_GET_LAST_SPEC_ID = "logger.db.error.get.last.spec.id";
@@ -55,6 +50,12 @@ public class SpecificationDAOImpl implements SpetificationDAO {
     private static final String DEFAULT_SPECIFICATION_STATUS = "waiting";
 
     private static final String ERROR_CLOSE = "111";
+
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_NAME = "name";
+    private static final String ATTRIBUTE_USERID = "uid";
+    private static final String ATTRIBUTE_JOBS = "jobs";
+    private static final String ATTRIBUTE_STATUS = "status";
 
 
     public static final String SQL_SET_SPECIFICATION_STATUS_TO =
@@ -122,7 +123,7 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             preparedStatement = connector.prepareStatement(SQL_FIND_MANAGER_SPECIFICATION);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                list.add(resultSet.getString("name"));
+                list.add(resultSet.getString(ATTRIBUTE_NAME));
             }
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER_SPECS) , e);
@@ -130,8 +131,13 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -177,9 +183,10 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             preparedStatement.setBytes(1, name.getBytes());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                spetification = new Spetification(name, resultSet.getInt("uid"), resultSet.getInt("jobs"),resultSet.getInt("status"));
+                spetification = new Spetification(name, resultSet.getInt(ATTRIBUTE_USERID),
+                        resultSet.getInt(ATTRIBUTE_JOBS),resultSet.getInt(ATTRIBUTE_STATUS));
                 spetification.setStatus(1);
-                spetification.setId(resultSet.getInt("id"));
+                spetification.setId(resultSet.getInt(ATTRIBUTE_ID));
             }
         }
         catch (SQLException e) {
@@ -188,8 +195,13 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -197,6 +209,8 @@ public class SpecificationDAOImpl implements SpetificationDAO {
         return spetification;
 
     }
+
+
 
     public Spetification getSpetificationById(int id) throws DAOException {
         Spetification spetification = null;
@@ -208,9 +222,10 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                spetification = new Spetification(resultSet.getString("name"), resultSet.getInt("uid"), resultSet.getInt("jobs"),resultSet.getInt("status"));
+                spetification = new Spetification(resultSet.getString(ATTRIBUTE_NAME), resultSet.getInt(ATTRIBUTE_USERID),
+                        resultSet.getInt(ATTRIBUTE_JOBS),resultSet.getInt(ATTRIBUTE_STATUS));
                 spetification.setStatus(1);
-                spetification.setId(resultSet.getInt("id"));
+                spetification.setId(resultSet.getInt(ATTRIBUTE_ID));
             }
         }
         catch (SQLException e) {
@@ -219,11 +234,15 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
-
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_USER_SPECS));
         return spetification;
@@ -242,7 +261,7 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             preparedStatement.setInt(2, jobs);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                spetification = new Spetification(resultSet.getInt("id"), jobs, name);
+                spetification = new Spetification(resultSet.getInt(ATTRIBUTE_ID), jobs, name);
                 spetification.setStatus(0);
             }
         }
@@ -252,11 +271,15 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
-
+            try {
+                resultSet.close();
+            }
+            catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
         }
         logger.info(ResourceManager.getProperty(INFO_GET_USER_SPECS));
         return spetification;
@@ -323,8 +346,14 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                preparedStatement.close();
-               resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -371,9 +400,10 @@ public class SpecificationDAOImpl implements SpetificationDAO {
                 count++;
             }
             for (; count < last_number + count_on_page && resultSet.next(); count++) {
-                spetification = new Spetification(resultSet.getInt("jobs"), resultSet.getInt("uid"), resultSet.getString("name"), resultSet.getInt("status"));
-                System.out.print(resultSet.getString("name"));
-                spetification.setId(resultSet.getInt("id"));
+                spetification = new Spetification(resultSet.getInt(ATTRIBUTE_JOBS), resultSet.getInt(ATTRIBUTE_USERID),
+                        resultSet.getString(ATTRIBUTE_NAME), resultSet.getInt(ATTRIBUTE_STATUS));
+                System.out.print(resultSet.getString(ATTRIBUTE_NAME));
+                spetification.setId(resultSet.getInt(ATTRIBUTE_ID));
                 jobList.add(spetification);
             }
 
@@ -383,8 +413,13 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -409,9 +444,10 @@ public class SpecificationDAOImpl implements SpetificationDAO {
                 count++;
             }
             for (; count < last_number + count_on_page && resultSet.next(); count++) {
-                spetification = new Spetification(resultSet.getInt("jobs"), resultSet.getInt("uid"), resultSet.getString("name"), resultSet.getInt("status"));
-                System.out.print(resultSet.getString("name"));
-                spetification.setId(resultSet.getInt("id"));
+                spetification = new Spetification(resultSet.getInt(ATTRIBUTE_JOBS), resultSet.getInt(ATTRIBUTE_USERID),
+                        resultSet.getString(ATTRIBUTE_NAME), resultSet.getInt(ATTRIBUTE_STATUS));
+
+                spetification.setId(resultSet.getInt(ATTRIBUTE_ID));
                 jobList.add(spetification);
             }
 
@@ -421,8 +457,13 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
 
@@ -503,8 +544,13 @@ public class SpecificationDAOImpl implements SpetificationDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }

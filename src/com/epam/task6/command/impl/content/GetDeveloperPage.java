@@ -9,21 +9,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * This class realizes command which save customer specifications.
+ * This command get developer page.
  *
  * Created by olga on 21.04.15.
  */
 public class GetDeveloperPage extends Command {
     private static GetDeveloperPage instance = new GetDeveloperPage();
-    private static Logger logger = Logger.getLogger("activity");
+    private static final Logger logger = Logger.getLogger("activity");
 
     /** Logger messages */
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
+    private static final String MSG_REQUESTED = "";
+    private static final String MSG_EXECUTE_ERROR = "";
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
-    private static final String ATTRIBUTE_FORM_CORRECT = "isFormCorrect";
-    private static final String PARAM_FORWARD_PAGE = "redirect.customer.show.order.form";
+    private static final String ATTRIBUTE_FORM_CORRECT = " ";
+    private static final String PARAM_FORWARD_PAGE = " ";
 
     public static GetDeveloperPage getInstance() {
         return instance;
@@ -40,5 +41,4 @@ public class GetDeveloperPage extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         return (JspPageName.DEVELOPER_PAGE);
     }
-
 }

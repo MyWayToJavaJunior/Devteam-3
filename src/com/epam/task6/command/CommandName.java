@@ -39,7 +39,8 @@ public enum CommandName {
     VIEW_WAITING_ORDER (Role.MANAGER),
     EDIT_ORDER_DETAIL (Role.CUSTOMER),
     VIEW_USER(Role.MANAGER),
-    CREATE_PROJECT (Role.MANAGER);
+    CREATE_PROJECT (Role.MANAGER),
+    VIEW_EDIT_CUSTOMER_PROFILE (Role.CUSTOMER);
 
 
     private Role type;

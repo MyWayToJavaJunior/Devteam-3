@@ -37,6 +37,14 @@ public class ProjectDAOImpl implements ProjectDAO {
     private static final String INFO_GET_LAST_PROJECT_ID = "logger.db.info.get.last.project.id";
     private static final String ERROR_CLOSE = "111";
 
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_NAME = "name";
+    private static final String ATTRIBUTE_SID = "sid";
+    private static final String ATTRIBUTE_TIME = "time";
+    private static final String ATTRIBUTE_DEVID = "devid";
+    private static final String ATTRIBUTE_MANAGER = "manager";
+    private static final String ATTRIBUTE_STATUS = "status";
+
     /**
      * Keeps query which return project created by certain manager. <br />
      * Requires to set manager id.
@@ -198,7 +206,7 @@ public class ProjectDAOImpl implements ProjectDAO {
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
-                id = resultSet.getInt("id");
+                id = resultSet.getInt(ATTRIBUTE_ID);
             }
         }
         catch (SQLException e) {
@@ -207,8 +215,13 @@ public class ProjectDAOImpl implements ProjectDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -238,8 +251,8 @@ public class ProjectDAOImpl implements ProjectDAO {
                 count++;
             }
             for (; count < last_number + count_on_page && resultSet.next(); count++) {
-               project = new Project(resultSet.getInt("id"),resultSet.getString("name"), resultSet.getInt("sid"), resultSet.getString("time"),resultSet.getInt("devid"), resultSet.getInt("manager"),resultSet.getInt("status"));
-                System.out.print(resultSet.getString("name"));
+               project = new Project(resultSet.getInt(ATTRIBUTE_ID),resultSet.getString(ATTRIBUTE_NAME), resultSet.getInt(ATTRIBUTE_SID),
+                       resultSet.getString(ATTRIBUTE_TIME),resultSet.getInt(ATTRIBUTE_DEVID), resultSet.getInt(ATTRIBUTE_MANAGER),resultSet.getInt(ATTRIBUTE_STATUS));
                 list.add(project);
             }
         } catch (SQLException exception) {
@@ -248,8 +261,13 @@ public class ProjectDAOImpl implements ProjectDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                preparedStatement.close();
-               resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -279,7 +297,7 @@ public class ProjectDAOImpl implements ProjectDAO {
                 preparedStatement.setInt(2, status);
                 resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
-                    list.add(resultSet.getString("name"));
+                    list.add(resultSet.getString(ATTRIBUTE_NAME));
                 }
             } catch (SQLException exception) {
                 throw new DAOException(ResourceManager.getProperty(ERROR_GET_MANAGER_PROJECTS) + uid, exception);
@@ -287,8 +305,13 @@ public class ProjectDAOImpl implements ProjectDAO {
                 ConnectionPool.getInstance().returnConnection(connector);
                 try {
                     preparedStatement.close();
-                    resultSet.close();
                 } catch (SQLException e) {
+                    logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+                }
+                try{
+                    resultSet.close();
+                }
+                catch (SQLException e) {
                     logger.error(ResourceManager.getProperty(ERROR_CLOSE));
                 }
             }
@@ -337,8 +360,9 @@ public class ProjectDAOImpl implements ProjectDAO {
                 count++;
             }
             for (; count < last_number + count_on_page && resultSet.next(); count++) {
-                project = new Project(resultSet.getInt("id"),resultSet.getString("name"), resultSet.getInt("sid"), resultSet.getString("time"),resultSet.getInt("devid"), resultSet.getInt("manager"),resultSet.getInt("status"));
-                System.out.print(resultSet.getString("name"));
+                project = new Project(resultSet.getInt(ATTRIBUTE_ID),resultSet.getString(ATTRIBUTE_NAME), resultSet.getInt(ATTRIBUTE_SID),
+                        resultSet.getString(ATTRIBUTE_TIME),resultSet.getInt(ATTRIBUTE_DEVID), resultSet.getInt(ATTRIBUTE_MANAGER),
+                        resultSet.getInt(ATTRIBUTE_STATUS));
                 list.add(project);
             }
         } catch (SQLException exception) {
@@ -347,8 +371,13 @@ public class ProjectDAOImpl implements ProjectDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -406,10 +435,10 @@ public class ProjectDAOImpl implements ProjectDAO {
             preparedStatement.setInt(1, sid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                project.setId(resultSet.getInt("id"));
-                project.setName(resultSet.getString("name"));
-                project.setManager(resultSet.getInt("manager"));
-                project.setSpetification_id(resultSet.getInt("sid"));
+                project.setId(resultSet.getInt(ATTRIBUTE_ID));
+                project.setName(resultSet.getString(ATTRIBUTE_NAME));
+                project.setManager(resultSet.getInt(ATTRIBUTE_MANAGER));
+                project.setSpetification_id(resultSet.getInt(ATTRIBUTE_SID));
             }
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_PROJECT) + sid, e);
@@ -417,8 +446,13 @@ public class ProjectDAOImpl implements ProjectDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -435,7 +469,6 @@ public class ProjectDAOImpl implements ProjectDAO {
      */
     public Project getProjectById(int pid) throws DAOException {
         Project project = new Project();
-       // connector = new DBConnector();
         Connection connector = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
@@ -444,11 +477,11 @@ public class ProjectDAOImpl implements ProjectDAO {
             preparedStatement.setInt(1, pid);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                project.setId(resultSet.getInt("id"));
-                project.setName(resultSet.getString("name"));
-                project.setManager(resultSet.getInt("manager"));
-                project.setSpetification_id(resultSet.getInt("sid"));
-                project.setTime(resultSet.getString("time"));
+                project.setId(resultSet.getInt(ATTRIBUTE_ID));
+                project.setName(resultSet.getString(ATTRIBUTE_NAME));
+                project.setManager(resultSet.getInt(ATTRIBUTE_MANAGER));
+                project.setSpetification_id(resultSet.getInt(ATTRIBUTE_SID));
+                project.setTime(resultSet.getString(ATTRIBUTE_TIME));
             }
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_PROJECT_BY_ID) + pid, e);
@@ -456,8 +489,13 @@ public class ProjectDAOImpl implements ProjectDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -490,8 +528,13 @@ public class ProjectDAOImpl implements ProjectDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }

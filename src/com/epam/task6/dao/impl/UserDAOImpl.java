@@ -40,6 +40,15 @@ public class UserDAOImpl implements UserDAO {
     private static final String ERROR_CLOSE = "111";
 
 
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ATTRIBUTE_FIRSTNAME = "firstName";
+    private static final String ATTRIBUTE_LASTNAME = "lastname";
+    private static final String ATTRIBUTE_QUALIFICATION = "qualification";
+    private static final String ATTRIBUTE_EMAIL = "email";
+    private static final String ATTRIBUTE_PASSWORD = "password";
+    private static final String ATTRIBUTE_ROLE = "role_id";
+    private static final String ATTRIBUTE_NAMES = "names";
+
     /**
      * This query appoints employee to certain job. <br />
      * Requires to set job id and user mail.
@@ -76,6 +85,7 @@ public class UserDAOImpl implements UserDAO {
      * @throws DAOException
      */
 
+
     public User checkUserMailAndPassword(String email, String password) throws DAOException {
         User user = null;
         Connection connector = ConnectionPool.getInstance().getConnection();
@@ -88,9 +98,10 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setBytes(2, password.getBytes());
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                user = new User(resultSet.getInt("id"), resultSet.getString("firstName"), resultSet.getString("lastname"),
-                        resultSet.getString("qualification"), resultSet.getString("email"),
-                        resultSet.getString("password"), getUserRole(resultSet.getInt("role_id")));
+                user = new User(resultSet.getInt(ATTRIBUTE_ID), resultSet.getString(ATTRIBUTE_FIRSTNAME),
+                        resultSet.getString(ATTRIBUTE_LASTNAME),
+                        resultSet.getString(ATTRIBUTE_QUALIFICATION), resultSet.getString(ATTRIBUTE_EMAIL),
+                        resultSet.getString(ATTRIBUTE_PASSWORD), getUserRole(resultSet.getInt(ATTRIBUTE_ROLE)));
             }
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER_MAIL) + email, e);
@@ -99,8 +110,13 @@ public class UserDAOImpl implements UserDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -124,7 +140,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(1, name);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
-                id = resultSet.getInt("id");
+                id = resultSet.getInt(ATTRIBUTE_ID);
             }
         }
         catch (SQLException e) {
@@ -134,8 +150,13 @@ public class UserDAOImpl implements UserDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -166,8 +187,13 @@ public class UserDAOImpl implements UserDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 statement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -185,7 +211,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setInt(1, role);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()){
-                id = resultSet.getInt("id");
+                id = resultSet.getInt(ATTRIBUTE_ID);
             }
         }
         catch (SQLException e) {
@@ -195,8 +221,13 @@ public class UserDAOImpl implements UserDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -204,38 +235,6 @@ public class UserDAOImpl implements UserDAO {
         return id;
     }
 
-   /* public User getUsersById1 (int id) throws DAOException {
-        User user = null;
-
-        try {
-            connector = ConnectionPool.getInstance().getConnection();
-            preparedStatement = connector.prepareStatement(SQL_FIND_USER_MAIL_BY_ID);
-            preparedStatement.setInt(1, id);
-            resultSet = preparedStatement.executeQuery();
-            int count = 0;
-            while (count < last_number && resultSet.next()) {
-                count++;
-            }
-            for (; count < last_number + count_on_page && resultSet.next(); count++) {
-
-                user = new User(resultSet.getInt("id"), resultSet.getString("firstName"), resultSet.getString("lastname"),
-                        resultSet.getString("qualification"), resultSet.getString("email"),
-                        resultSet.getString("password"), getUserRole(resultSet.getInt("role_id")));
-
-            }
-        }
-        catch (SQLException e) {
-            throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER), e);
-        } finally {
-            try {
-                connector.close();
-            } catch (SQLException e) {
-                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
-            }
-        }
-        logger.info(ResourceManager.getProperty(INFO_GET_USER));
-        return user;
-    }*/
     /**
      *
      * @param id
@@ -253,7 +252,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setInt(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                role = RoleDefiner.defineRole(resultSet.getString("names"));
+                role = RoleDefiner.defineRole(resultSet.getString(ATTRIBUTE_NAMES));
             }
             if (role == null){
                throw new DAOException(ResourceManager.getProperty(DATA_ROLE_NOT_FOUND) + id);
@@ -264,8 +263,13 @@ public class UserDAOImpl implements UserDAO {
             ConnectionPool.getInstance().returnConnection(connector);
             try {
                 preparedStatement.close();
-                resultSet.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -285,7 +289,6 @@ public class UserDAOImpl implements UserDAO {
     public void takeEmployee(int jid, String mail) throws DAOException {
         Connection connector = ConnectionPool.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
         try {
             preparedStatement = connector.prepareStatement(SQL_TAKE_EMPLOYEE);
             preparedStatement.setInt(1, jid);

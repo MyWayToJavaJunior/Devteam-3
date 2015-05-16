@@ -18,8 +18,8 @@ public class BillDAOImpl implements BillDAO {
     /** Initializes logger */
     private static Logger logger = Logger.getLogger("db");
 
-    private static int last_number = 0;
-    private static int count_on_page = 100;
+    private static final int last_number = 0;
+    private static final int count_on_page = 100;
 
     /** Logger messages */
     private static final String ERROR_GET_CUSTOMER_BILLS = "logger.db.error.get.customer.bills";
@@ -30,6 +30,11 @@ public class BillDAOImpl implements BillDAO {
     private static final String ERROR_CREATE_BILL = "logger.db.error.create.bill";
     private static final String INFO_CREATE_BILL = "logger.db.info.create.bill";
     private static final String ERROR_CLOSE = "111";
+
+
+    private static final String ATTRIBUTE_ID = "id";
+    private static final String ARRRIBUTE_SUM = "sum";
+    private static final String ATTRIBUTE_PID = "pid";
 
     /**
      * Keeps query which return customer bills order by newest. <br />
@@ -84,18 +89,25 @@ public class BillDAOImpl implements BillDAO {
                 count++;
             }
             for (; count < last_number + count_on_page && resultSet.next(); count++) {
-                bill = new Bill(resultSet.getInt("id"), resultSet.getInt("sum"), resultSet.getInt("pid"));
-                System.out.print(resultSet.getString("name"));
+                bill = new Bill(resultSet.getInt(ATTRIBUTE_ID), resultSet.getInt(ARRRIBUTE_SUM), resultSet.getInt(ATTRIBUTE_PID));
                billList.add(bill);
             }
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_CUSTOMER_BILLS), e);
-        } finally {
+        }
+        finally {
             ConnectionPool.getInstance().returnConnection(connector);
 
             try {
                 preparedStatement.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -132,9 +144,16 @@ public class BillDAOImpl implements BillDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_MANAGER_BILLS), e);
         } finally {
+            ConnectionPool.getInstance().returnConnection(connector);
             try {
-                connector.close();
+                preparedStatement.close();
             } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+            try{
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }
@@ -153,7 +172,6 @@ public class BillDAOImpl implements BillDAO {
         Connection connector = ConnectionPool.getInstance().getConnection();
         Statement statement = null;
         ResultSet resultSet = null;
-       // connector = new DBConnector();
         try {
             connector = ConnectionPool.getInstance().getConnection();
             statement = connector.createStatement();
@@ -166,9 +184,18 @@ public class BillDAOImpl implements BillDAO {
         } catch (SQLException e) {
             throw new DAOException(ResourceManager.getProperty(ERROR_GET_LAST_BILL_NAME), e);
         } finally {
+            ConnectionPool.getInstance().returnConnection(connector);
+
+            try{
+                statement.close();
+            }
+            catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
             try {
-                connector.close();
-            } catch (SQLException e) {
+                resultSet.close();
+            }
+            catch (SQLException e) {
                 logger.error(ResourceManager.getProperty(ERROR_CLOSE));
             }
         }

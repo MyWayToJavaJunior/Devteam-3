@@ -48,10 +48,6 @@
                 <c:if test="${sessionScope.user == null}">
                     <a href="login.jsp"> <button type="btn" class="btn btn-lg btn-primary"><fmt:message key="jsp.common.header.login" bundle="${msg}"/></button></a>
                 </c:if>
-                    or
-                <c:if test="${sessionScope.user == null}">
-                    <a href="register.jsp"><button type="btn" class="btn btn-lg btn-primary"><fmt:message key="jsp.common.header.reg" bundle="${msg}"/></button></a>
-                </c:if>
                </p>
                 </div>
             <div class="col-md-6">

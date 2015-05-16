@@ -15,14 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * This command get all new projects with status 0.
+ *
  * Created by olga on 29.04.15.
  */
 public class GetNewProject extends Command {
     public static GetNewProject instance = new GetNewProject();
     private static Logger logger = Logger.getLogger(GetNewProject.class);
 
-    private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.show.order";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.new.project";
+    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.new.project";
 
 
     private static final String USER_ATTRIBUTE = "user";

@@ -13,13 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This command get page for edit spetification.
+ *
  * Created by olga on 29.04.15.
  */
 public class GetEditOrder extends Command {
     private static GetEditOrder instance = new GetEditOrder();
-    private static Logger logger = Logger.getLogger(GetEditOrder.class);
 
-    private static final String MSG_SHOW_BILLS = "logger.activity.customer.show.bills";
+    private static final Logger logger = Logger.getLogger(GetEditOrder.class);
+
+    private static final String MSG_SHOW_EDIT_ORDER = "logger.activity.customer.show.edit.order";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.edit.order";
 
     private static final String CUSTOMER_EDIT_SPETIFICATION_PAGE = "jsp/customer/editSpetification.jsp";
@@ -56,7 +59,7 @@ public class GetEditOrder extends Command {
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
-        logger.info(ResourceManager.getProperty(MSG_SHOW_BILLS) + user.getId());
+        logger.info(ResourceManager.getProperty(MSG_SHOW_EDIT_ORDER) + user.getId());
         return (CUSTOMER_EDIT_SPETIFICATION_PAGE);
     }
 }
