@@ -9,18 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by olga on 16.05.15.
  */
-public class GetEditCusomerProfile extends Command {
-
-    private static final String EDIT_PROFILE_PAGE = "jsp/customer/editCustomerProfile.jsp";
-
-    private static GetEditCusomerProfile instance = new GetEditCusomerProfile();
-
-    public static GetEditCusomerProfile getInstance() {
-        return instance;
-    }
+public class GetJob extends Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        return EDIT_PROFILE_PAGE;
+
+        return "jsp/customer/addjobs.jsp";
     }
 }

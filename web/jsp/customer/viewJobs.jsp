@@ -61,7 +61,7 @@
                         </c:forEach>
 
                     </table>
-                        <a class="btn btn-lg btn-primary" href="addjobs.jsp">Add Job</a>
+                        <a class="btn btn-lg btn-primary" href="Controller?executionCommand=GET_JOB">Add Job</a>
                 </div>
             </div>
         </div>

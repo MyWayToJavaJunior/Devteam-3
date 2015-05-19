@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class GetJobsBySpetification extends Command {
     private static final String MSG_EXECUTE_ERROR = "logger.error.show.current.job";
 
     private static final String SPETIFICATION_ATTRIBUTE = "spId";
+
     private static final String JOBS_ATTRIBUTE = "jobs";
     private static final String USER_ATTRIBUTE = "user";
     private static final String MANAGER_PAGE = "jsp/customer/viewJobs.jsp";
@@ -43,8 +45,11 @@ public class GetJobsBySpetification extends Command {
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
-        User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
+
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute(USER_ATTRIBUTE);
         int spetificationId = Integer.parseInt(request.getParameter(SPETIFICATION_ATTRIBUTE));
+        session.setAttribute(SPETIFICATION_ATTRIBUTE, spetificationId);
         JobDAOImpl jobDAO = JobDAOImpl.getInstance();
         try {
             List<Job> jobArrayList = jobDAO.getSpecificationJobs(spetificationId);

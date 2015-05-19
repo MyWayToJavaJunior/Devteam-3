@@ -47,6 +47,8 @@ public class CreateOrder extends Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         String name = request.getParameter(RequestParameterName.NAME_ORDER);
         String jobs = request.getParameter(RequestParameterName.JOB_NUMBER);
+
+        System.out.println(222222+name+"   "+jobs);
         SpecificationDAOImpl specificationDAO = SpecificationDAOImpl.getInstance();
 
         HttpSession session = request.getSession();

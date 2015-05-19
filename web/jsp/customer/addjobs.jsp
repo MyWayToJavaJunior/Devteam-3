@@ -19,38 +19,31 @@
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en' : localeValue}"/>
 <fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
 
-<jsp:useBean id="job" type="java.lang.Integer" scope="session" />
-
-<%-----
-<jsp:useBean id="name_job" type="java.util.ArrayList" scope="session" />
-<jsp:useBean id="qualification_job" type="java.util.ArrayList" scope="session" />
-<jsp:useBean id="job_time" type="java.util.ArrayList" scope="session" />
-----------%>
-
 
 <div class="container">
-        <h3 class="form">Step 2</h3>
-
-        <form class="form" role="form" >
-
-            <h4>Job</h4>
+    <div class="col-md-6 col-md-offset-3">
+        <a class="btn btn-lg btn-primary" href="Controller?executionCommand=SHOW_SPECIFICATIONS">Назад</a>
+        <form class="form-signin" action="Controller" method="get">
+            <input type="hidden" name="executionCommand" value="CREATE_JOB" />
+            <h3>Job</h3>
             <div class="form-group">
-                <label for="name_job">Name</label>
+                <label><fmt:message key="jsp.customer.specifications.table.name" bundle="${msg}"/></label>
                 <input type="text" id="name_job" name="name_job"  class="form-control" placeholder="Enter name of job" required="" autofocus="">
             </div>
-
             <div class="form-group">
-                <label for = "qualification_job">Qualification</label>
+                <label for="exampleInputPassword1">Qualification</label>
                 <input type="text" id="qualification_job" name="qualification_job" class="form-control" placeholder="Enter qualification" required="">
             </div>
 
             <div class="form-group">
-                <label for="qualification_job">Time</label>
+                <label for="exampleInputPassword1">Time</label>
                 <input type="text" id="job_time" name="job_time" class="form-control" id="exampleInputPassword1" placeholder="Time">
             </div>
+            <input class="btn" type="submit" value="Create job" /><br />
         </form>
-        <a class="btn btn-lg btn-primary" href="Controller?executionCommand=CREATE_JOB">Create job</a>
+    </div>
 </div>
+
 
 <p></p>
 <p></p>

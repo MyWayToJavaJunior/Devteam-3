@@ -5,7 +5,6 @@ import com.epam.task6.command.CommandException;
 import com.epam.task6.controller.RequestParameterName;
 import com.epam.task6.dao.DAOException;
 import com.epam.task6.dao.impl.JobDAOImpl;
-import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
@@ -26,7 +25,7 @@ public class CreateJob extends Command {
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
-    private static final String ATTRIBUTE_SPETIFICATION = "spetification";
+    private static final String ATTRIBUTE_SPETIFICATION = "spId";
     private static final String ATTRIBUTE_USER = "user";
 
     private static final String CUSTOMER_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
@@ -45,17 +44,16 @@ public class CreateJob extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         HttpSession session = request.getSession();
-        Spetification spetification = (Spetification) session.getAttribute(ATTRIBUTE_SPETIFICATION);
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
 
         String jobName = request.getParameter(RequestParameterName.NAME_JOB);
         String qualification = request.getParameter(RequestParameterName.QUALIFICATION_JOB);
         String jobTime = request.getParameter(RequestParameterName.JOB_TIME);
+        int spId = (int) session.getAttribute(ATTRIBUTE_SPETIFICATION);
 
         try {
-            int countSp = spetification.getJobs();
             JobDAOImpl jobDAO = JobDAOImpl.getInstance();
-            jobDAO.saveJob(spetification.getId(), jobName, qualification, jobTime);
+            jobDAO.saveJob(spId, jobName, qualification, jobTime);
         }
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);

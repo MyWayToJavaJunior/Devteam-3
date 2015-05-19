@@ -40,7 +40,9 @@ public enum CommandName {
     EDIT_ORDER_DETAIL (Role.CUSTOMER),
     VIEW_USER(Role.MANAGER),
     CREATE_PROJECT (Role.MANAGER),
-    VIEW_EDIT_CUSTOMER_PROFILE (Role.CUSTOMER);
+    VIEW_EDIT_CUSTOMER_PROFILE (Role.CUSTOMER),
+    GET_JOB(Role.CUSTOMER),
+    EDIT_PROFILE(Role.ALL);
 
 
     private Role type;
