@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.user.language}"/>
+<fmt:setLocale value="${localeValue}"/>
 <fmt:setBundle basename="com.epam.task6.resource.Resource" var="msg"/>
 <html>
 <head>
@@ -33,7 +33,7 @@
                     <fmt:message key="jsp.500.details" bundle="${msg}"/>
                 </div><br />
                 <div class="error-actions">
-                    <a href="controller?executionCommand=REDIRECT" class="btn btn-primary btn-lg">
+                    <a href="index.jsp" class="btn btn-primary btn-lg">
                         <span class="glyphicon glyphicon-home"></span>
                         <fmt:message key="jsp.500.button.home.value" bundle="${msg}"/>
                     </a>

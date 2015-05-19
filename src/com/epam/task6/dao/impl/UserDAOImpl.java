@@ -59,11 +59,6 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_FIND_USERS_BY_EMIL_AND_PASSWORD =
             "SELECT * FROM users WHERE email = ? AND password = ?";
 
-    private static final String SQL_SELECT_USERS =
-            "SELECT * FROM users WHERE role_id = ?";
-
-    private static final String SQL_FIND_USER_MAIL_BY_ID =
-            "SELECT email FROM users WHERE id = ?";
 
     private static final String SQL_FIND_USER_ROLE_BY_USER_ID =
             "SELECT names FROM roles WHERE id = ?";
@@ -73,9 +68,37 @@ public class UserDAOImpl implements UserDAO {
 
     private static final String SQL_FIND_ALL_DEV_NAME = "SELECT firstName FROM users WHERE role_id = 3";
 
+    private static final String SQL_UPDATE_USER = "UPDATE users SET firstName = ?, lastname = ?, email = ?, password = ? WHERE id = ?";
+
     private static final UserDAOImpl instance = new UserDAOImpl();
 
     public static UserDAOImpl getInstance() { return  instance; }
+
+    public void updateUserProfile(String firstName, String lastName, String email, String password, int id) throws  DAOException {
+        Connection connector = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connector.prepareStatement(SQL_UPDATE_USER);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, email);
+            preparedStatement.setString(4, password);
+            preparedStatement.setInt(5, id);
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            throw new DAOException(ResourceManager.getProperty(ERROR_GET_USER) + id, e);
+        } finally {
+            ConnectionPool.getInstance().returnConnection(connector);
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+        }
+        logger.info(ResourceManager.getProperty(INFO_GET_USER) + id);
+    }
+
 
     /**
      *

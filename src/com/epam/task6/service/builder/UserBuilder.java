@@ -26,6 +26,7 @@ public final class UserBuilder {
                 throw new ServiceException(ResourceManager.getProperty(USER_BUILDER_ERROR), e);
             }
 
+
         return user;
     }
 

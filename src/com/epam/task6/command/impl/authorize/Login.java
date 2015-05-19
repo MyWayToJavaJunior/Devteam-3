@@ -67,6 +67,10 @@ public class Login extends Command {
         } catch (ServiceException e) {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
         }
+        catch (NullPointerException e)
+        {
+            return(JspPageName.ERROR_PAGE);
+        }
 
         if (null != user) {
             HttpSession session = request.getSession();
@@ -82,7 +86,6 @@ public class Login extends Command {
                 return(PARAM_REDIRECT_COMMAND2);
             }
         } else {
-           // logger.info(ResourceManager.getProperty(MSG_SIGN_FAILED) + user.getPassword() + "," + user.getEmail());
             request.setAttribute(ATTRIBUTE_INCORRECT_MSG, PARAM_INCORRECT_MSG);
             return(JspPageName.ERROR_PAGE);
         }

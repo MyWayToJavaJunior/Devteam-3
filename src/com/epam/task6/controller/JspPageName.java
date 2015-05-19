@@ -6,7 +6,7 @@ public final class JspPageName {
     public static final String USER_PAGE = "jsp/userPage.jsp";
     public static final String REGISTER_PAGE = "register.jsp";
     public static final String LOGIN_PAGE = "login.jsp";
-    public static final String ERROR_PAGE = "error.jsp";
+    public static final String ERROR_PAGE = "jsp/error/500.jsp";
 
     public static final String CUSTOMER_PAGE = "jsp/customer/showSpetification.jsp";
     public static final String MANAGER_PAGE = "jsp/manager/projects.jsp";

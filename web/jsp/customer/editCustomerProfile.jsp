@@ -43,12 +43,7 @@
                         <input id="lastName" name="lastName" class="form-control" value="${user.lastName}" type="text">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-lg-3 control-label">Company:</label>
-                    <div class="col-lg-8">
-                        <input id="company" name="company" class="form-control" value="" type="text">
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <label class="col-lg-3 control-label">Email:</label>
                     <div class="col-lg-8">
