@@ -2,7 +2,6 @@ package com.epam.task6.command.impl.authorize;
 
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
-import com.epam.task6.controller.JspPageName;
 import com.epam.task6.domain.user.Role;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.domain.verifable.SignInForm;
@@ -25,26 +24,30 @@ import javax.servlet.http.HttpSession;
 public class Login extends Command {
 
     private static Login instance = new Login();
-    //private static Lock lock = new ReentrantLock();
-    private static Logger logger = Logger.getLogger(Login.class);
 
-    /* Logger messages */
+    private static final Logger logger = Logger.getLogger(Login.class);
+
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.login";
     private static final String MSG_SIGNED_IN = "logger.activity.user.signed.in";
     private static final String MSG_SIGN_FAILED = "logger.activity.user.sign.failed";
 
-    /* Keeps session lifecycle */
+    /** Keeps session lifecycle */
     private static final int SESSION_LIFECYCLE = 600;
 
-    /* Attributes and parameters */
+    /** Attributes and parameters */
     private static final String PARAM_USER = "user";
     private static final String PARAM_ROLE = "role";
-    private static final String PARAM_REDIRECT_COMMAND = "Controller?executionCommand=SHOW_SPECIFICATIONS";
-    private static final String PARAM_REDIRECT_COMMAND1 = "Controller?executionCommand=SHOW_PROJECTS";
-    private static final String PARAM_REDIRECT_COMMAND2 = "Controller?executionCommand=DEV";
-
     private static final String PARAM_INCORRECT_MSG = "Incorrect login or password";
     private static final String ATTRIBUTE_INCORRECT_MSG = "errorLoginPasswordMessage";
+
+    /** Forward pages */
+    private static final String PARAM_REDIRECT_COMMAND_CUSTOMER = "Controller?executionCommand=SHOW_SPECIFICATIONS";
+    private static final String PARAM_REDIRECT_COMMAND_MANAGER = "Controller?executionCommand=SHOW_PROJECTS";
+    private static final String PARAM_REDIRECT_COMMAND_DEVELOPER = "Controller?executionCommand=DEV";
+    public static final String ERROR_PAGE = "jsp/error/500.jsp";
+
+
 
     public static Login getInstance(){
         return instance;
@@ -59,17 +62,21 @@ public class Login extends Command {
      */
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
 
-
         SignInForm form = VerifiableBuilder.buildSignInForm(request);
         User user = null;
         try {
             user = UserBuilder.buildUser(form);
+
         } catch (ServiceException e) {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
         }
-        catch (NullPointerException e)
+        catch (NumberFormatException e)
         {
-            return(JspPageName.ERROR_PAGE);
+            return ERROR_PAGE;
+        }
+        catch (Exception e)
+        {
+            return ERROR_PAGE;
         }
 
         if (null != user) {
@@ -79,15 +86,15 @@ public class Login extends Command {
             setSessionLifecycle(request, user);
             logger.info(ResourceManager.getProperty(MSG_SIGNED_IN) + user.getId());
             if (user.getRole() == Role.CUSTOMER) {
-                return  (PARAM_REDIRECT_COMMAND);
+                return  PARAM_REDIRECT_COMMAND_CUSTOMER;
             } else if (user.getRole() == Role.MANAGER) {
-                return(PARAM_REDIRECT_COMMAND1);
+                return PARAM_REDIRECT_COMMAND_MANAGER;
             } else {
-                return(PARAM_REDIRECT_COMMAND2);
+                return PARAM_REDIRECT_COMMAND_DEVELOPER;
             }
         } else {
             request.setAttribute(ATTRIBUTE_INCORRECT_MSG, PARAM_INCORRECT_MSG);
-            return(JspPageName.ERROR_PAGE);
+            return ERROR_PAGE;
         }
     }
 

@@ -15,22 +15,23 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Implementing command pattern.
+ * his command get page with spetification.
  *
  * Created by olga on 19.04.15.
  */
 public class GetSpecifications extends Command {
 
     private static GetSpecifications instance = new GetSpecifications();
-    private static Logger logger = Logger.getLogger(GetSpecifications.class);
+    private static final Logger logger = Logger.getLogger(GetSpecifications.class);
 
-    /* Logger messages */
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.specifications";
     private static final String MSG_REQUESTED = "logger.error.execute.view.project";
 
-    /* Attributes and parameters */
-    private static final String LIST_OF_SPECIFICATIONS = "specificationsList";
+    /** Attributes and parameters */
     private static final String USER_ATTRIBUTE = "user";
+
+    /** Forward page */
     private static final String SPECIFICATIONS_PAGE = "jsp/customer/showSpetification.jsp";
 
 
@@ -39,10 +40,11 @@ public class GetSpecifications extends Command {
     }
 
     /**
-     * This method executes the command.
+     * Implementation of command that get page with spetification.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
+     * @return rederict page or command.
      * @throws CommandException if an error has occurred on runtime
      */
    @Override
@@ -60,7 +62,7 @@ public class GetSpecifications extends Command {
            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
        }
        logger.info(ResourceManager.getProperty(MSG_REQUESTED) + user.getId());
-       return (SPECIFICATIONS_PAGE);
+       return SPECIFICATIONS_PAGE;
    }
 }
 

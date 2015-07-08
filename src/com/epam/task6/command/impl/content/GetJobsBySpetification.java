@@ -23,13 +23,16 @@ public class GetJobsBySpetification extends Command {
     public static GetJobsBySpetification instance = new GetJobsBySpetification();
     private static final Logger logger = Logger.getLogger(GetJobsBySpetification.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.job";
     private static final String MSG_EXECUTE_ERROR = "logger.error.show.current.job";
 
+    /** Attributes and parameters */
     private static final String SPETIFICATION_ATTRIBUTE = "spId";
-
     private static final String JOBS_ATTRIBUTE = "jobs";
     private static final String USER_ATTRIBUTE = "user";
+
+    /** Forward pages */
     private static final String MANAGER_PAGE = "jsp/customer/viewJobs.jsp";
 
     public static GetJobsBySpetification getInstance() {
@@ -37,10 +40,11 @@ public class GetJobsBySpetification extends Command {
     }
 
     /**
-     * This method invalidates user session
+     * Implementation of command that get page for show all jobs by spetification.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
+     * @return rederict page or command
      * @throws CommandException If execution is failed
      */
     @Override
@@ -61,6 +65,6 @@ public class GetJobsBySpetification extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
-        return(MANAGER_PAGE);
+        return MANAGER_PAGE;
     }
 }

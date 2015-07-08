@@ -42,6 +42,7 @@ public enum CommandName {
     CREATE_PROJECT (Role.MANAGER),
     VIEW_EDIT_CUSTOMER_PROFILE (Role.CUSTOMER),
     GET_JOB(Role.CUSTOMER),
+    REDIRECT(Role.ALL),
     EDIT_PROFILE(Role.ALL);
 
 

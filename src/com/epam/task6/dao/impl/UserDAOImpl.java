@@ -70,6 +70,8 @@ public class UserDAOImpl implements UserDAO {
 
     private static final String SQL_UPDATE_USER = "UPDATE users SET firstName = ?, lastname = ?, email = ?, password = ? WHERE id = ?";
 
+
+    private static final String SQL_REGISTER_USER = "INSERT INTO users (email, password, firstName, lastname, role_id, qualification) VALUES (?, ?, ?, ?,?,?)";
     private static final UserDAOImpl instance = new UserDAOImpl();
 
     public static UserDAOImpl getInstance() { return  instance; }
@@ -330,4 +332,32 @@ public class UserDAOImpl implements UserDAO {
         logger.info(ResourceManager.getProperty(INFO_TAKE_EMPLOYEE) + mail + "," + jid);
     }
 
+
+    public void registerUser(String email, String password, String firstName, String secondName, int role_id, int qualification) throws DAOException {
+        Connection connector = ConnectionPool.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            connector = ConnectionPool.getInstance().getConnection();
+            preparedStatement = connector.prepareStatement(SQL_REGISTER_USER);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            preparedStatement.setString(3, firstName);
+            preparedStatement.setString(4, secondName);
+            preparedStatement.setInt(5, role_id);
+            preparedStatement.setInt(6, qualification);
+
+            preparedStatement.execute();
+        }
+        catch (SQLException e) {
+            throw new DAOException(ResourceManager.getProperty(ERROR_GET_PASSWORD) , e);
+        }  finally {
+            ConnectionPool.getInstance().returnConnection(connector);
+            try {
+                preparedStatement.close();
+            } catch (SQLException e) {
+                logger.error(ResourceManager.getProperty(ERROR_CLOSE));
+            }
+        }
+        logger.info(ResourceManager.getProperty(INFO_GET_USER));
+    }
 }

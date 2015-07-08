@@ -14,31 +14,36 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * Implementing command pattern.
+ * This command get wating orders page
  *
  * Created by olga on 05.05.15.
  */
 public class GetWaitingOrder extends Command
 {
     private static GetWaitingOrder instance = new GetWaitingOrder();
-    private static Logger logger = Logger.getLogger(GetWaitingOrder.class);
+    private static final Logger logger = Logger.getLogger(GetWaitingOrder.class);
+
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.db.error.get.waiting.specifications";
     private static final String MSG_REQUESTED = "logger.activity.requested.waiting.orders";
 
-    /* Attributes and parameters */
+    /** Attributes and parameters */
     private static final String LIST_OF_SPECIFICATIONS = "spetification";
     private static final String USER_ATTRIBUTE = "user";
-    private static final String PAGE = "jsp/manager/watingOrders.jsp";
+
+    /** Forward page */
+    private static final String WAITING_ORDERS_PAGE = "jsp/manager/watingOrders.jsp";
 
     public static GetWaitingOrder getInstance() {
         return instance;
     }
 
     /**
-     * Implementation of command
+     * Implementation of command that get wating orders page
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
+     * @return rederict page or command
      * @throws CommandException If an error has occurred on runtime
      */
     @Override
@@ -55,7 +60,7 @@ public class GetWaitingOrder extends Command
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
         }
-           logger.info(ResourceManager.getProperty(MSG_REQUESTED) + user.getId());
-        return(PAGE);
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED) + user.getId());
+        return WAITING_ORDERS_PAGE;
     }
 }

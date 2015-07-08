@@ -1,18 +1,19 @@
 package com.epam.task6.filter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 /**
  * Created by olga on 02.05.15.
  */
-
+@WebFilter()
 public class EncodingFilter implements Filter {
     private String encoding;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        encoding = filterConfig.getInitParameter("encoding");
+        encoding = filterConfig.getInitParameter(encoding);
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.epam.task6.command.CommandException;
 import com.epam.task6.dao.DAOException;
 import com.epam.task6.dao.impl.UserDAOImpl;
 import com.epam.task6.domain.user.User;
+import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This command edit profile.
+ *
  * Created by olga on 18.05.15.
  */
 public class EditProfile extends Command {
     private static EditProfile instance = new EditProfile();
-    private static Logger logger = Logger.getLogger(DeleteProject.class);
+    private static final Logger logger = Logger.getLogger(EditProfile.class);
+
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
+
+    /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_FIRST_NAME = "firstName";
     private static final String ATTRIBUTE_LAST_NAME = "lastName";
@@ -25,11 +33,21 @@ public class EditProfile extends Command {
     private static final String ATTRIBUTE_PASS1 = "pass1";
     private static final String ATTRIBUTE_PASS2 = "pass2";
 
+    /** Forward page */
+    private static final String CUSTOMER_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
 
     public static EditProfile getInstance() {
         return instance;
     }
 
+    /**
+     * Implementation of command that edit profile.
+     *
+     * @param request HttpServletRequest object
+     * @param response HttpServletResponse object
+     * @return rederict page or command
+     * @throws CommandException If command can't be executed.
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
         HttpSession session = request.getSession();
@@ -46,8 +64,10 @@ public class EditProfile extends Command {
                 userDAO.updateUserProfile(firstName, lastName, email, pass1, user.getId());
             }
         } catch (DAOException e) {
-            e.printStackTrace();
+            throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
+
         }
-        return "Controller?executionCommand=SHOW_SPECIFICATIONS";
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
+        return CUSTOMER_PAGE;
     }
 }

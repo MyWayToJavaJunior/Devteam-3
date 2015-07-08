@@ -20,7 +20,7 @@ public class EditProject extends Command {
 
     private static EditProject instance = new EditProject();
     /** Initialize activity logger */
-    private static Logger logger = Logger.getLogger(DeleteProject.class);
+    private static final Logger logger = Logger.getLogger(DeleteProject.class);
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";

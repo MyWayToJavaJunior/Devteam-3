@@ -20,11 +20,14 @@ public class GetBills extends Command {
     private static GetBills instance = new GetBills();
     private static final Logger logger = Logger.getLogger(GetBills.class);
 
+    /** Logger messages */
     private static final String MSG_SHOW_BILLS = "logger.activity.customer.show.bills";
     private static final String MSG_ERROR_LOADING_BILLS = "logger.error.show.bills";
 
+    /** Forward pages */
     private static final String CUSTOMER_BILLS_PAGE = "jsp/customer/bills.jsp";
 
+    /** Attributes */
     private static final String LIST_OF_BILLS = "billsList";
     private static final String USER_ATTRIBUTE = "user";
 
@@ -34,7 +37,7 @@ public class GetBills extends Command {
     }
 
     /**
-     * This method invalidates user session
+     * Implementation of command that get bills
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object

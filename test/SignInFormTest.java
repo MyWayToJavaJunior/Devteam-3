@@ -10,27 +10,26 @@ import org.junit.Test;
  * Created by olga on 05.05.15.
  */
 public class SignInFormTest {
-    //private SignInForm form = new SignInForm();
-    //private Validator validator;
+    private SignInForm form = new SignInForm();
+    private Validator validator;
 
     @Before
     public void init() {
-       // ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        //validator = factory.getValidator();
+
     }
 
     @Test
     public void testForm() {
         UserDAOImpl loginDAO = UserDAOImpl.getInstance();
         try {
-            User user = loginDAO.checkUserMailAndPassword("olga@com.com", "olga");
+            User user = loginDAO.checkUserMailAndPassword("olga@com.com", "e44d46e0bb9691cf448a9bb19391e8ab");
         } catch (DAOException e) {
             e.printStackTrace();
         }
-        //form.setLogin("olga@com.com");
-       // form.setPassword("olga");
-       // Set<ConstraintViolation<SignInForm>> violations = validator.validate(form);
-       // assertEquals(violations.size(), 0);
+        form.setLogin("olga@com.com");
+        form.setPassword("e44d46e0bb9691cf448a9bb19391e8ab");
+        Set<ConstraintViolation<SignInForm>> violations = validator.validate(form);
+        assertEquals(violations.size(), 0);
     }
 
 }

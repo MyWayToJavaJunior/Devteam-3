@@ -1,13 +1,13 @@
 package com.epam.task6.command;
 
 
-import com.epam.task6.command.impl.content.GetDeveloperPage;
-import com.epam.task6.command.impl.navigate.NoFound;
 import com.epam.task6.command.impl.authorize.Login;
 import com.epam.task6.command.impl.authorize.Logout;
 import com.epam.task6.command.impl.content.*;
 import com.epam.task6.command.impl.handle.*;
 import com.epam.task6.command.impl.language.ChangeLanguage;
+import com.epam.task6.command.impl.navigate.NoFound;
+import com.epam.task6.command.impl.navigate.RedirectToDefault;
 import com.epam.task6.resource.ResourceManager;
 import com.epam.task6.service.checker.AccessChecker;
 import org.apache.log4j.Logger;
@@ -43,6 +43,9 @@ public final class CommandHelper {
                 case LOGOUT:
                     command = Logout.getInstance();
                     break;
+                //case REGISTER:
+                  //  command = Register.getInstance();
+                    //break;
                 case SHOW_SPECIFICATIONS:
                     command = GetSpecifications.getInstance();
                     break;
@@ -116,19 +119,20 @@ public final class CommandHelper {
                     command = GetWaitingOrder.getInstance();
                     break;
                 case CREATE_PROJECT:
-                    command = GetProject.getInstance();
+                    command = CreateProject.getInstance();
                     break;
-                case VIEW_USER:
-                    command = GetUserProfile.getInstance();
-                    break;
+
                 case VIEW_EDIT_CUSTOMER_PROFILE:
                     command = GetEditCusomerProfile.getInstance();
                     break;
                 case GET_JOB:
-                    command = new GetJob();
+                    command = GetJob.getInstance();
                     break;
                 case EDIT_PROFILE:
                     command = EditProfile.getInstance();
+                    break;
+                case REDIRECT:
+                    command = RedirectToDefault.getInstance();
                     break;
                 default:
                     command = NoFound.getInstance();

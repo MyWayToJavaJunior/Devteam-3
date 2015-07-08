@@ -21,11 +21,14 @@ public class GetEditProject extends Command {
     private static GetEditProject instance = new GetEditProject();
     private static final Logger logger = Logger.getLogger(GetEditProject.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.edit.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.edit.project";
 
+    /** Forward pages */
     private static final String CUSTOMER_EDIT_PROJECT = "jsp/manager/editProject.jsp";
 
+    /** Attributes and parameters */
     private static final String USER_ATTRIBUTE = "user";
     private static final String ATTRIBUTE_PROJECT_ID = "projectId";
     private static final String ATTRIBUTE_PROJECT = "project";
@@ -36,11 +39,11 @@ public class GetEditProject extends Command {
     }
 
     /**
-     * This method invalidates user session
-     *
+     * Implementation of command that get page for edit project.
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
-     * @throws CommandException If execution is failed
+     * @return rederict page or command
+     * @throws CommandException
      */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws CommandException {
@@ -59,6 +62,6 @@ public class GetEditProject extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
-        return(CUSTOMER_EDIT_PROJECT);
+        return CUSTOMER_EDIT_PROJECT;
     }
 }

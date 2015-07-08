@@ -23,10 +23,14 @@ public class GetCurrentProject extends Command {
     private static GetCurrentProject instance = new GetCurrentProject();
     private static final Logger logger = Logger.getLogger(GetCurrentProject.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.current.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.current.project";
 
+    /** Attributes */
     private static final String USER_ATTRIBUTE = "user";
+
+    /** Forward pages */
     private static final String NEW_PROJECT_PAGE = "jsp/developer/currentProjects.jsp";
 
 
@@ -35,7 +39,7 @@ public class GetCurrentProject extends Command {
     }
 
     /**
-     * This method invalidates user session
+     * Implementation of command that get current project.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
@@ -56,7 +60,7 @@ public class GetCurrentProject extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
-        return(NEW_PROJECT_PAGE);
+        return NEW_PROJECT_PAGE;
 
     }
 }

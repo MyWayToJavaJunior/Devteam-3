@@ -71,13 +71,9 @@
             </c:if>
                     <c:if test="${sessionScope.role == 'DEVELOPER'}">
                         <li><a href="Controller?executionCommand=DEV"><fmt:message key="jsp.common.header.home" bundle="${msg}"/></a></li>
-
-                        <li><a href=""><fmt:message key="jsp.common.header.about" bundle="${msg}"/></a></li>
                     </c:if>
                     <c:if test="${sessionScope.role == 'MANAGER'}">
                         <li><a href="Controller?executionCommand=SHOW_PROJECTS"><fmt:message key="jsp.common.header.home" bundle="${msg}"/></a></li>
-
-                        <li><a href=""><fmt:message key="jsp.common.header.about" bundle="${msg}"/></a></li>
                     </c:if>
                 </ul>
 

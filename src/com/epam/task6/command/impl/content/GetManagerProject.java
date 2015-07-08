@@ -16,20 +16,23 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * Implementing command pattern.
+ * This command get all managed projects.
  *
  * Created by olga on 28.04.15.
  */
 public class GetManagerProject extends Command {
     private static GetManagerProject instance = new GetManagerProject();
-    private static Logger logger = Logger.getLogger(GetManagerProject.class);
+    private static final Logger logger = Logger.getLogger(GetManagerProject.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.managed.show.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.project";
 
-
+    /** Attributes and parameters */
     private static final String PROJECT_ATTRIBUTE = "project";
     private static final String USER_ATTRIBUTE = "user";
+
+    /** Forward pages */
     private static final String MANAGER_PAGE = "jsp/manager/projects.jsp";
 
     public static GetManagerProject getInstance() {
@@ -37,10 +40,11 @@ public class GetManagerProject extends Command {
     }
 
     /**
-     * This method invalidates user session
+     *  Implementation of command that get all managed projects.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
+     * @return rederict page or command
      * @throws CommandException If execution is failed
      */
     @Override

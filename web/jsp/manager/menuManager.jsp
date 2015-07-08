@@ -13,7 +13,6 @@
                 <li class="active"><a href=""><fmt:message key="jsp.customer.menu.specifications.add" bundle="${msg}"/></a></li>
                 <li><a href="Controller?executionCommand=SHOW_PROJECTS"><fmt:message key="jsp.manager.projects.page.title" bundle="${msg}"/></a></li>
                 <li><a href="Controller?executionCommand=VIEW_WAITING_ORDER"><fmt:message key="jsp.manager.waiting.orders.body.header" bundle="${msg}"/></a></li>
-                <li><a href=""><fmt:message key="jsp.manager.bills.body.header" bundle="${msg}"/></a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li><a href="Controller?executionCommand=SHOW_ASSIGN_PROJECT_FORM"><fmt:message key="jsp.manager.assign.orders.body.header" bundle="${msg}"/></a></li>

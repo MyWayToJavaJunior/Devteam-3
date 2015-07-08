@@ -15,12 +15,22 @@ import com.epam.task6.util.Hasher;
  */
 public final class UserBuilder {
 
+    private static  boolean b = true;
     private static final String USER_BUILDER_ERROR = "";
 
     public static User buildUser(SignInForm form) throws ServiceException {
         User user = null;
                UserDAOImpl dao = UserDAOImpl.getInstance();
             try {
+
+                if (Hasher.getMD5(form.getPassword()).isEmpty())
+                {
+                    b = false;
+                }
+                if (form.getLogin().isEmpty())
+                {
+                    b = false;
+                }
                 user = dao.checkUserMailAndPassword(form.getLogin(), Hasher.getMD5(form.getPassword()));
             } catch (DAOException e) {
                 throw new ServiceException(ResourceManager.getProperty(USER_BUILDER_ERROR), e);
@@ -28,6 +38,10 @@ public final class UserBuilder {
 
 
         return user;
+    }
+
+    public static boolean util (){
+        return b;
     }
 
 }

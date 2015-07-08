@@ -11,16 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 public class NoFound extends Command {
 
     private static NoFound instance = new NoFound();
-    /* Initialize activity logger */
-    private static Logger logger = Logger.getLogger("activity");
+    private static Logger logger = Logger.getLogger(NoFound.class);
 
-    /* Logger messages */
+    /** Logger messages */
     private static final String MSG_ACTIVITY = "logger.activity.requested.not.found";
 
-    /* Forward page */
+    /** Forward page */
     private static final String FORWARD_NOT_FOUND = "forward.error.404";
 
-    /* Parameters */
+    /** Parameters */
     private static final String PARAM_EXECUTION_COMMAND = "executionCommand";
 
     public static NoFound getInstance() {

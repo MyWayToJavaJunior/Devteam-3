@@ -15,21 +15,27 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This command create order.
+ *
  * Created by olga on 26.04.15.
  */
 public class CreateOrder extends Command {
 
     private static CreateOrder instance = new CreateOrder();
-    /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(CreateOrder.class);
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_JOB = "job";
     private static final String ATTRIBUTE_SPETIFICATION = "spetification";
+    public static final String ERROR_PAGE = "jsp/error/500.jsp";
+
+
+    /** Forward page */
     private static final String CUSTOMER_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
 
     public static CreateOrder getInstance() {
@@ -37,10 +43,11 @@ public class CreateOrder extends Command {
     }
 
     /**
-     *  This method executes the command.
+     *  Implementation of command that create order.
      *
      *  @param request HttpServletRequest object
      *  @param response HttpServletResponse object
+     *  @return rederict page or command
      *  @throws CommandException  If command can't be executed.
      */
     @Override
@@ -48,7 +55,6 @@ public class CreateOrder extends Command {
         String name = request.getParameter(RequestParameterName.NAME_ORDER);
         String jobs = request.getParameter(RequestParameterName.JOB_NUMBER);
 
-        System.out.println(222222+name+"   "+jobs);
         SpecificationDAOImpl specificationDAO = SpecificationDAOImpl.getInstance();
 
         HttpSession session = request.getSession();
@@ -62,7 +68,14 @@ public class CreateOrder extends Command {
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        return (CUSTOMER_PAGE);
+        catch (NumberFormatException e)
+        {
+          // session.invalidate();
+            return ERROR_PAGE;
+        }
+
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
+        return CUSTOMER_PAGE;
     }
 
 }

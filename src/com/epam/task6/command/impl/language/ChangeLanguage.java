@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This command for change language.
+ *
  * Created by olga on 28.04.15.
  */
 public class ChangeLanguage extends Command {
@@ -21,9 +23,7 @@ public class ChangeLanguage extends Command {
     private static Logger logger = Logger.getLogger(ChangeLanguage.class);
 
     /** Logger messages */
-    private static final String MSG_EXECUTE_ERROR = "logger.error.execute.order.form";
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
-
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
@@ -31,18 +31,16 @@ public class ChangeLanguage extends Command {
     private static final String SESSION_LOCALE_ATTRIBUTE = "localeValue";
     private static final String SESSION_PAGE_ATTRIBUTE = "page";
 
-    /** Forward page */
-    private static final String REDIRECT_TO_DEFAULT_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
-
     public static ChangeLanguage getInstance() {
         return instance;
     }
 
     /**
-     *  This method executes the command.
+     *   Implementation of command that change language.
      *
      *  @param request HttpServletRequest object
      *  @param response HttpServletResponse object
+     *  @return rederict page or command
      *  @throws CommandException  If command can't be executed.
      */
     @Override

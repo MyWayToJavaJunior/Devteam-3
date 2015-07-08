@@ -3,6 +3,7 @@ package com.epam.task6.command.impl.authorize;
 import com.epam.task6.command.Command;
 import com.epam.task6.command.CommandException;
 import com.epam.task6.domain.user.User;
+import com.epam.task6.resource.ResourceManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,16 +17,16 @@ import javax.servlet.http.HttpSession;
  */
 public class Logout extends Command{
     private static Logout instance = new Logout();
-    /* Initializes activity logger */
-    private static Logger logger = Logger.getLogger(Logout.class);
+    /** Initializes activity logger */
+    private static final Logger logger = Logger.getLogger(Logout.class);
 
-    /* Logger messages */
+    /** Logger messages */
     private static final String MSG_SIGN_OUT = "logger.activity.user.sign.out";
 
-    /* Forward pages */
+    /** Forward pages */
     private static final String LOGIN_PAGE = "login.jsp";
 
-    /* Attributes */
+    /** Attributes */
     private static final String USER_ATTRIBUTE = "user";
 
     public static Logout getInstance() {
@@ -33,7 +34,7 @@ public class Logout extends Command{
     }
 
     /**
-     * This method invalidates user session
+     *  Implementation of logout command
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
@@ -44,8 +45,7 @@ public class Logout extends Command{
         User user = (User)request.getSession().getAttribute(USER_ATTRIBUTE);
         HttpSession session=request.getSession();
         session.invalidate();
-        //logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
+        logger.info(ResourceManager.getProperty(MSG_SIGN_OUT) + user.getId());
         return LOGIN_PAGE;
     }
-
 }

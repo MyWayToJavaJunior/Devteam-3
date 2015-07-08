@@ -12,22 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This command get order form.
+ *
  * Created by olga on 26.04.15.
  */
 public class GetOrderForm extends Command {
     private static GetOrderForm instance = new GetOrderForm();
-    /* Initializes activity logger */
-    private static Logger logger = Logger.getLogger(GetOrderForm.class);
+    private static final Logger logger = Logger.getLogger(GetOrderForm.class);
 
-    /* Logger messages */
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.order.form";
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
 
-    /* Attributes and parameters */
+    /** Attributes and parameters */
     private static final String PARAM_QUALIFICATIONS = "qualifications";
     private static final String USER_ATTRIBUTE = "user";
 
-    /* Forward page */
+    /**Forward page */
     private static final String FORWARD_ORDER_FORM = "jsp/customer/addSpetification.jsp";
 
     public static GetOrderForm getInstance() {
@@ -35,10 +36,11 @@ public class GetOrderForm extends Command {
     }
 
     /**
-     * This method invalidates user session
+     * Implementation of command that get order form.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
+     * @return rederict page or command
      * @throws CommandException If execution is failed
      */
     @Override
@@ -51,7 +53,7 @@ public class GetOrderForm extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
-        return (FORWARD_ORDER_FORM);
+        return FORWARD_ORDER_FORM;
     }
 
 }

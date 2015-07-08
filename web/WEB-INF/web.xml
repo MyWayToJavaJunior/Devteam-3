@@ -11,7 +11,4 @@
             <taglib-location>/WEB-INF/tld/ctaglib.tld</taglib-location>
         </taglib>
     </jsp-config>
-
-
-
 </web-app>

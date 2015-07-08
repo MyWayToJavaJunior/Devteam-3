@@ -10,7 +10,7 @@
                 <li><a href="Controller?executionCommand=SHOW_ORDER_FORM"><fmt:message key="jsp.customer.add.specifications" bundle="${msg}"/></a></li>
                 <li><a href="Controller?executionCommand=SHOW_SPECIFICATIONS"><fmt:message key="jsp.customer.specifications" bundle="${msg}"/></a></li>
                 <li><a href="Controller?executionCommand=SHOW_BILLS"><fmt:message key="jsp.customer.bills" bundle="${msg}"/></a></li>
-           <li>${localeValue}</li>
+
             </ul>
         </div>
     </div>

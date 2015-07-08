@@ -23,13 +23,16 @@ public class GetAssignProjectForm extends Command {
 
     private static final Logger logger = Logger.getLogger(GetAssignProjectForm.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.manager.view.assign.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.assign.project";
 
+    /** Attributes */
     private static final String PARAM_PROJECT = "projects";
     private static final String USER_ATTRIBUTE = "user";
     private static final String PARAM_DEV_NAMES = "dev_names";
 
+    /** Forward pages */
     private static final String FORWARD_ASSIGN_PROJECT_FORM = "jsp/manager/assignProject.jsp";
 
     public static GetAssignProjectForm getInstance() {
@@ -37,7 +40,7 @@ public class GetAssignProjectForm extends Command {
     }
 
     /**
-     * This method invalidates user session
+     *  Implementation of command that get assign project form
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
@@ -59,6 +62,6 @@ public class GetAssignProjectForm extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
-        return(FORWARD_ASSIGN_PROJECT_FORM);
+        return FORWARD_ASSIGN_PROJECT_FORM;
     }
 }

@@ -13,22 +13,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This command delete project.
+ *
  * Created by olga on 05.05.15.
  */
 public class DeleteProject extends Command {
 
     private static DeleteProject instance = new DeleteProject();
-
-    /** Initialize activity logger */
     private static Logger logger = Logger.getLogger(DeleteProject.class);
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.delete.order";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
+
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_PROJECT = "projectId";
-    private static final String DELETE_PROJECT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
+
+    /** Forward page */
+    private static final String MANAGER_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
 
 
     public static DeleteProject getInstance() {
@@ -36,10 +40,11 @@ public class DeleteProject extends Command {
     }
 
     /**
-     *  This method executes the command.
+     *  Implementation of command that delete project.
      *
      *  @param request HttpServletRequest object
      *  @param response HttpServletResponse object
+     *  @return rederict page or command
      *  @throws CommandException  If command can't be executed.
      */
     @Override
@@ -54,7 +59,9 @@ public class DeleteProject extends Command {
         } catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        return (DELETE_PROJECT_PAGE);
+
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
+        return MANAGER_PAGE;
 
     }
 }

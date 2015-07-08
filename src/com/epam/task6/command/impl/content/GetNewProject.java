@@ -21,13 +21,16 @@ import java.util.List;
  */
 public class GetNewProject extends Command {
     public static GetNewProject instance = new GetNewProject();
-    private static Logger logger = Logger.getLogger(GetNewProject.class);
+    private static final Logger logger = Logger.getLogger(GetNewProject.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.new.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.new.project";
 
-
+    /** Attributes and parameters */
     private static final String USER_ATTRIBUTE = "user";
+
+    /** Forward pages */
     private static final String NEW_PROJECT_PAGE = "jsp/developer/newProjects.jsp";
 
     public static GetNewProject getInstance() {
@@ -35,10 +38,11 @@ public class GetNewProject extends Command {
     }
 
     /**
-     * This method invalidates user session
+     * Implementation of command that get all new projects with status 0.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
+     * @return rederict page or command
      * @throws CommandException If execution is failed
      */
 
@@ -57,7 +61,7 @@ public class GetNewProject extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
-        return (NEW_PROJECT_PAGE);
+        return NEW_PROJECT_PAGE;
 
     }
 }

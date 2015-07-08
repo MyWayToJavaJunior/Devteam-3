@@ -9,7 +9,7 @@
 
 <div class="container">
     <form class="form-signin" action="Controller" method="post">
-		<input type="hidden" name="command" value="register" />
+		<input type="hidden" name="executionCommand" value="REGISTER" />
         Имя:
         <br /> <input class="form-control" type="text" name="firstname" value="" /><br />
         Фамилия:

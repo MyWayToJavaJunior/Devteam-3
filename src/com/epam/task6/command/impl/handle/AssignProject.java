@@ -13,37 +13,41 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This command assign project.
+ *
  * Created by olga on 28.04.15.
  */
 public class AssignProject extends Command {
 
     private static AssignProject instance = new AssignProject();
-    /** Initialize activity logger */
-    private static Logger logger = Logger.getLogger("activity");
+
+    private static final Logger logger = Logger.getLogger(AssignProject.class);
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.project";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
+
 
     /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
-
-
     private static final String ATTRIBUTE_PROJECT_NAME = "project_name";
     private static final String ATTRIBUTE_DEVELOPER_NAME = "dev_name";
+
+    /** Forward page */
     private static final String ASSIG_REDERICT_PAGE = "Controller?executionCommand=SHOW_PROJECTS";
     //project_name
     //dev_name
-
 
     public static AssignProject getInstance() {
         return instance;
     }
 
     /**
-     *  This method executes the command.
+     *  Implementation of command that assign project.
      *
      *  @param request HttpServletRequest object
      *  @param response HttpServletResponse object
+     *  @return rederict page or command
      *  @throws CommandException  If command can't be executed.
      */
     @Override
@@ -64,7 +68,8 @@ public class AssignProject extends Command {
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        return(ASSIG_REDERICT_PAGE);
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
+        return ASSIG_REDERICT_PAGE;
     }
 }
 

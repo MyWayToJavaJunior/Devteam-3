@@ -19,6 +19,7 @@ public class Hasher {
      */
     public static String getMD5(String value) {
         try {
+
             MessageDigest messageDigest = MessageDigest.getInstance(MD5);
             byte[] digest = messageDigest.digest(value.getBytes());
             BigInteger number = new BigInteger(1, digest);
@@ -32,5 +33,6 @@ public class Hasher {
         }
         return "";
     }
+
 
 }

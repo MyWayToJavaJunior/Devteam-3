@@ -10,6 +10,7 @@ import com.epam.task6.domain.project.Job;
 import com.epam.task6.domain.project.Spetification;
 import com.epam.task6.domain.user.User;
 import com.epam.task6.resource.ResourceManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,16 +23,22 @@ import java.util.List;
 public class GetProjectFormDetails extends Command {
     private static GetProjectFormDetails instance = new GetProjectFormDetails();
 
+    private static final Logger logger = Logger.getLogger(GetProjectFormDetails.class);
+
+    /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.assign.project";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
+
+    /** Attributes and parameters */
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_SPETIFICATION = "spetification";
-
     private static final String ATTRIBUTE_SPETIFICATION_NAME = "spetification_name";
+    private static final String ATTRIBUTE_SPETIFICATION_TO_SESSION = "spec";
     private static final String ATTRIBUTE_PROJECT_NAME = "project_name";
     private static final String ATTRIBUTE_JOB = "jobList";
     private static final String ATTRIBUTE_DEV = "developer_id";
 
-
+    /** Forward page */
     private static final String FORWARD_ORDER_FORM = "jsp/manager/createProjectDetails.jsp";
 
     public static GetProjectFormDetails getInstance() {
@@ -65,7 +72,7 @@ public class GetProjectFormDetails extends Command {
             Spetification spetification = specificationDAO.getSpetificationByName(spetificationName);
             session.setAttribute(ATTRIBUTE_SPETIFICATION, spetification);
 
-            session.setAttribute("spec", spetification);
+            session.setAttribute(ATTRIBUTE_SPETIFICATION_TO_SESSION, spetification);
             JobDAOImpl jobDAO = JobDAOImpl.getInstance();
             List<Job> jobList = jobDAO.getSpecificationJobs(spetification.getId());
             session.setAttribute(ATTRIBUTE_JOB, jobList);
@@ -75,6 +82,7 @@ public class GetProjectFormDetails extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR), e);
         }
 
-        return (FORWARD_ORDER_FORM);
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
+        return FORWARD_ORDER_FORM;
     }
 }

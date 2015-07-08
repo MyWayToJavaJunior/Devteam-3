@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This command create job.
+ *
  * Created by olga on 27.04.15.
  */
 public class CreateJob extends Command {
@@ -21,13 +23,17 @@ public class CreateJob extends Command {
     private static CreateJob instance = new CreateJob();
 
     /** Initialize activity logger */
-    private static Logger logger = Logger.getLogger(CreateJob.class);
+    private static final Logger logger = Logger.getLogger(CreateJob.class);
 
     /** Logger messages */
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.create.order";
+    private static final String MSG_REQUESTED_COMMAND = "logger.activity.requested.order.form";
+
+    /** Attributes and parameters */
     private static final String ATTRIBUTE_SPETIFICATION = "spId";
     private static final String ATTRIBUTE_USER = "user";
 
+    /** Forward page */
     private static final String CUSTOMER_PAGE = "Controller?executionCommand=SHOW_SPECIFICATIONS";
 
     public static CreateJob getInstance() {
@@ -35,10 +41,11 @@ public class CreateJob extends Command {
     }
 
     /**
-     *  This method executes the command.
+     *  Implementation of command that create job.
      *
      *  @param request HttpServletRequest object
      *  @param response HttpServletResponse object
+     *  @return rederict page or command
      *  @throws CommandException  If command can't be executed.
      */
     @Override
@@ -58,6 +65,7 @@ public class CreateJob extends Command {
         catch (DAOException e){
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
-        return (CUSTOMER_PAGE);
+        logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND) + user.getId());
+        return CUSTOMER_PAGE;
     }
 }

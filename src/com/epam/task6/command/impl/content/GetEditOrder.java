@@ -22,11 +22,14 @@ public class GetEditOrder extends Command {
 
     private static final Logger logger = Logger.getLogger(GetEditOrder.class);
 
+    /** Logger messages */
     private static final String MSG_SHOW_EDIT_ORDER = "logger.activity.customer.show.edit.order";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.edit.order";
 
+    /** Forward pages */
     private static final String CUSTOMER_EDIT_SPETIFICATION_PAGE = "jsp/customer/editSpetification.jsp";
 
+    /** Attributes and parameters */
     private static final String LIST_OF_SPETIFICATION = "editSp";
     private static final String SPETIFICATION = "spId";
     private static final String USER_ATTRIBUTE = "user";
@@ -36,7 +39,7 @@ public class GetEditOrder extends Command {
     }
 
     /**
-     * This method invalidates user session
+     * Implementation of command get page for edit spetification.
      *
      * @param request HttpServletRequest object
      * @param response HttpServletResponse object
@@ -60,6 +63,6 @@ public class GetEditOrder extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR)+ user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_SHOW_EDIT_ORDER) + user.getId());
-        return (CUSTOMER_EDIT_SPETIFICATION_PAGE);
+        return CUSTOMER_EDIT_SPETIFICATION_PAGE;
     }
 }

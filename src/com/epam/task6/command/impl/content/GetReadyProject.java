@@ -21,25 +21,28 @@ import java.util.List;
  */
 public class GetReadyProject extends Command {
     private static GetReadyProject instance = new GetReadyProject();
-    private static Logger logger = Logger.getLogger(GetReadyProject.class);
+    private static final Logger logger = Logger.getLogger(GetReadyProject.class);
 
+    /** Logger messages */
     private static final String MSG_REQUESTED_COMMAND = "logger.activity.employee.show.ready.project";
     private static final String MSG_EXECUTE_ERROR = "logger.error.execute.view.ready.project";
 
-
+    /** Attributes and parameters */
     private static final String USER_ATTRIBUTE = "user";
-    private static final String NEW_PROJECT_PAGE = "jsp/developer/newProjects.jsp";
 
+    /** Forward page */
+    private static final String NEW_PROJECT_PAGE = "jsp/developer/newProjects.jsp";
 
     public static GetReadyProject getInstance() {
         return instance;
     }
 
     /**
-     *  This method executes the command.
+     *  mplementation of command that get all ready projects.
      *
      *  @param request HttpServletRequest object
      *  @param response HttpServletResponse object
+     *  @return rederict page or command
      *  @throws CommandException  If command can't be executed.
      */
     @Override
@@ -56,6 +59,6 @@ public class GetReadyProject extends Command {
             throw new CommandException(ResourceManager.getProperty(MSG_EXECUTE_ERROR) + user.getId(), e);
         }
         logger.info(ResourceManager.getProperty(MSG_REQUESTED_COMMAND)+user.getId());
-        return (NEW_PROJECT_PAGE);
+        return NEW_PROJECT_PAGE;
     }
 }
